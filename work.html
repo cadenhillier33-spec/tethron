@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Work — Tethron</title>
+<meta name="description" content="See the custom websites and AI employees Tethron has built for real businesses. No templates. No recycled layouts. Built from scratch.">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta property="og:title" content="Our Work — Tethron" />
+<meta property="og:url" content="https://tethron.ai/work" />
+<meta property="og:type" content="website" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: rgb(7, 8, 10);
+  color: #fff;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav-wrap { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100; padding: 0 16px; width: 100%; max-width: 1240px; }
+.nav {
+  display: flex; align-items: center;
+  background: linear-gradient(137deg, rgba(17,18,20,0.75) 4.87%, rgba(12,13,15,0.9) 75.88%);
+  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
+  padding: 16px 32px; height: 76px;
+  box-shadow: rgba(255,255,255,0.15) 0 1px 1px 0 inset;
+}
+.nav-left { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+.nav-icon { width: 28px; height: 28px; background: linear-gradient(135deg, #00d4aa, #00b894); border-radius: 7px; }
+.nav-brand { font-size: 16px; font-weight: 600; }
+.nav-links { display: flex; gap: 8px; }
+.nav-link { padding: 8px 14px; font-size: 16px; font-weight: 400; color: white; opacity: 0.7; transition: opacity 0.15s; }
+.nav-link:hover { opacity: 1; }
+.nav-link.active { opacity: 1; }
+.nav-btn { margin-left: 16px; padding: 8px 16px; background: rgb(230,230,230); color: rgb(47,48,49); font-size: 14px; font-weight: 500; border-radius: 8px; border: none; height: 36px; display: flex; align-items: center; cursor: pointer; box-shadow: rgba(0,0,0,0.5) 0 0 0 2px, rgba(255,255,255,0.19) 0 0 14px 0, rgba(0,0,0,0.2) 0 -1px 0.4px 0 inset, rgb(255,255,255) 0 1px 0.4px 0 inset; transition: background-color 0.2s; }
+.nav-btn:hover { background: white; }
+
+.hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; width: 44px; height: 44px; margin-left: 16px; z-index: 10001; }
+.hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all .4s cubic-bezier(.4,0,.2,1); }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); background: #00d4aa; }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); background: #00d4aa; }
+
+.mobile-nav { position: fixed; inset: 0; z-index: 10000; background: rgba(7,8,10,0.98); backdrop-filter: blur(24px); display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; pointer-events: none; transition: all .4s cubic-bezier(.4,0,.2,1); }
+.mobile-nav.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.mobile-nav-close { position: absolute; top: 20px; right: 20px; background: none; border: 1px solid rgba(255,255,255,.08); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: rgba(255,255,255,.5); }
+.mobile-nav-close:hover { color: #00d4aa; }
+.mobile-nav-label { font-size: 10px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: #00d4aa; margin-bottom: 12px; }
+.mobile-nav-sub { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 32px; }
+.mobile-nav-divider { width: 200px; height: 1px; background: linear-gradient(90deg,transparent,#00d4aa,transparent); margin-bottom: 36px; }
+.mobile-nav-links { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 340px; padding: 0 28px; }
+.mobile-nav-links a { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid rgba(255,255,255,.06); border-radius: 14px; background: rgba(255,255,255,.02); color: rgba(255,255,255,.75); font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; transition: all .25s ease; transform: translateY(20px); opacity: 0; }
+.mobile-nav.open .mobile-nav-links a { transform: translateY(0); opacity: 1; }
+.mobile-nav-links a:nth-child(1){transition-delay:.05s}
+.mobile-nav-links a:nth-child(2){transition-delay:.08s}
+.mobile-nav-links a:nth-child(3){transition-delay:.11s}
+.mobile-nav-links a:nth-child(4){transition-delay:.14s}
+.mobile-nav-links a:nth-child(5){transition-delay:.17s}
+.mobile-nav-links a:nth-child(6){transition-delay:.20s}
+.mobile-nav-links a:hover { background: rgba(255,255,255,.06); border-color: rgba(0,212,170,.25); color: #fff; }
+.mobile-nav-num { font-size: 11px; font-weight: 700; color: #00d4aa; opacity: .5; min-width: 24px; }
+.mobile-nav-cta { margin-top: 32px; display: inline-flex; padding: 16px 40px; border-radius: 999px; background: linear-gradient(135deg,#00d4aa,#00b894); color: #0a0a0a; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; transform: translateY(20px); opacity: 0; }
+.mobile-nav.open .mobile-nav-cta { transform: translateY(0); opacity: 1; transition-delay: .25s; }
+
+/* CONTENT */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+.eyebrow { font-size: 14px; color: #00d4aa; font-weight: 500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+.section-h2 { font-size: 40px; font-weight: 600; line-height: 1.15; letter-spacing: -1px; margin-bottom: 16px; }
+.section-h2 .muted { color: rgba(255,255,255,0.35); }
+.section-p { font-size: 16px; color: rgba(255,255,255,0.45); line-height: 1.65; max-width: 600px; }
+
+/* Work Grid */
+.work-hero { padding: 140px 0 40px; position: relative; z-index: 1; }
+.work-section { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 32px 100px; }
+.glass-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px; box-shadow: rgba(255,255,255,0.03) 0 0 40px 10px, rgba(255,255,255,0.15) 0 0.5px 0 0 inset; transition: border-color 0.2s; }
+.glass-card:hover { border-color: rgba(255,255,255,0.12); }
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.work-card-preview { height: 240px; border-radius: 12px; margin-bottom: 20px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.wcp-obsidian { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%); border: 1px solid rgba(212,175,55,0.15); }
+.wcp-solara { background: linear-gradient(135deg, #0a1a0f 0%, #0d2818 50%, #0a1a0f 100%); border: 1px solid rgba(16,185,129,0.15); }
+.wcp-atlas { background: linear-gradient(135deg, #0a0a1a 0%, #0d1830 50%, #0a0a1a 100%); border: 1px solid rgba(59,130,246,0.15); }
+.work-card-preview-label { position: absolute; bottom: 12px; left: 12px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 6px; background: rgba(0,0,0,0.5); border: 0.5px solid rgba(255,255,255,0.1); }
+.work-card-brand { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 28px; font-weight: 700; letter-spacing: -1px; opacity: 0.15; white-space: nowrap; }
+.work-card-name { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.work-card-type { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 16px; line-height: 1.6; }
+.work-card-results { display: flex; gap: 16px; margin-bottom: 16px; }
+.work-result { font-size: 13px; font-weight: 500; color: #22c55e; }
+.work-card-desc { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+
+/* CTA */
+.cta-section { position: relative; z-index: 1; text-align: center; padding: 80px 32px 120px; border-top: 0.5px solid rgba(255,255,255,0.06); max-width: 1100px; margin: 0 auto; }
+.cta-section h2 { font-size: 40px; font-weight: 600; letter-spacing: -1px; margin-bottom: 16px; }
+.cta-section p { font-size: 16px; color: rgba(255,255,255,0.45); max-width: 580px; margin: 0 auto 40px; line-height: 1.65; }
+.btn-orange {
+  display: inline-flex; align-items: center; padding: 14px 28px; border-radius: 10px;
+  background: #00d4aa; color: white; font-size: 16px; font-weight: 600;
+  box-shadow: rgba(0,0,0,0.5) 0 0 0 2px, rgba(0,212,170,0.35) 0 0 20px 0;
+  transition: all 0.15s; border: none; cursor: pointer;
+}
+.btn-orange:hover { box-shadow: rgba(0,0,0,0.5) 0 0 0 2px, rgba(0,212,170,0.5) 0 0 30px 0; }
+
+/* Footer */
+.footer { border-top: 0.5px solid rgba(255,255,255,0.06); padding: 48px 32px 32px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,.2); }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 12px; color: rgba(255,255,255,.2); transition: color .15s; }
+.footer-legal a:hover { color: rgba(255,255,255,.5); }
+
+#webgl-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-btn.desktop-only { display: none; }
+  .hamburger { display: flex; }
+  .work-grid { grid-template-columns: 1fr; }
+  .section-h2 { font-size: 32px; }
+}
+@media (max-width: 600px) {
+  .container, .work-section, .cta-section { padding-left: 20px; padding-right: 20px; }
+  .work-hero { padding: 120px 0 30px; }
+  .cta-section h2 { font-size: 28px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .nav { padding: 12px 16px; height: 64px; }
+}
+</style>
+</head>
+<body>
+<canvas id="webgl-bg"></canvas>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="/" class="nav-left">
+      <div class="nav-icon"></div>
+      <span class="nav-brand">Tethron</span>
+    </a>
+    <div class="nav-links">
+      <a href="/#what-we-do" class="nav-link">What We Do</a>
+      <a href="/#demo" class="nav-link">See It Live</a>
+      <a href="/work" class="nav-link active">Our Work</a>
+      <a href="/#pricing" class="nav-link">Pricing</a>
+      <a href="/contact" class="nav-link">Contact</a>
+      <a href="/about" class="nav-link">About</a>
+    </div>
+    <a href="/contact" class="nav-btn desktop-only">Get Started</a>
+    <button class="hamburger" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</div>
+
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close">&times;</button>
+  <div class="mobile-nav-label">Tethron</div>
+  <div class="mobile-nav-sub">Navigate</div>
+  <div class="mobile-nav-divider"></div>
+  <div class="mobile-nav-links">
+    <a href="/#what-we-do" onclick="closeMobileNav()"><span class="mobile-nav-num">01</span>What We Do</a>
+    <a href="/#demo" onclick="closeMobileNav()"><span class="mobile-nav-num">02</span>See It Live</a>
+    <a href="/work" onclick="closeMobileNav()"><span class="mobile-nav-num">03</span>Our Work</a>
+    <a href="/#pricing" onclick="closeMobileNav()"><span class="mobile-nav-num">04</span>Pricing</a>
+    <a href="/contact" onclick="closeMobileNav()"><span class="mobile-nav-num">05</span>Contact</a>
+    <a href="/about" onclick="closeMobileNav()"><span class="mobile-nav-num">06</span>About</a>
+  </div>
+  <a class="mobile-nav-cta" href="/contact" onclick="closeMobileNav()">Get Started</a>
+</nav>
+
+<!-- WORK HERO -->
+<section class="work-hero">
+  <div class="container">
+    <div class="eyebrow">Our Work</div>
+    <h2 class="section-h2">Every site built from scratch. <span class="muted">Every AI employee custom-trained.</span></h2>
+    <p class="section-p">No templates, no recycled layouts. Each project is designed to make the business look as premium as the AI employee running it.</p>
+  </div>
+</section>
+
+<!-- WORK GRID -->
+<div class="work-section">
+  <div class="work-grid">
+    <!-- Obsidian -->
+    <div class="glass-card" style="padding: 0; overflow: hidden;">
+      <div class="work-card-preview wcp-obsidian">
+        <span class="work-card-brand" style="color: #d4af37;">OBSIDIAN</span>
+        <span class="work-card-preview-label" style="color: #d4af37;">Luxury Real Estate</span>
+      </div>
+      <div style="padding: 24px 28px 28px;">
+        <div class="work-card-name">Obsidian & Co</div>
+        <div class="work-card-type">Ultra-dark luxury brokerage. Gold accents, property cards, invitation-only aesthetic. Built for a high-end real estate firm targeting $2M+ listings.</div>
+        <div class="work-card-results">
+          <span class="work-result">3x more inquiries</span>
+          <span class="work-result">+62% site traffic</span>
+        </div>
+        <p class="work-card-desc">Custom-coded dark luxury theme with animated property cards, video hero, and lead capture forms. AI employee handles inquiry follow-ups and appointment scheduling 24/7.</p>
+      </div>
+    </div>
+
+    <!-- Solara -->
+    <div class="glass-card" style="padding: 0; overflow: hidden;">
+      <div class="work-card-preview wcp-solara">
+        <span class="work-card-brand" style="color: #10b981;">SOLARA</span>
+        <span class="work-card-preview-label" style="color: #10b981;">Modern Healthcare</span>
+      </div>
+      <div style="padding: 24px 28px 28px;">
+        <div class="work-card-name">Solara Health</div>
+        <div class="work-card-type">Clean wellness platform. Emerald accents, trust architecture, booking flow. Designed for a multi-practitioner wellness clinic.</div>
+        <div class="work-card-results">
+          <span class="work-result">+47% online bookings</span>
+          <span class="work-result">2.1x new patients</span>
+        </div>
+        <p class="work-card-desc">Patient-first design with integrated booking, practitioner profiles, and insurance verification. AI employee manages patient intake, reactivation, and review requests.</p>
+      </div>
+    </div>
+
+    <!-- Atlas -->
+    <div class="glass-card" style="padding: 0; overflow: hidden;">
+      <div class="work-card-preview wcp-atlas">
+        <span class="work-card-brand" style="color: #3b82f6;">ATLAS</span>
+        <span class="work-card-preview-label" style="color: #3b82f6;">Venture Capital</span>
+      </div>
+      <div style="padding: 24px 28px 28px;">
+        <div class="work-card-name">Atlas Venture</div>
+        <div class="work-card-type">Data-driven VC platform. Grid system, portfolio metrics, Bloomberg aesthetic. Built for a seed-stage venture fund.</div>
+        <div class="work-card-results">
+          <span class="work-result">+83% deal flow</span>
+          <span class="work-result">4.2s avg load time</span>
+        </div>
+        <p class="work-card-desc">Bloomberg-inspired data dashboard design with portfolio company profiles, fund metrics, and investor login portal. AI employee handles deal flow intake and founder screening.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Want to see what we'd build <span class="section-h2"><span class="muted">for you?</span></span></h2>
+  <p>Every project starts with a free audit. We research your business, show you what your AI employee would handle, and give you a full breakdown — no commitment required.</p>
+  <a href="/contact" class="btn-orange">Get Your Free AI Audit &rarr;</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 Tethron. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="mailto:hello@tethron.ai?subject=Privacy%20Policy%20Request">Privacy</a>
+      <a href="mailto:hello@tethron.ai?subject=Terms%20of%20Service%20Request">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('menuToggle').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobileNav').classList.contains('open') ? 'hidden' : '';
+});
+function closeMobileNav() {
+  document.getElementById('menuToggle').classList.remove('active');
+  document.getElementById('mobileNav').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  var canvas = document.getElementById('webgl-bg');
+  var vs = 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }';
+  var fs = [
+    'precision highp float;',
+    'varying vec2 vUv; uniform float uTime; uniform vec2 uResolution;',
+    'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
+    'float noise(vec2 p) { vec2 i=floor(p); vec2 f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y); }',
+    'float fbm(vec2 p) { float v=0.0,a=0.5; for(int i=0;i<4;i++){v+=a*noise(p);p*=2.0;a*=0.5;} return v; }',
+    'float streak(vec2 uv,float xP,float ang,float w,float s,float l,float yo) { float ca=cos(ang),sa=sin(ang); vec2 c=vec2(xP,0.5+yo); vec2 r=vec2(ca*(uv.x-c.x)-sa*(uv.y-c.y),sa*(uv.x-c.x)+ca*(uv.y-c.y)); return exp(-abs(r.x)/w*abs(r.x)/w*s)*smoothstep(1.0,0.3,abs(r.y)/l); }',
+    'void main() { vec2 uv=vUv; float t=uTime*0.08;',
+    'float n1=fbm(vec2(uv.x*2.0,uv.y*0.5+t*0.3))*0.015;',
+    'vec3 col=vec3(0.0); vec3 cyan=vec3(0,0.831,0.667); vec3 teal=vec3(0,0.722,0.580); vec3 mint=vec3(0,0.9,0.75);',
+    'col+=cyan*streak(uv+vec2(n1,0),0.38,-0.22,0.035,8.0,0.7,sin(t*0.5)*0.02)*0.55;',
+    'col+=mint*streak(uv,0.45,-0.28,0.045,6.0,0.75,sin(t*0.4+1.0)*0.015)*0.65;',
+    'col+=teal*streak(uv,0.52,-0.18,0.03,10.0,0.65,sin(t*0.6+2.0)*0.02)*0.5;',
+    'col*=1.0+sin(t*0.6)*0.08;',
+    'vec2 vig=uv-0.5; col*=clamp(pow(1.0-dot(vig,vig)*2.2,1.4),0.0,1.0);',
+    'col=col/(col+0.6); col+=vec3((hash(uv*uResolution+fract(uTime))-0.5)*0.015);',
+    'col=max(col,vec3(0.027,0.031,0.039)); gl_FragColor=vec4(col,1.0); }'
+  ].join('\n');
+  var scene=new THREE.Scene(), camera=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:false});
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  var uniforms={uTime:{value:0},uResolution:{value:new THREE.Vector2(window.innerWidth,window.innerHeight)}};
+  var mat=new THREE.ShaderMaterial({vertexShader:vs,fragmentShader:fs,uniforms:uniforms});
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat));
+  window.addEventListener('resize',function(){renderer.setSize(window.innerWidth,window.innerHeight);uniforms.uResolution.value.set(window.innerWidth,window.innerHeight);});
+  (function animate(t){uniforms.uTime.value=t*0.001;renderer.render(scene,camera);requestAnimationFrame(animate);})(0);
+})();
+</script>
+</body>
+</html>

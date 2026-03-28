@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free AI Audit — Tethron</title>
+<meta name="description" content="Get a free AI audit from Tethron. We'll identify your 3 biggest time-wasters and show you exactly how an AI employee can handle them — no call needed.">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta property="og:title" content="Free AI Audit — Tethron" />
+<meta property="og:description" content="Tell us about your business. We'll show you what an AI employee would handle for you — and text you a full report. No call, no pitch." />
+<meta property="og:url" content="https://tethron.ai/contact" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Free AI Audit — Tethron" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: rgb(7, 8, 10);
+  color: #fff;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav-wrap { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100; padding: 0 16px; width: 100%; max-width: 1240px; }
+.nav {
+  display: flex; align-items: center;
+  background: linear-gradient(137deg, rgba(17,18,20,0.75) 4.87%, rgba(12,13,15,0.9) 75.88%);
+  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
+  padding: 16px 32px; height: 76px;
+  box-shadow: rgba(255,255,255,0.15) 0 1px 1px 0 inset;
+}
+.nav-left { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+.nav-icon { width: 28px; height: 28px; background: linear-gradient(135deg, #00d4aa, #00b894); border-radius: 7px; }
+.nav-brand { font-size: 16px; font-weight: 600; }
+.nav-links { display: flex; gap: 8px; }
+.nav-link { padding: 8px 14px; font-size: 16px; font-weight: 400; color: white; opacity: 0.7; transition: opacity 0.15s; }
+.nav-link:hover { opacity: 1; }
+.nav-link.active { opacity: 1; }
+.nav-btn { margin-left: 16px; padding: 8px 16px; background: rgb(230,230,230); color: rgb(47,48,49); font-size: 14px; font-weight: 500; border-radius: 8px; border: none; height: 36px; display: flex; align-items: center; cursor: pointer; box-shadow: rgba(0,0,0,0.5) 0 0 0 2px, rgba(255,255,255,0.19) 0 0 14px 0, rgba(0,0,0,0.2) 0 -1px 0.4px 0 inset, rgb(255,255,255) 0 1px 0.4px 0 inset; transition: background-color 0.2s; }
+.nav-btn:hover { background: white; }
+
+/* Hamburger */
+.hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; width: 44px; height: 44px; margin-left: 16px; z-index: 10001; }
+.hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all .4s cubic-bezier(.4,0,.2,1); }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); background: #00d4aa; }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); background: #00d4aa; }
+
+/* Mobile Nav */
+.mobile-nav { position: fixed; inset: 0; z-index: 10000; background: rgba(7,8,10,0.98); backdrop-filter: blur(24px); display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; pointer-events: none; transition: all .4s cubic-bezier(.4,0,.2,1); }
+.mobile-nav.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.mobile-nav-close { position: absolute; top: 20px; right: 20px; background: none; border: 1px solid rgba(255,255,255,.08); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: rgba(255,255,255,.5); }
+.mobile-nav-close:hover { color: #00d4aa; border-color: rgba(0,212,170,.3); }
+.mobile-nav-label { font-size: 10px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: #00d4aa; margin-bottom: 12px; }
+.mobile-nav-sub { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 32px; }
+.mobile-nav-divider { width: 200px; height: 1px; background: linear-gradient(90deg,transparent,#00d4aa,transparent); margin-bottom: 36px; }
+.mobile-nav-links { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 340px; padding: 0 28px; }
+.mobile-nav-links a { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid rgba(255,255,255,.06); border-radius: 14px; background: rgba(255,255,255,.02); color: rgba(255,255,255,.75); font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; transition: all .25s ease; transform: translateY(20px); opacity: 0; }
+.mobile-nav.open .mobile-nav-links a { transform: translateY(0); opacity: 1; }
+.mobile-nav-links a:nth-child(1){transition-delay:.05s}
+.mobile-nav-links a:nth-child(2){transition-delay:.08s}
+.mobile-nav-links a:nth-child(3){transition-delay:.11s}
+.mobile-nav-links a:nth-child(4){transition-delay:.14s}
+.mobile-nav-links a:nth-child(5){transition-delay:.17s}
+.mobile-nav-links a:nth-child(6){transition-delay:.20s}
+.mobile-nav-links a:hover { background: rgba(255,255,255,.06); border-color: rgba(0,212,170,.25); color: #fff; }
+.mobile-nav-num { font-size: 11px; font-weight: 700; color: #00d4aa; opacity: .5; min-width: 24px; }
+.mobile-nav-cta { margin-top: 32px; display: inline-flex; padding: 16px 40px; border-radius: 999px; background: linear-gradient(135deg,#00d4aa,#00b894); color: #0a0a0a; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; transform: translateY(20px); opacity: 0; }
+.mobile-nav.open .mobile-nav-cta { transform: translateY(0); opacity: 1; transition-delay: .25s; }
+
+/* CONTACT HERO */
+.contact-hero { padding: 140px 0 80px; position: relative; z-index: 1; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.eyebrow { font-size: 14px; color: #00d4aa; font-weight: 500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+.contact-left h2 { max-width: 500px; font-size: 42px; font-weight: 600; letter-spacing: -1px; margin: 0 0 20px; line-height: 1.1; }
+.lead { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.55); }
+.audit-box {
+  margin-top: 32px; padding: 24px 28px; border-radius: 16px;
+  border: 1px solid rgba(0,212,170,.15); background: rgba(0,212,170,.03);
+}
+.audit-box-title { font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #00d4aa; margin-bottom: 12px; }
+.audit-box-list { font-size: 15px; line-height: 1.9; color: rgba(255,255,255,0.6); }
+.audit-box-list div { margin-bottom: 4px; }
+.audit-note { margin-top: 20px; font-size: 13px; color: rgba(255,255,255,.35); }
+
+/* Form */
+.contact-form { display: grid; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+.form-input {
+  padding: 14px 18px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04);
+  color: #fff; font-size: 15px; font-family: Inter, sans-serif; outline: none; transition: .2s;
+}
+.form-input:focus { border-color: rgba(0,212,170,.5); background: rgba(255,255,255,.06); }
+.form-input::placeholder { color: rgba(255,255,255,.25); }
+textarea.form-input { min-height: 120px; resize: vertical; }
+.form-submit {
+  margin-top: 8px; width: 100%; padding: 16px; border-radius: 12px; border: none;
+  background: #00d4aa; color: #0a0a0a;
+  font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  cursor: pointer; font-family: Inter, sans-serif; transition: .2s;
+  box-shadow: rgba(0,0,0,0.5) 0 0 0 2px, rgba(0,212,170,0.35) 0 0 20px 0;
+}
+.form-submit:hover { box-shadow: rgba(0,0,0,0.5) 0 0 0 2px, rgba(0,212,170,0.5) 0 0 30px 0; }
+.form-note { font-size: 12px; color: rgba(255,255,255,.3); text-align: center; }
+.form-success { display: none; text-align: center; padding: 40px 20px; color: #00d4aa; font-size: 20px; font-weight: 700; }
+.form-error { display: none; text-align: center; padding: 20px; color: #e74c3c; font-size: 14px; font-weight: 600; }
+
+/* Footer */
+.footer { border-top: 0.5px solid rgba(255,255,255,0.06); padding: 48px 32px 32px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,.2); }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 12px; color: rgba(255,255,255,.2); transition: color .15s; }
+.footer-legal a:hover { color: rgba(255,255,255,.5); }
+
+/* WebGL */
+#webgl-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-btn.desktop-only { display: none; }
+  .hamburger { display: flex; }
+  .contact-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+  .contact-hero { padding: 120px 0 50px; }
+  .contact-left h2 { font-size: 32px; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .nav { padding: 12px 16px; height: 64px; }
+}
+</style>
+</head>
+<body>
+<canvas id="webgl-bg"></canvas>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="/" class="nav-left">
+      <div class="nav-icon"></div>
+      <span class="nav-brand">Tethron</span>
+    </a>
+    <div class="nav-links">
+      <a href="/#what-we-do" class="nav-link">What We Do</a>
+      <a href="/#demo" class="nav-link">See It Live</a>
+      <a href="/work" class="nav-link">Our Work</a>
+      <a href="/#pricing" class="nav-link">Pricing</a>
+      <a href="/contact" class="nav-link active">Contact</a>
+      <a href="/about" class="nav-link">About</a>
+    </div>
+    <a href="/contact" class="nav-btn desktop-only">Get Started</a>
+    <button class="hamburger" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</div>
+
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close">&times;</button>
+  <div class="mobile-nav-label">Tethron</div>
+  <div class="mobile-nav-sub">Navigate</div>
+  <div class="mobile-nav-divider"></div>
+  <div class="mobile-nav-links">
+    <a href="/#what-we-do" onclick="closeMobileNav()"><span class="mobile-nav-num">01</span>What We Do</a>
+    <a href="/#demo" onclick="closeMobileNav()"><span class="mobile-nav-num">02</span>See It Live</a>
+    <a href="/work" onclick="closeMobileNav()"><span class="mobile-nav-num">03</span>Our Work</a>
+    <a href="/#pricing" onclick="closeMobileNav()"><span class="mobile-nav-num">04</span>Pricing</a>
+    <a href="/contact" onclick="closeMobileNav()"><span class="mobile-nav-num">05</span>Contact</a>
+    <a href="/about" onclick="closeMobileNav()"><span class="mobile-nav-num">06</span>About</a>
+  </div>
+  <a class="mobile-nav-cta" href="/contact" onclick="closeMobileNav()">Get Started</a>
+</nav>
+
+<!-- CONTACT -->
+<section class="contact-hero">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="eyebrow">Free — No Strings Attached</div>
+        <h2>Get a free AI audit.</h2>
+        <p class="lead">No call. No pitch. Just results. Tell us about your business and we'll do the work — we research your daily operations, identify what's eating your time, and text you a full report showing exactly what your AI employee would handle.</p>
+        <div class="audit-box">
+          <div class="audit-box-title">WHAT YOU GET</div>
+          <div class="audit-box-list">
+            <div>&#10022; Every role your AI employee could fill in your business</div>
+            <div>&#10022; Estimated hours saved per week</div>
+            <div>&#10022; What your AI employee would actually do, step by step</div>
+            <div>&#10022; A clear breakdown of what changes and what doesn't</div>
+            <div>&#10022; Delivered via text — read it on your own time</div>
+          </div>
+        </div>
+        <p class="audit-note">Most reports delivered within 24 hours.</p>
+      </div>
+      <div>
+        <form class="contact-form" id="contactForm">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="form-field"><label class="form-label">Your Name</label><input class="form-input" name="name" type="text" placeholder="Full name" required></div>
+          <div class="form-field"><label class="form-label">Business Name</label><input class="form-input" name="business" type="text" placeholder="Your company" required></div>
+          <div class="form-field"><label class="form-label">Website URL</label><input class="form-input" name="website" type="url" placeholder="https://yourbusiness.com" required></div>
+          <div class="form-field"><label class="form-label">Tell Us About Your Business</label><textarea class="form-input" name="about_business" placeholder="What does your business do? What takes up most of your time day-to-day?" rows="4" required></textarea></div>
+          <div class="form-row">
+            <div class="form-field"><label class="form-label">Phone (for delivery)</label><input class="form-input" name="phone" type="tel" placeholder="(555) 000-0000" required></div>
+            <div class="form-field"><label class="form-label">Email</label><input class="form-input" name="email" type="email" placeholder="you@company.com" required></div>
+          </div>
+          <button class="form-submit" type="submit">Get My Free AI Audit</button>
+          <div class="form-note">100% free. No obligation. No mailing list. No follow-up spam. Just your AI audit report.</div>
+        </form>
+        <div class="form-success" id="formSuccess">You're in. We'll research your business and text you your AI audit report within 24 hours.</div>
+        <div class="form-error" id="formError">Something went wrong. Text us directly at (203) 671-4631</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 Tethron. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="mailto:hello@tethron.ai?subject=Privacy%20Policy%20Request">Privacy</a>
+      <a href="mailto:hello@tethron.ai?subject=Terms%20of%20Service%20Request">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile nav
+document.getElementById('menuToggle').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobileNav').classList.contains('open') ? 'hidden' : '';
+});
+function closeMobileNav() {
+  document.getElementById('menuToggle').classList.remove('active');
+  document.getElementById('mobileNav').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Phone auto-format
+document.querySelector('[name="phone"]').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g, '').substring(0, 10);
+  if (v.length >= 7) v = '(' + v.substring(0,3) + ') ' + v.substring(3,6) + '-' + v.substring(6);
+  else if (v.length >= 4) v = '(' + v.substring(0,3) + ') ' + v.substring(3);
+  else if (v.length >= 1) v = '(' + v;
+  e.target.value = v;
+});
+
+// Form submit
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var f = this;
+  var btn = f.querySelector('.form-submit');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  var data = {
+    name: f.name.value,
+    business: f.business.value,
+    website: f.website.value,
+    email: f.email.value,
+    phone: f.phone.value,
+    message: 'Free Business Audit Request (via tethron.ai)'
+  };
+  if (f.querySelector('[name="_gotcha"]').value) { f.style.display = 'none'; document.getElementById('formSuccess').style.display = 'block'; return; }
+  fetch('https://slmdfgunkmvbqbzjfpdz.supabase.co/functions/v1/contact-form', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(function(r) {
+    if (r.ok) {
+      f.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else { throw new Error('fail'); }
+  }).catch(function() {
+    btn.disabled = false; btn.textContent = 'Get My Free AI Audit';
+    document.getElementById('formError').style.display = 'block';
+  });
+});
+</script>
+
+<!-- WebGL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  var canvas = document.getElementById('webgl-bg');
+  var vs = 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }';
+  var fs = [
+    'precision highp float;',
+    'varying vec2 vUv; uniform float uTime; uniform vec2 uResolution;',
+    'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
+    'float noise(vec2 p) { vec2 i=floor(p); vec2 f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y); }',
+    'float fbm(vec2 p) { float v=0.0,a=0.5; for(int i=0;i<4;i++){v+=a*noise(p);p*=2.0;a*=0.5;} return v; }',
+    'float streak(vec2 uv,float xP,float ang,float w,float s,float l,float yo) { float ca=cos(ang),sa=sin(ang); vec2 c=vec2(xP,0.5+yo); vec2 r=vec2(ca*(uv.x-c.x)-sa*(uv.y-c.y),sa*(uv.x-c.x)+ca*(uv.y-c.y)); return exp(-abs(r.x)/w*abs(r.x)/w*s)*smoothstep(1.0,0.3,abs(r.y)/l); }',
+    'void main() { vec2 uv=vUv; float t=uTime*0.08;',
+    'float n1=fbm(vec2(uv.x*2.0,uv.y*0.5+t*0.3))*0.015;',
+    'vec3 col=vec3(0.0); vec3 cyan=vec3(0,0.831,0.667); vec3 teal=vec3(0,0.722,0.580); vec3 mint=vec3(0,0.9,0.75);',
+    'col+=cyan*streak(uv+vec2(n1,0),0.38,-0.22,0.035,8.0,0.7,sin(t*0.5)*0.02)*0.55;',
+    'col+=mint*streak(uv,0.45,-0.28,0.045,6.0,0.75,sin(t*0.4+1.0)*0.015)*0.65;',
+    'col+=teal*streak(uv,0.52,-0.18,0.03,10.0,0.65,sin(t*0.6+2.0)*0.02)*0.5;',
+    'col*=1.0+sin(t*0.6)*0.08;',
+    'vec2 vig=uv-0.5; col*=clamp(pow(1.0-dot(vig,vig)*2.2,1.4),0.0,1.0);',
+    'col=col/(col+0.6); col+=vec3((hash(uv*uResolution+fract(uTime))-0.5)*0.015);',
+    'col=max(col,vec3(0.027,0.031,0.039)); gl_FragColor=vec4(col,1.0); }'
+  ].join('\n');
+  var scene=new THREE.Scene(), camera=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:false});
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  var uniforms={uTime:{value:0},uResolution:{value:new THREE.Vector2(window.innerWidth,window.innerHeight)}};
+  var mat=new THREE.ShaderMaterial({vertexShader:vs,fragmentShader:fs,uniforms:uniforms});
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat));
+  window.addEventListener('resize',function(){renderer.setSize(window.innerWidth,window.innerHeight);uniforms.uResolution.value.set(window.innerWidth,window.innerHeight);});
+  (function animate(t){uniforms.uTime.value=t*0.001;renderer.render(scene,camera);requestAnimationFrame(animate);})(0);
+})();
+</script>
+</body>
+</html>
