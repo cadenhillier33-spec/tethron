@@ -608,40 +608,64 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 .ind-card-desc { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.5; }
 .results-disclaimer { font-size: 11px; color: rgba(255,255,255,0.2); line-height: 1.6; font-style: italic; }
 
-/* ===== TESTIMONIALS (Raycast-style switcher) ===== */
-.test-selector-row { display: flex; justify-content: center; gap: 12px; margin-top: 48px; overflow-x: auto; padding: 8px 0; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-.test-selector-row::-webkit-scrollbar { display: none; }
-.test-pill {
+/* ===== TESTIMONIALS (Raycast-style sliding carousel) ===== */
+.test-carousel-wrap {
+  position: relative;
+  margin-top: 48px;
+  overflow: hidden;
+  padding: 12px 0;
+  mask-image: linear-gradient(90deg, rgba(217,217,217,0) 3%, rgb(217,217,217) 25%, rgb(217,217,217) 75%, rgba(217,217,217,0) 97%);
+  -webkit-mask-image: linear-gradient(90deg, rgba(217,217,217,0) 3%, rgb(217,217,217) 25%, rgb(217,217,217) 75%, rgba(217,217,217,0) 97%);
+}
+.test-carousel-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: transform;
+}
+.test-card {
   display: grid;
-  grid-template-columns: 40px 1fr;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
+  grid-template-areas: "avatar name" "avatar title";
+  grid-template-columns: 44px 1fr;
+  gap: 2px 16px;
+  padding: 18px 22px;
   border-radius: 16px;
   cursor: pointer;
   border: 1px solid transparent;
   background: transparent;
-  transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
-  min-width: 200px;
-  flex-shrink: 0;
-  opacity: 0.45;
+  flex: 0 0 auto;
+  margin: 0 8px;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
 }
-.test-pill:hover { opacity: 0.7; }
-.test-pill.active {
-  opacity: 1;
-  background: linear-gradient(137deg, rgb(17, 18, 20) 4.87%, rgb(12, 13, 15) 75.88%);
+.test-card:hover:not(.active) .test-card-avatar { opacity: 0.7; filter: grayscale(0.4); }
+.test-card.active {
+  background: linear-gradient(137deg, #111214 4.87%, #0c0d0f 75.88%);
   border-color: rgba(255,255,255,0.06);
-  box-shadow: rgba(255,255,255,0.1) 0px 1px 1px 0px inset, rgba(0,212,170,0.06) 0px 2px 40px 10px, rgba(0,212,170,0.04) 0px 0px 16px -7px;
+  box-shadow:
+    rgba(255,255,255,0.1) 0px 1px 1px 0px inset,
+    rgba(0,212,170,0.06) 0px 2px 40px 10px,
+    rgba(0,212,170,0.04) 0px 0px 16px -7px;
 }
-.test-pill-avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: rgba(0,212,170,0.12); border: 1px solid rgba(0,212,170,0.2);
+.test-card-avatar {
+  grid-area: avatar;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(0,212,170,0.12); border: 1px solid rgba(255,255,255,0.1);
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 700; color: #00d4aa;
-  flex-shrink: 0;
+  font-size: 17px; font-weight: 700; color: #00d4aa;
+  filter: grayscale(1);
+  opacity: 0.5;
+  transition: filter 0.3s ease, opacity 0.3s ease;
 }
-.test-pill-name { font-size: 15px; font-weight: 600; color: white; letter-spacing: 0.3px; white-space: nowrap; }
-.test-pill-type { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.35); white-space: nowrap; }
+.test-card.active .test-card-avatar { filter: grayscale(0); opacity: 1; border-color: rgba(0,212,170,0.25); }
+.test-card-name {
+  grid-area: name;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 600; color: white; letter-spacing: 0.3px;
+}
+.test-card-title {
+  grid-area: title;
+  font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.35);
+}
 
 /* Testimonial content area */
 .test-content-area {
@@ -711,8 +735,11 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 .test-bottom-text { font-size: 15px; color: rgba(255,255,255,0.45); max-width: 600px; margin: 0 auto 24px; line-height: 1.6; }
 
 @media (max-width: 768px) {
-  .test-selector-row { gap: 8px; justify-content: flex-start; padding: 8px 16px; }
-  .test-pill { min-width: 160px; padding: 12px 14px; }
+  .test-carousel-wrap { mask-image: linear-gradient(90deg, rgba(217,217,217,0) 1%, rgb(217,217,217) 10%, rgb(217,217,217) 90%, rgba(217,217,217,0) 99%); -webkit-mask-image: linear-gradient(90deg, rgba(217,217,217,0) 1%, rgb(217,217,217) 10%, rgb(217,217,217) 90%, rgba(217,217,217,0) 99%); }
+  .test-card { padding: 14px 16px; grid-template-columns: 36px 1fr; gap: 2px 12px; }
+  .test-card-avatar { width: 36px; height: 36px; font-size: 14px; }
+  .test-card-name { font-size: 14px; }
+  .test-card-title { font-size: 12px; }
   .test-content-panel.active { grid-template-columns: 1fr; gap: 32px; }
   .test-quote-text { font-size: 18px; }
 }
@@ -1122,31 +1149,39 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   <h2 class="section-h2">Here's what their AI employees <span class="muted">handled this month.</span></h2>
   <p class="section-p">Every AI employee is built for a different business. Click a name to see what theirs actually does.</p>
 
-  <!-- Person selector row -->
-  <div class="test-selector-row">
-    <div class="test-pill active" onclick="switchTestimonial(0)">
-      <div class="test-pill-avatar">S</div>
-      <div><div class="test-pill-name">Sarah</div><div class="test-pill-type">Wellness Studio</div></div>
-    </div>
-    <div class="test-pill" onclick="switchTestimonial(1)">
-      <div class="test-pill-avatar">J</div>
-      <div><div class="test-pill-name">James</div><div class="test-pill-type">Roofing Company</div></div>
-    </div>
-    <div class="test-pill" onclick="switchTestimonial(2)">
-      <div class="test-pill-avatar">T</div>
-      <div><div class="test-pill-name">Tony</div><div class="test-pill-type">Italian Restaurant</div></div>
-    </div>
-    <div class="test-pill" onclick="switchTestimonial(3)">
-      <div class="test-pill-avatar">D</div>
-      <div><div class="test-pill-name">Dr. Patel</div><div class="test-pill-type">Physical Therapy</div></div>
-    </div>
-    <div class="test-pill" onclick="switchTestimonial(4)">
-      <div class="test-pill-avatar">L</div>
-      <div><div class="test-pill-name">Lisa</div><div class="test-pill-type">Interior Design</div></div>
-    </div>
-    <div class="test-pill" onclick="switchTestimonial(5)">
-      <div class="test-pill-avatar">M</div>
-      <div><div class="test-pill-name">Michael</div><div class="test-pill-type">Financial Advisory</div></div>
+  <!-- Raycast-style sliding carousel selector -->
+  <div class="test-carousel-wrap">
+    <div class="test-carousel-track" id="testCarouselTrack">
+      <div class="test-card active" onclick="switchTestimonial(0)">
+        <div class="test-card-avatar">S</div>
+        <div class="test-card-name">Sarah</div>
+        <div class="test-card-title">Wellness Studio</div>
+      </div>
+      <div class="test-card" onclick="switchTestimonial(1)">
+        <div class="test-card-avatar">J</div>
+        <div class="test-card-name">James</div>
+        <div class="test-card-title">Roofing Company</div>
+      </div>
+      <div class="test-card" onclick="switchTestimonial(2)">
+        <div class="test-card-avatar">T</div>
+        <div class="test-card-name">Tony</div>
+        <div class="test-card-title">Italian Restaurant</div>
+      </div>
+      <div class="test-card" onclick="switchTestimonial(3)">
+        <div class="test-card-avatar">D</div>
+        <div class="test-card-name">Dr. Patel</div>
+        <div class="test-card-title">Physical Therapy</div>
+      </div>
+      <div class="test-card" onclick="switchTestimonial(4)">
+        <div class="test-card-avatar">L</div>
+        <div class="test-card-name">Lisa</div>
+        <div class="test-card-title">Interior Design</div>
+      </div>
+      <div class="test-card" onclick="switchTestimonial(5)">
+        <div class="test-card-avatar">M</div>
+        <div class="test-card-name">Michael</div>
+        <div class="test-card-title">Financial Advisory</div>
+      </div>
     </div>
   </div>
 
@@ -1564,16 +1599,35 @@ document.querySelectorAll('.faq-question').forEach(function(btn) {
   });
 });
 
-// Testimonial switcher
+// Raycast-style testimonial carousel
 function switchTestimonial(index) {
-  document.querySelectorAll('.test-pill').forEach(function(p, i) {
-    p.classList.toggle('active', i === index);
-  });
+  var cards = document.querySelectorAll('.test-card');
+  var track = document.getElementById('testCarouselTrack');
+  var wrap = track.parentElement;
+
+  // Update active card styling
+  cards.forEach(function(c, i) { c.classList.toggle('active', i === index); });
+
+  // Calculate offset to center the active card in the viewport
+  var wrapWidth = wrap.offsetWidth;
+  var activeCard = cards[index];
+  var cardLeft = activeCard.offsetLeft;
+  var cardWidth = activeCard.offsetWidth;
+  var centerOffset = (wrapWidth / 2) - cardLeft - (cardWidth / 2);
+  track.style.transform = 'translateX(' + centerOffset + 'px)';
+
+  // Update content panels
   document.querySelectorAll('.test-content-panel').forEach(function(panel) {
     var isTarget = parseInt(panel.getAttribute('data-test')) === index;
     panel.classList.toggle('active', isTarget);
   });
 }
+
+// Initialize carousel position on load
+window.addEventListener('DOMContentLoaded', function() {
+  // Small delay to ensure layout is computed
+  setTimeout(function() { switchTestimonial(0); }, 50);
+});
 </script>
 
 <!-- WebGL Light Streaks (Three.js) -->
