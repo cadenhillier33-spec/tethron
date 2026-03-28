@@ -275,22 +275,22 @@ a { color: inherit; text-decoration: none; }
   display: none;
 }
 #video-bg {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
   object-fit: cover;
   opacity: 0.8;
 }
 #video-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
   background: radial-gradient(ellipse at 50% 50%, rgba(7,8,10,0.2) 20%, rgba(7,8,10,0.5) 60%, rgb(7,8,10) 90%);
@@ -1490,10 +1490,6 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 </head>
 <body>
 <canvas id="webgl-bg"></canvas>
-<video id="video-bg" autoplay muted loop playsinline>
-  <source src="/bg-video.mp4" type="video/mp4">
-</video>
-<div id="video-overlay"></div>
 
 <!-- NAV -->
 <div class="nav-wrap">
@@ -1533,7 +1529,11 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 </nav>
 
 <!-- 1. HERO -->
-<section class="hero">
+<section class="hero" style="overflow: hidden;">
+  <video id="video-bg" autoplay muted loop playsinline>
+    <source src="/bg-video.mp4" type="video/mp4">
+  </video>
+  <div id="video-overlay"></div>
   <div class="hero-content">
     <a href="#testimonials" class="hero-pill"><span class="hero-pill-dot"></span> New: See what our AI employees built this month <span class="hero-pill-arrow">&rarr;</span></a>
     <h1 class="hero-h1">We install AI employees<br>that run your business.</h1>
