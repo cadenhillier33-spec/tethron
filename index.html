@@ -302,11 +302,31 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   color: rgba(255,255,255,0.6);
   margin-bottom: 32px;
   background: rgba(255,255,255,0.03);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.hero-pill:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(0,212,170,0.2);
+  color: rgba(255,255,255,0.8);
 }
 .hero-pill-dot {
-  width: 4px; height: 4px;
+  width: 6px; height: 6px;
   background: #00d4aa;
   border-radius: 50%;
+  animation: pillDotPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pillDotPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,212,170,0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(0,212,170,0); }
+}
+.hero-pill-arrow {
+  margin-left: 4px;
+  transition: transform 0.2s;
+}
+.hero-pill:hover .hero-pill-arrow {
+  transform: translateX(2px);
 }
 .hero-h1 {
   font-size: 64px;
@@ -1236,6 +1256,14 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.2); transition: color 0.15s; }
 .footer-legal a:hover { color: rgba(255,255,255,0.5); }
 
+/* ===== ALTERNATING SECTION BACKGROUNDS ===== */
+#what-we-do { background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,212,170,0.03) 0%, transparent 70%); }
+#demo { background: radial-gradient(ellipse 50% 50% at 90% 40%, rgba(0,150,255,0.02) 0%, transparent 70%); }
+#results { background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0,212,170,0.025) 0%, transparent 70%); }
+#testimonials { background: linear-gradient(180deg, rgba(255,255,255,0.008) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.005) 100%); }
+#before-after { background: radial-gradient(ellipse 50% 40% at 10% 50%, rgba(0,212,170,0.015) 0%, transparent 60%); }
+#integrations { background: radial-gradient(ellipse 50% 40% at 80% 30%, rgba(0,150,255,0.015) 0%, transparent 60%); }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .nav-links { display: none; }
@@ -1250,9 +1278,6 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   .demo-layout { grid-template-columns: 1fr; }
   .test-grid { grid-template-columns: 1fr; }
   .ba-grid { grid-template-columns: 1fr; }
-  .bento-grid { grid-template-columns: 1fr; }
-  .bento-hero { grid-column: 1; grid-row: auto; }
-  .bento-hero .result-card-val { font-size: 48px; }
   .industry-grid { grid-template-columns: 1fr; }
   .int-tab-content { grid-template-columns: 1fr; }
   .trust-inner { grid-template-columns: repeat(2, 1fr); }
@@ -1269,22 +1294,160 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   .dock-icon { width: 56px; height: 56px; }
   .dock-icon-symbol { font-size: 18px; }
 }
-@media (max-width: 600px) {
-  .hero-h1 { font-size: 32px; }
-  .section { padding: 80px 20px; }
-  .waterfall-section { padding: 80px 20px; }
-  .feature-dock-section { padding: 60px 20px; }
-  .demo-stats { grid-template-columns: 1fr; }
-  .bento-grid { grid-template-columns: 1fr; }
+
+/* ===== MOBILE: 768px ===== */
+@media (max-width: 768px) {
+  /* Bento grid: single column, no spanning */
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .bento-hero {
+    grid-column: 1;
+    grid-row: auto;
+    padding: 32px 24px;
+    min-height: auto;
+  }
+  .bento-hero .result-card-val {
+    font-size: 48px;
+    letter-spacing: -1px;
+  }
+  .bento-hero .result-card-label { font-size: 16px; }
+  .bento-hero .result-card-desc { max-width: 100%; }
+  .bento-small { padding: 24px 20px; }
+  .bento-small .result-card-val { font-size: 28px; }
+  /* Remove explicit grid-column/row from bento-small cards */
+  .bento-small[style*="grid-column"] {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  /* Trust bar: 2x2 grid */
+  .trust-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .trust-item-num { font-size: 24px; }
+
+  /* What We Do, Steps, Work: single column */
+  .what-grid, .steps-grid, .work-grid { grid-template-columns: 1fr; }
+
+  /* How it works aside */
+  .hw-aside { flex-direction: column; text-align: center; }
+
+  /* Text waterfall: stack */
+  .waterfall-grid { grid-template-columns: 1fr; gap: 32px; }
+  .waterfall-statement { font-size: 26px; text-align: center; }
+
+  /* Live Demo: stack text above, phone below centered */
+  .demo-layout { grid-template-columns: 1fr; gap: 40px; }
+  .iphone-wrap { display: flex; flex-direction: column; align-items: center; }
+
+  /* Demo stats */
+  .demo-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .demo-stat-val { font-size: 24px; }
+
+  /* Testimonial content: single column */
+  .test-content-panel.active { grid-template-columns: 1fr; gap: 32px; }
+  .test-quote-text { font-size: 18px; }
+
+  /* Before/After: stack */
+  .ba-grid { grid-template-columns: 1fr; }
+
+  /* Integrations: tabs wrap, cards single column */
+  .int-tabs { gap: 6px; }
+  .int-tab { padding: 8px 14px; font-size: 13px; }
   .int-tab-content { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
+
+  /* Pricing: single column */
+  .pricing-grid { grid-template-columns: 1fr; }
+
+  /* Industry grid: single column */
+  .industry-grid { grid-template-columns: 1fr; }
+
+  /* Footer: 2 columns */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Feature dock */
+  .dock-icons { flex-wrap: wrap; gap: 8px; }
+  .dock-icon { width: 52px; height: 52px; }
+  .dock-icon-symbol { font-size: 18px; }
+  .dock-content { padding: 0 16px; }
+
+  /* Hero pill */
+  .hero-pill { font-size: 12px; padding: 6px 14px; gap: 6px; }
+
+  /* Results big num */
+  .results-big-num { font-size: 56px; letter-spacing: -2px; }
+}
+
+/* ===== MOBILE: 480px ===== */
+@media (max-width: 480px) {
+  .hero-h1 { font-size: 28px; }
+  .hero-sub { font-size: 15px; }
+  .hero-content { padding: 0 16px; }
+  .hero-buttons { flex-direction: column; align-items: center; gap: 10px; }
+  .hero-buttons .btn { width: 100%; justify-content: center; }
+
+  .section { padding: 60px 16px; }
+  .waterfall-section { padding: 60px 16px; }
+  .feature-dock-section { padding: 40px 16px; }
+  .section-h2 { font-size: 26px; letter-spacing: -0.5px; }
+
+  /* Trust bar */
+  .trust-bar { padding: 24px 16px; }
+  .trust-inner { gap: 16px; }
+  .trust-item-num { font-size: 22px; }
+  .trust-item-label { font-size: 11px; }
+
+  /* Demo stats: stack on very small screens */
+  .demo-stats { grid-template-columns: 1fr; gap: 8px; }
+  .demo-stat-val { font-size: 28px; }
+
+  /* Bento grid tighten */
+  .bento-hero .result-card-val { font-size: 40px; }
+  .bento-small .result-card-val { font-size: 24px; }
+
+  /* Results */
+  .results-big-num { font-size: 44px; letter-spacing: -1.5px; }
+  .results-label { font-size: 14px; }
+  .results-sub { font-size: 13px; }
+
+  /* Pricing */
+  .pricing-price { font-size: 32px; }
+
+  /* iPhone shrink */
+  .iphone { width: 240px; height: 500px; border-radius: 38px; }
+  .iphone::before { width: 80px; height: 22px; border-radius: 0 0 14px 14px; }
+  .iphone::after { width: 40px; height: 4px; top: 6px; }
+  .iphone-screen { border-radius: 34px; }
+
+  /* Nav */
+  .nav { padding: 10px 14px; height: 60px; }
+  .nav-brand { font-size: 14px; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-  .closing-cta { padding: 100px 20px 120px; }
-  .closing-cta h2 { font-size: 28px; }
-  .hero-content { padding: 0 20px; }
-  .hero-sub { font-size: 16px; }
-  .trust-bar { padding: 32px 20px; }
-  .nav { padding: 12px 16px; height: 64px; }
+  .footer { padding: 40px 16px 24px; }
+
+  /* Closing CTA */
+  .closing-cta { padding: 80px 16px 100px; }
+  .closing-cta h2 { font-size: 26px; }
+  .closing-cta p { font-size: 15px; }
+
+  /* Waterfall */
+  .waterfall-statement { font-size: 22px; }
+  .waterfall-text { font-size: 16px; line-height: 1.8; }
+
+  /* Feature dock */
+  .dock-icon { width: 48px; height: 48px; }
+  .dock-icon-symbol { font-size: 16px; }
+  .dock-icon-label { font-size: 7px; }
+  .dock-container { padding: 20px 12px; }
+  .dock-content-title { font-size: 17px; }
+  .dock-content-desc { font-size: 13px; }
+  .dock-content-stat { font-size: 22px; }
+
+  /* Hero pill */
+  .hero-pill { font-size: 11px; padding: 6px 12px; }
 }
 </style>
 </head>
@@ -1331,7 +1494,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 <!-- 1. HERO -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-pill">AI Employees <span class="hero-pill-dot"></span> Custom Websites</div>
+    <a href="#testimonials" class="hero-pill"><span class="hero-pill-dot"></span> New: See what our AI employees built this month <span class="hero-pill-arrow">&rarr;</span></a>
     <h1 class="hero-h1">We install AI employees<br>that run your business.</h1>
     <p class="hero-sub">Customer communication. Operations. Marketing. Scheduling. Reporting. Your AI employee handles it all — trained on your business, speaking in your voice, running 24/7 on dedicated hardware. No salary, no sick days, no turnover.</p>
     <div class="hero-buttons">
