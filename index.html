@@ -1599,71 +1599,144 @@ document.querySelectorAll('.faq-question').forEach(function(btn) {
   });
 });
 
-// Raycast-style infinite testimonial carousel
+// Seamless infinite testimonial carousel — DOM reorder approach (no clones)
 var totalClients = 6;
 var currentTestimonial = 0;
+var carouselAnimating = false;
 
-function initInfiniteCarousel() {
+function initCarousel() {
   var track = document.getElementById('testCarouselTrack');
-  var originalCards = Array.from(track.querySelectorAll('.test-card'));
+  var cards = Array.from(track.children);
+  // Tag each card with its original index
+  cards.forEach(function(card, i) {
+    card.setAttribute('data-index', i);
+  });
+  // Center the first card without animation
+  arrangeCards(0, false);
+}
 
-  // Clone all cards and append before and after for infinite loop
-  // Add 2 full sets on each side
-  for (var round = 0; round < 2; round++) {
-    originalCards.forEach(function(card) {
-      var cloneBefore = card.cloneNode(true);
-      track.insertBefore(cloneBefore, track.firstChild);
+// Reorder cards in DOM so that activeIndex is in the center,
+// with cards distributed evenly on each side (3 left, 2 right for 6 cards)
+function getOrderedIndices(activeIndex) {
+  // Put active in center. For 6 cards, we want 3 before and 2 after.
+  var half = Math.floor(totalClients / 2);
+  var ordered = [];
+  for (var i = -half; i < totalClients - half; i++) {
+    ordered.push(((activeIndex + i) % totalClients + totalClients) % totalClients);
+  }
+  return ordered;
+}
+
+function arrangeCards(targetIndex, animate) {
+  var track = document.getElementById('testCarouselTrack');
+  var wrap = track.parentElement;
+  var wrapWidth = wrap.offsetWidth;
+  var cards = Array.from(track.children);
+
+  if (animate && !carouselAnimating) {
+    // STEP 1: Slide to the target card's position in the CURRENT order first
+    carouselAnimating = true;
+    track.style.transition = 'transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
+    // Find where the target card currently sits
+    var targetCard = null;
+    cards.forEach(function(c) {
+      if (parseInt(c.getAttribute('data-index')) === targetIndex) targetCard = c;
     });
-    originalCards.forEach(function(card) {
-      var cloneAfter = card.cloneNode(true);
-      track.appendChild(cloneAfter);
+
+    // Determine shortest-path direction: should we slide left or right?
+    // Find current center card index and positions
+    var currentOrder = cards.map(function(c) { return parseInt(c.getAttribute('data-index')); });
+    var currentCenterPos = Math.floor(totalClients / 2); // center slot index
+    var targetSlotPos = currentOrder.indexOf(targetIndex);
+
+    // Calculate shortest wraparound distance
+    var distForward = ((targetSlotPos - currentCenterPos) % totalClients + totalClients) % totalClients;
+    var distBackward = ((currentCenterPos - targetSlotPos) % totalClients + totalClients) % totalClients;
+
+    // If target is more than half away in current layout, we need to
+    // temporarily move a card to make a shorter path
+    // But since we have all 6 visible, just slide to wherever the target is
+    if (targetCard) {
+      var cardLeft = targetCard.offsetLeft;
+      var cardW = targetCard.offsetWidth;
+      var offset = (wrapWidth / 2) - cardLeft - (cardW / 2);
+      track.style.transform = 'translateX(' + offset + 'px)';
+    }
+
+    // Update active class immediately
+    cards.forEach(function(c) {
+      c.classList.toggle('active', parseInt(c.getAttribute('data-index')) === targetIndex);
+    });
+
+    // After transition ends, snap-reorder DOM without animation
+    var onEnd = function() {
+      track.removeEventListener('transitionend', onEnd);
+      // Disable transition, reorder, re-center
+      track.style.transition = 'none';
+      reorderDOM(targetIndex);
+      centerActiveCard(targetIndex, wrapWidth, track);
+      // Force reflow before re-enabling transition
+      void track.offsetHeight;
+      track.style.transition = 'transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1)';
+      carouselAnimating = false;
+    };
+    track.addEventListener('transitionend', onEnd);
+
+    // Safety timeout in case transitionend doesn't fire
+    setTimeout(function() {
+      if (carouselAnimating) {
+        onEnd();
+      }
+    }, 500);
+
+  } else {
+    // No animation — just reorder and center instantly
+    track.style.transition = 'none';
+    reorderDOM(targetIndex);
+    centerActiveCard(targetIndex, wrapWidth, track);
+    // Re-enable transition after reflow
+    void track.offsetHeight;
+    track.style.transition = 'transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
+    // Update active class
+    Array.from(track.children).forEach(function(c) {
+      c.classList.toggle('active', parseInt(c.getAttribute('data-index')) === targetIndex);
     });
   }
+}
 
-  // Update all card onclick handlers
-  var allCards = track.querySelectorAll('.test-card');
-  allCards.forEach(function(card, i) {
-    var realIndex = ((i % totalClients) + totalClients) % totalClients;
-    card.setAttribute('data-real-index', realIndex);
-    card.onclick = function() { switchTestimonial(realIndex); };
+function reorderDOM(activeIndex) {
+  var track = document.getElementById('testCarouselTrack');
+  var ordered = getOrderedIndices(activeIndex);
+  var cardMap = {};
+  Array.from(track.children).forEach(function(c) {
+    cardMap[c.getAttribute('data-index')] = c;
+  });
+  // Re-append in the correct order
+  ordered.forEach(function(idx) {
+    track.appendChild(cardMap[idx]);
   });
 }
 
-function switchTestimonial(index) {
-  currentTestimonial = index;
-  var track = document.getElementById('testCarouselTrack');
-  var wrap = track.parentElement;
-  var allCards = track.querySelectorAll('.test-card');
-  var wrapWidth = wrap.offsetWidth;
-
-  // Update active styling on ALL cards (including clones)
-  allCards.forEach(function(c) {
-    var ri = parseInt(c.getAttribute('data-real-index'));
-    c.classList.toggle('active', ri === index);
-  });
-
-  // Find the closest card with this index to center (prefer one near the middle of the track)
+function centerActiveCard(targetIndex, wrapWidth, track) {
+  var cards = Array.from(track.children);
   var targetCard = null;
-  var trackCenter = track.scrollWidth / 2;
-  var bestDist = Infinity;
-  allCards.forEach(function(c) {
-    var ri = parseInt(c.getAttribute('data-real-index'));
-    if (ri === index) {
-      var cardCenter = c.offsetLeft + c.offsetWidth / 2;
-      var dist = Math.abs(cardCenter - trackCenter);
-      if (dist < bestDist) {
-        bestDist = dist;
-        targetCard = c;
-      }
-    }
+  cards.forEach(function(c) {
+    if (parseInt(c.getAttribute('data-index')) === targetIndex) targetCard = c;
   });
-
   if (targetCard) {
     var cardLeft = targetCard.offsetLeft;
-    var cardWidth = targetCard.offsetWidth;
-    var centerOffset = (wrapWidth / 2) - cardLeft - (cardWidth / 2);
-    track.style.transform = 'translateX(' + centerOffset + 'px)';
+    var cardW = targetCard.offsetWidth;
+    var offset = (wrapWidth / 2) - cardLeft - (cardW / 2);
+    track.style.transform = 'translateX(' + offset + 'px)';
   }
+}
+
+function switchTestimonial(index) {
+  if (carouselAnimating || index === currentTestimonial) return;
+  currentTestimonial = index;
+  arrangeCards(index, true);
 
   // Update content panels
   document.querySelectorAll('.test-content-panel').forEach(function(panel) {
@@ -1675,8 +1748,12 @@ function switchTestimonial(index) {
 // Initialize carousel
 window.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() {
-    initInfiniteCarousel();
-    switchTestimonial(0);
+    initCarousel();
+    currentTestimonial = 0;
+    // Update content panels for initial state
+    document.querySelectorAll('.test-content-panel').forEach(function(panel) {
+      panel.classList.toggle('active', parseInt(panel.getAttribute('data-test')) === 0);
+    });
   }, 50);
 });
 </script>
