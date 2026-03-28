@@ -702,58 +702,104 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 /* ===== LIVE DEMO ===== */
 .demo-layout {
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 60px;
+  grid-template-columns: 1fr auto;
+  gap: 64px;
   margin-top: 48px;
-  align-items: start;
+  align-items: center;
 }
 .demo-text .section-p { margin-bottom: 32px; }
 .demo-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+.demo-stat { padding: 16px; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; background: rgba(255,255,255,0.02); text-align: center; }
 .demo-stat-val { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; margin-bottom: 4px; }
 .demo-stat-val.ds-orange { color: #00d4aa; }
 .demo-stat-val.ds-green { color: #22c55e; }
 .demo-stat-val.ds-blue { color: #3b82f6; }
-.demo-stat-label { font-size: 12px; color: rgba(255,255,255,0.35); }
+.demo-stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 4px; }
+
+/* iPhone 15 Frame */
+.iphone-wrap { position: relative; }
+.iphone-glow { position: absolute; width: 360px; height: 360px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,170,0.06), transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; z-index: -1; filter: blur(40px); animation: iphoneGlow 3s ease-in-out infinite; }
+@keyframes iphoneGlow { 0%,100% { filter: blur(40px); opacity: 0.7; } 50% { filter: blur(50px); opacity: 1; } }
+.iphone-pulse-wrapper { position: relative; display: inline-block; }
+.iphone-pulse-ring { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; border-radius: 50px; border: 1px solid rgba(0,212,170,0.35); transform: translate(-50%,-50%); pointer-events: none; z-index: 0; }
+.iphone-pulse-ring:nth-child(1) { animation: iphonePulse 2.5s ease-out infinite; }
+.iphone-pulse-ring:nth-child(2) { animation: iphonePulse 2.5s ease-out infinite 1.25s; }
+@keyframes iphonePulse { 0% { width: 100%; height: 100%; opacity: 0.5; } 100% { width: 118%; height: 108%; opacity: 0; } }
 .iphone {
-  background: rgb(18, 19, 22);
-  border: 2px solid rgba(255,255,255,0.1);
-  border-radius: 40px;
-  padding: 16px;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.5), rgba(255,255,255,0.05) 0 0.5px 0 0 inset;
   position: relative;
+  width: 300px;
+  height: 640px;
+  border-radius: 50px;
+  background: linear-gradient(145deg, #2a2a2e, #1a1a1e 30%, #111113 70%, #1a1a1e);
+  border: 3px solid #2a2a2e;
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(255,255,255,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 1px 0 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+  flex-shrink: 0;
 }
-.iphone-notch { width: 120px; height: 28px; background: rgb(7, 8, 10); border-radius: 0 0 16px 16px; margin: 0 auto 16px; }
+/* Dynamic Island */
+.iphone::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 28px; background: #1a1a1e; border-radius: 0 0 18px 18px; z-index: 10; }
+.iphone::after { content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 52px; height: 5px; background: #0a0a0a; border-radius: 20px; z-index: 11; }
 .iphone-screen {
-  background: rgb(7, 8, 10);
-  border-radius: 24px;
-  padding: 20px 16px;
-  min-height: 600px;
+  position: absolute;
+  inset: 4px;
+  border-radius: 46px;
+  background: #000;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  overflow: hidden;
 }
-.iphone-header { text-align: center; padding-bottom: 12px; border-bottom: 0.5px solid rgba(255,255,255,0.06); margin-bottom: 4px; }
-.iphone-header-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); }
-.iphone-header-sub { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
-.notif { background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 12px 14px; transition: background 0.2s; }
-.notif:hover { background: rgba(255,255,255,0.05); }
+/* Status bar */
+.iphone-status { display: flex; justify-content: space-between; align-items: center; padding: 14px 28px 8px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); flex-shrink: 0; }
+.iphone-status-icons { display: flex; align-items: center; gap: 5px; }
+.iphone-status-icons svg { width: 15px; height: 15px; fill: rgba(255,255,255,0.8); }
+/* App header inside phone */
+.app-header { padding: 10px 20px 12px; background: #000; flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.app-header-top { display: flex; align-items: center; justify-content: space-between; }
+.app-title { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+.app-live { display: flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #00d4aa; }
+.app-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #00d4aa; animation: livePulse 2s infinite; }
+@keyframes livePulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,212,170,0.4); } 50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(0,212,170,0); } }
+.app-date { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+/* Notification feed — scrollable */
+.notif-feed {
+  flex: 1;
+  min-height: 0;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  position: relative;
+  padding: 6px 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 36px, #000 calc(100% - 50px), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 36px, #000 calc(100% - 50px), transparent);
+}
+.notif-feed::-webkit-scrollbar { display: none; }
+.notif-feed { scrollbar-width: none; }
+.notif-scroll { display: flex; flex-direction: column; gap: 8px; padding: 8px 14px; }
+/* Notification cards */
+.notif { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 12px 14px; flex-shrink: 0; transition: border-color 0.3s ease; }
+.notif:hover { border-color: rgba(255,255,255,0.12); }
 .notif-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.notif-source { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; color: rgba(255,255,255,0.3); }
-.notif-source.ns-internal { color: #00d4aa; }
-.notif-source.ns-google { color: #4285f4; }
-.notif-source.ns-email { color: #22c55e; }
-.notif-source.ns-sms { color: #a855f7; }
-.notif-source.ns-social { color: #f59e0b; }
-.notif-source.ns-website { color: #3b82f6; }
-.notif-time { font-size: 10px; color: rgba(255,255,255,0.2); margin-left: auto; }
-.notif-body { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
-.notif-body strong { color: rgba(255,255,255,0.8); font-weight: 500; }
-.notif-badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 6px; margin-top: 6px; }
-.nb-orange { background: rgba(0,212,170,0.1); color: #00d4aa; border: 0.5px solid rgba(0,212,170,0.15); }
-.nb-green { background: rgba(34,197,94,0.08); color: #22c55e; border: 0.5px solid rgba(34,197,94,0.12); }
-.nb-blue { background: rgba(59,130,246,0.08); color: #3b82f6; border: 0.5px solid rgba(59,130,246,0.12); }
-.nb-purple { background: rgba(168,85,247,0.08); color: #a855f7; border: 0.5px solid rgba(168,85,247,0.12); }
+.notif-ch { font-size: 7px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 7px; border-radius: 6px; flex-shrink: 0; }
+.n-internal { background: rgba(156,163,175,0.15); color: #9ca3af; }
+.n-google { background: rgba(59,130,246,0.15); color: #60a5fa; }
+.n-email { background: rgba(34,211,238,0.15); color: #22d3ee; }
+.n-sms { background: rgba(34,197,94,0.15); color: #22c55e; }
+.n-social { background: rgba(168,85,247,0.15); color: #a855f7; }
+.n-ops { background: rgba(249,115,22,0.15); color: #f97316; }
+.n-crm { background: rgba(234,179,8,0.15); color: #eab308; }
+.n-marketing { background: rgba(236,72,153,0.15); color: #ec4899; }
+.n-invoice { background: rgba(239,68,68,0.15); color: #ef4444; }
+.n-web { background: rgba(20,184,166,0.15); color: #14b8a6; }
+.notif-time { font-size: 9px; color: rgba(255,255,255,0.25); margin-left: auto; white-space: nowrap; }
+.notif-title { font-size: 12px; font-weight: 600; color: #fff; line-height: 1.35; }
+.notif-desc { font-size: 10px; line-height: 1.55; color: rgba(255,255,255,0.4); margin-top: 3px; }
+.notif-result { margin-top: 6px; font-size: 9px; color: #00d4aa; display: flex; align-items: center; gap: 4px; }
+.iphone-hint { text-align: center; margin-top: 16px; font-size: 11px; color: rgba(0,212,170,0.45); letter-spacing: 0.5px; text-transform: uppercase; animation: hintFade 2.5s ease-in-out infinite; }
+@keyframes hintFade { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
 
 /* ===== OUR WORK ===== */
 .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
@@ -1211,7 +1257,11 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   .int-tab-content { grid-template-columns: 1fr; }
   .trust-inner { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .iphone { max-width: 380px; margin: 0 auto; }
+  .iphone-wrap { display: flex; flex-direction: column; align-items: center; }
+  .iphone { width: 260px; height: 540px; border-radius: 42px; }
+  .iphone::before { width: 86px; height: 24px; border-radius: 0 0 16px 16px; }
+  .iphone::after { width: 44px; height: 4px; top: 7px; }
+  .iphone-screen { border-radius: 38px; }
   .hw-aside { flex-direction: column; text-align: center; }
   .waterfall-grid { grid-template-columns: 1fr; gap: 40px; }
   .waterfall-statement { font-size: 28px; text-align: center; }
@@ -1433,71 +1483,211 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
     <div class="demo-text">
       <div class="eyebrow">A Day In Their Life</div>
       <h2 class="section-h2">It's 11pm. You're asleep. <span class="muted">They're not.</span></h2>
-      <p class="section-p">While you're living your life, your AI employee is running your business. A lead comes in at midnight — answered in 30 seconds. A vendor needs a PO confirmed at 6am — handled before you wake up. A cancellation hits at noon — the slot's already refilled from the waitlist. Social posts go out on schedule. Your daily report is waiting when you open your inbox. This is just a glimpse.</p>
+      <p class="section-p">While you're living your life, your AI employee is running your entire operation — answering customers, managing vendors, posting on social, tracking your pipeline, handling reviews, and delivering your morning brief.</p>
       <div class="demo-stats">
-        <div>
+        <div class="demo-stat">
           <div class="demo-stat-val ds-orange">80%</div>
           <div class="demo-stat-label">Of Your Day Back</div>
         </div>
-        <div>
-          <div class="demo-stat-val ds-green">38s</div>
-          <div class="demo-stat-label">Avg Response</div>
-        </div>
-        <div>
-          <div class="demo-stat-val ds-blue">6+</div>
+        <div class="demo-stat">
+          <div class="demo-stat-val ds-green">6+</div>
           <div class="demo-stat-label">Roles Covered</div>
+        </div>
+        <div class="demo-stat">
+          <div class="demo-stat-val ds-blue">38s</div>
+          <div class="demo-stat-label">Avg Response</div>
         </div>
       </div>
       <a href="/contact" class="btn btn-orange">See What They'd Do For Your Business &rarr;</a>
     </div>
-    <div class="iphone">
-      <div class="iphone-notch"></div>
-      <div class="iphone-screen">
-        <div class="iphone-header">
-          <div class="iphone-header-title">AI Employee Activity</div>
-          <div class="iphone-header-sub">Today's Log</div>
+    <div class="iphone-wrap">
+      <div class="iphone-glow"></div>
+      <div class="iphone-pulse-wrapper">
+        <div class="iphone-pulse-ring"></div>
+        <div class="iphone-pulse-ring"></div>
+        <div class="iphone">
+          <div class="iphone-screen">
+            <div class="iphone-status">
+              <span>9:41</span>
+              <div class="iphone-status-icons">
+                <svg viewBox="0 0 16 16"><path d="M1 12h2v3H1zm4-3h2v6H5zm4-3h2v9H9zm4-4h2v13h-2z"/></svg>
+                <svg viewBox="0 0 16 16"><path d="M8 2a8.5 8.5 0 0 1 6 2.5l-1.2 1.2A6.8 6.8 0 0 0 8 3.7a6.8 6.8 0 0 0-4.8 2l-1.2-1.2A8.5 8.5 0 0 1 8 2zm0 3.4a5.1 5.1 0 0 1 3.6 1.5L10.4 8A3.4 3.4 0 0 0 8 7.1 3.4 3.4 0 0 0 5.6 8L4.4 6.9A5.1 5.1 0 0 1 8 5.4zM8 8.8a1.7 1.7 0 0 1 1.2.5L8 10.5 6.8 9.3A1.7 1.7 0 0 1 8 8.8z"/></svg>
+                <svg viewBox="0 0 24 12"><rect x="0" y="0" width="21" height="12" rx="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="22" y="3.5" width="1.5" height="5" rx=".8" fill="currentColor" opacity=".4"/><rect x="1.5" y="1.5" width="16" height="9" rx="1.2" fill="currentColor"/></svg>
+              </div>
+            </div>
+            <div class="app-header">
+              <div class="app-header-top">
+                <div class="app-title">AI Employee Activity</div>
+                <div class="app-live"><span class="app-live-dot"></span> Live</div>
+              </div>
+              <div class="app-date">Today's Log</div>
+            </div>
+            <div class="notif-feed" id="notifFeed">
+              <div class="notif-scroll" id="notifScroll">
+                <!-- Set 1 -->
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-internal">Internal</span><span class="notif-time">6:00 AM</span></div>
+                  <div class="notif-title">Morning systems check</div>
+                  <div class="notif-desc">Traffic analysis complete. Social post drafted. Competitor price change flagged.</div>
+                  <div class="notif-result">&#10003; Post queued &middot; Spike flagged</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-social">Social</span><span class="notif-time">7:30 AM</span></div>
+                  <div class="notif-title">Instagram post published</div>
+                  <div class="notif-desc">Weekly tip post scheduled and published. 3 comments responded to automatically.</div>
+                  <div class="notif-result">&#10003; 3 comments handled</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-google">Google</span><span class="notif-time">8:15 AM</span></div>
+                  <div class="notif-title">3-star review responded to</div>
+                  <div class="notif-desc">Professional response drafted in your brand voice. Sent for approval.</div>
+                  <div class="notif-result">&#10003; Drafted in 12 seconds</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-email">Email</span><span class="notif-time">9:00 AM</span></div>
+                  <div class="notif-title">4 overnight inquiries answered</div>
+                  <div class="notif-desc">Personalized responses with pricing sent. Avg response: 38s.</div>
+                  <div class="notif-result">&#10003; 4 leads responded</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-ops">Operations</span><span class="notif-time">10:30 AM</span></div>
+                  <div class="notif-title">Vendor PO confirmed</div>
+                  <div class="notif-desc">Supply order placed with your preferred vendor. Delivery Thursday.</div>
+                  <div class="notif-result">&#10003; Order confirmed</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-sms">SMS</span><span class="notif-time">11:00 AM</span></div>
+                  <div class="notif-title">Cold lead re-engaged</div>
+                  <div class="notif-desc">Sarah visited Tuesday but didn't book. Follow-up sent. She booked at 11:42.</div>
+                  <div class="notif-result">&#10003; Sarah booked at 11:42 AM</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-crm">CRM</span><span class="notif-time">12:30 PM</span></div>
+                  <div class="notif-title">Pipeline updated</div>
+                  <div class="notif-desc">6 new contacts added, 3 moved to qualified, 1 deal closed ($4,200).</div>
+                  <div class="notif-result">&#10003; $4,200 closed</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-internal">Internal</span><span class="notif-time">2:00 PM</span></div>
+                  <div class="notif-title">Cancellation handled</div>
+                  <div class="notif-desc">3pm slot cancelled. Waitlist activated. Slot filled in 8 minutes.</div>
+                  <div class="notif-result">&#10003; $0 revenue lost</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-marketing">Marketing</span><span class="notif-time">3:30 PM</span></div>
+                  <div class="notif-title">Newsletter draft ready</div>
+                  <div class="notif-desc">Weekly email compiled with this week's promotions. Sent for review.</div>
+                  <div class="notif-result">&#10003; Draft delivered</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-social">Social</span><span class="notif-time">5:30 PM</span></div>
+                  <div class="notif-title">Review requests sent</div>
+                  <div class="notif-desc">6 customers texted post-visit with Google review link.</div>
+                  <div class="notif-result">&#10003; 2 five-star reviews by 9pm</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-internal">Internal</span><span class="notif-time">6:00 PM</span></div>
+                  <div class="notif-title">Daily report delivered</div>
+                  <div class="notif-desc">Revenue, leads, bookings, reviews, and tomorrow's schedule compiled.</div>
+                  <div class="notif-result">&#10003; 2-minute read</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-invoice">Invoice</span><span class="notif-time">9:15 PM</span></div>
+                  <div class="notif-title">Payment reminder sent</div>
+                  <div class="notif-desc">2 overdue invoices flagged. Polite reminders sent automatically.</div>
+                  <div class="notif-result">&#10003; 2 reminders sent</div>
+                </div>
+                <div class="notif">
+                  <div class="notif-top"><span class="notif-ch n-web">Website</span><span class="notif-time">11:47 PM</span></div>
+                  <div class="notif-title">Late-night lead captured</div>
+                  <div class="notif-desc">Responded in 38s, booked for Friday, intake forms sent, CRM updated.</div>
+                  <div class="notif-result">&#10003; Booked &middot; CRM updated</div>
+                </div>
+                <!-- Set 2 (duplicate for seamless loop) -->
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-internal">Internal</span><span class="notif-time">6:00 AM</span></div>
+                  <div class="notif-title">Morning systems check</div>
+                  <div class="notif-desc">Traffic analysis complete. Social post drafted. Competitor price change flagged.</div>
+                  <div class="notif-result">&#10003; Post queued &middot; Spike flagged</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-social">Social</span><span class="notif-time">7:30 AM</span></div>
+                  <div class="notif-title">Instagram post published</div>
+                  <div class="notif-desc">Weekly tip post scheduled and published. 3 comments responded to automatically.</div>
+                  <div class="notif-result">&#10003; 3 comments handled</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-google">Google</span><span class="notif-time">8:15 AM</span></div>
+                  <div class="notif-title">3-star review responded to</div>
+                  <div class="notif-desc">Professional response drafted in your brand voice. Sent for approval.</div>
+                  <div class="notif-result">&#10003; Drafted in 12 seconds</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-email">Email</span><span class="notif-time">9:00 AM</span></div>
+                  <div class="notif-title">4 overnight inquiries answered</div>
+                  <div class="notif-desc">Personalized responses with pricing sent. Avg response: 38s.</div>
+                  <div class="notif-result">&#10003; 4 leads responded</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-ops">Operations</span><span class="notif-time">10:30 AM</span></div>
+                  <div class="notif-title">Vendor PO confirmed</div>
+                  <div class="notif-desc">Supply order placed with your preferred vendor. Delivery Thursday.</div>
+                  <div class="notif-result">&#10003; Order confirmed</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-sms">SMS</span><span class="notif-time">11:00 AM</span></div>
+                  <div class="notif-title">Cold lead re-engaged</div>
+                  <div class="notif-desc">Sarah visited Tuesday but didn't book. Follow-up sent. She booked at 11:42.</div>
+                  <div class="notif-result">&#10003; Sarah booked at 11:42 AM</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-crm">CRM</span><span class="notif-time">12:30 PM</span></div>
+                  <div class="notif-title">Pipeline updated</div>
+                  <div class="notif-desc">6 new contacts added, 3 moved to qualified, 1 deal closed ($4,200).</div>
+                  <div class="notif-result">&#10003; $4,200 closed</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-internal">Internal</span><span class="notif-time">2:00 PM</span></div>
+                  <div class="notif-title">Cancellation handled</div>
+                  <div class="notif-desc">3pm slot cancelled. Waitlist activated. Slot filled in 8 minutes.</div>
+                  <div class="notif-result">&#10003; $0 revenue lost</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-marketing">Marketing</span><span class="notif-time">3:30 PM</span></div>
+                  <div class="notif-title">Newsletter draft ready</div>
+                  <div class="notif-desc">Weekly email compiled with this week's promotions. Sent for review.</div>
+                  <div class="notif-result">&#10003; Draft delivered</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-social">Social</span><span class="notif-time">5:30 PM</span></div>
+                  <div class="notif-title">Review requests sent</div>
+                  <div class="notif-desc">6 customers texted post-visit with Google review link.</div>
+                  <div class="notif-result">&#10003; 2 five-star reviews by 9pm</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-internal">Internal</span><span class="notif-time">6:00 PM</span></div>
+                  <div class="notif-title">Daily report delivered</div>
+                  <div class="notif-desc">Revenue, leads, bookings, reviews, and tomorrow's schedule compiled.</div>
+                  <div class="notif-result">&#10003; 2-minute read</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-invoice">Invoice</span><span class="notif-time">9:15 PM</span></div>
+                  <div class="notif-title">Payment reminder sent</div>
+                  <div class="notif-desc">2 overdue invoices flagged. Polite reminders sent automatically.</div>
+                  <div class="notif-result">&#10003; 2 reminders sent</div>
+                </div>
+                <div class="notif notif-dupe">
+                  <div class="notif-top"><span class="notif-ch n-web">Website</span><span class="notif-time">11:47 PM</span></div>
+                  <div class="notif-title">Late-night lead captured</div>
+                  <div class="notif-desc">Responded in 38s, booked for Friday, intake forms sent, CRM updated.</div>
+                  <div class="notif-result">&#10003; Booked &middot; CRM updated</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="notif">
-          <div class="notif-top"><span class="notif-source ns-internal">Internal</span><span class="notif-time">6:00 AM</span></div>
-          <div class="notif-body"><strong>Morning systems check:</strong> Traffic spiked 3x overnight from local news mention. Social post drafted for approval.</div>
-          <span class="notif-badge nb-orange">Post queued, Spike flagged</span>
-        </div>
-        <div class="notif">
-          <div class="notif-top"><span class="notif-source ns-google">Google</span><span class="notif-time">8:15 AM</span></div>
-          <div class="notif-body"><strong>3-star review responded to:</strong> Professional response drafted in your brand voice. Sent to you for one-click approval.</div>
-          <span class="notif-badge nb-blue">Drafted in 12 seconds</span>
-        </div>
-        <div class="notif">
-          <div class="notif-top"><span class="notif-source ns-email">Email</span><span class="notif-time">9:30 AM</span></div>
-          <div class="notif-body"><strong>4 overnight inquiries answered:</strong> Personalized responses with pricing and booking links sent in your voice. Avg response: 38s.</div>
-          <span class="notif-badge nb-green">4 leads responded</span>
-        </div>
-        <div class="notif">
-          <div class="notif-top"><span class="notif-source ns-sms">SMS</span><span class="notif-time">11:00 AM</span></div>
-          <div class="notif-body"><strong>Cold lead re-engaged:</strong> Sarah visited Tuesday but didn't book. Personalized follow-up text sent automatically.</div>
-          <span class="notif-badge nb-purple">Sarah booked at 11:42 AM</span>
-        </div>
-        <div class="notif">
-          <div class="notif-top"><span class="notif-source ns-internal">Internal</span><span class="notif-time">2:00 PM</span></div>
-          <div class="notif-body"><strong>Cancellation > waitlist activated:</strong> 3pm slot cancelled. Next 2 waitlisted clients texted. Slot filled in 8 minutes.</div>
-          <span class="notif-badge nb-green">$0 revenue lost</span>
-        </div>
-        <div class="notif">
-          <div class="notif-top"><span class="notif-source ns-social">Social</span><span class="notif-time">5:30 PM</span></div>
-          <div class="notif-body"><strong>Review requests sent:</strong> 6 customers texted post-visit with direct Google review link. Timed for peak satisfaction.</div>
-          <span class="notif-badge nb-green">2 five-star reviews by 9pm</span>
-        </div>
-        <div class="notif">
-          <div class="notif-top"><span class="notif-source ns-internal">Internal</span><span class="notif-time">6:00 PM</span></div>
-          <div class="notif-body"><strong>Daily report delivered:</strong> Revenue, leads, bookings, reviews, and tomorrow's schedule — compiled and sent to your inbox.</div>
-          <span class="notif-badge nb-blue">2-minute read</span>
-        </div>
-        <div class="notif">
-          <div class="notif-top"><span class="notif-source ns-website">Website</span><span class="notif-time">11:47 PM</span></div>
-          <div class="notif-body"><strong>Late-night lead captured:</strong> New inquiry at midnight. Responded in 38s, booked for Friday, sent intake forms, updated CRM.</div>
-          <span class="notif-badge nb-green">Booked, CRM updated</span>
-        </div>
-      </div>
+        <p class="iphone-hint">Scroll to explore &middot; Live AI notifications</p>
+      </div><!-- /iphone-pulse-wrapper -->
     </div>
   </div>
 </div>
@@ -2347,6 +2537,53 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   }, 50);
 });
+</script>
+
+<!-- iPhone Notification Auto-Scroll -->
+<script>
+(function(){
+  var feed=document.getElementById('notifFeed');
+  if(!feed)return;
+  var speed=0.8;
+  var accum=0;
+  var paused=false;
+  var resumeTimer=null;
+  var touching=false;
+
+  function tick(){
+    if(!paused&&!touching){
+      accum+=speed;
+      if(accum>=1){
+        var px=Math.floor(accum);
+        accum-=px;
+        feed.scrollTop=feed.scrollTop+px;
+        var half=feed.scrollHeight/2;
+        if(feed.scrollTop>=half)feed.scrollTop=feed.scrollTop-half;
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  setTimeout(function(){tick()},500);
+
+  function scheduleResume(ms){
+    clearTimeout(resumeTimer);
+    resumeTimer=setTimeout(function(){paused=false},ms);
+  }
+
+  feed.addEventListener('touchstart',function(){
+    touching=true;paused=true;clearTimeout(resumeTimer);
+  },{passive:true});
+  feed.addEventListener('touchend',function(){
+    touching=false;scheduleResume(2500);
+  },{passive:true});
+  feed.addEventListener('touchcancel',function(){
+    touching=false;scheduleResume(2500);
+  },{passive:true});
+  feed.addEventListener('mouseenter',function(){paused=true;clearTimeout(resumeTimer)});
+  feed.addEventListener('mouseleave',function(){scheduleResume(1500)});
+  feed.addEventListener('wheel',function(){paused=true;scheduleResume(2500)},{passive:true});
+})();
 </script>
 
 <!-- WebGL Light Streaks (Three.js) -->
