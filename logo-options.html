@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tethron — Logo Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: rgb(7, 8, 10);
+  color: white;
+  font-family: 'Inter', sans-serif;
+  padding: 40px;
+}
+h1 {
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 48px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.option {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 40px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.option:hover {
+  border-color: rgba(0,212,170,0.2);
+  background: rgba(255,255,255,0.03);
+}
+.option svg {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+}
+.option-num {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.option-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: rgba(255,255,255,0.9);
+}
+.option-desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.5;
+}
+.logo-text {
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h1>Tethron Logo — 10 Options</h1>
+
+<div class="grid">
+
+<!-- 1. SHARP ORIGINAL -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#00b894"/>
+      </linearGradient>
+    </defs>
+    <!-- Outer triangle — sharp corners -->
+    <path d="M100 20 L185 170 H15 Z" stroke="url(#g1)" stroke-width="10" fill="none" stroke-linejoin="miter"/>
+    <!-- Inner triangle -->
+    <path d="M100 55 L155 150 H45 Z" stroke="url(#g1)" stroke-width="6" fill="none" stroke-linejoin="miter"/>
+  </svg>
+  <div class="option-num">01</div>
+  <div class="option-name">Sharp Original</div>
+  <div class="option-desc">Your logo but with sharp miter corners. More technical, more precise.</div>
+</div>
+
+<!-- 2. INVERTED INNER -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#00b894"/>
+      </linearGradient>
+    </defs>
+    <!-- Outer triangle pointing up -->
+    <path d="M100 20 L185 170 H15 Z" stroke="url(#g2)" stroke-width="10" fill="none" stroke-linejoin="miter"/>
+    <!-- Inner triangle pointing DOWN -->
+    <path d="M100 155 L60 80 H140 Z" stroke="url(#g2)" stroke-width="6" fill="none" stroke-linejoin="miter"/>
+  </svg>
+  <div class="option-num">02</div>
+  <div class="option-name">Inverted Inner</div>
+  <div class="option-desc">Inner triangle flipped. Two forces working together. Tension + harmony.</div>
+</div>
+
+<!-- 3. T-TRIANGLE -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#00b894"/>
+      </linearGradient>
+    </defs>
+    <!-- Triangle -->
+    <path d="M100 25 L180 165 H20 Z" stroke="url(#g3)" stroke-width="10" fill="none" stroke-linejoin="miter"/>
+    <!-- Horizontal T bar -->
+    <line x1="55" y1="85" x2="145" y2="85" stroke="url(#g3)" stroke-width="6" stroke-linecap="round"/>
+    <!-- Vertical T stem -->
+    <line x1="100" y1="85" x2="100" y2="155" stroke="url(#g3)" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <div class="option-num">03</div>
+  <div class="option-name">T-Triangle</div>
+  <div class="option-desc">The letter T built inside the triangle. Name + icon unified.</div>
+</div>
+
+<!-- 4. FILLED OUTER -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#00b894"/>
+      </linearGradient>
+    </defs>
+    <!-- Outer triangle — filled -->
+    <path d="M100 20 L185 170 H15 Z" fill="url(#g4)" opacity="0.15"/>
+    <path d="M100 20 L185 170 H15 Z" stroke="url(#g4)" stroke-width="8" fill="none" stroke-linejoin="miter"/>
+    <!-- Inner triangle — stroked only -->
+    <path d="M100 60 L152 148 H48 Z" stroke="url(#g4)" stroke-width="5" fill="none" stroke-linejoin="miter"/>
+  </svg>
+  <div class="option-num">04</div>
+  <div class="option-name">Glass Fill</div>
+  <div class="option-desc">Outer triangle has a subtle fill. Glass effect. More presence.</div>
+</div>
+
+<!-- 5. THREE NESTED -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#00b894"/>
+      </linearGradient>
+    </defs>
+    <!-- Outer -->
+    <path d="M100 18 L188 172 H12 Z" stroke="url(#g5)" stroke-width="8" fill="none" stroke-linejoin="miter"/>
+    <!-- Middle -->
+    <path d="M100 52 L158 152 H42 Z" stroke="url(#g5)" stroke-width="5" fill="none" stroke-linejoin="miter" opacity="0.6"/>
+    <!-- Inner -->
+    <path d="M100 82 L130 135 H70 Z" stroke="url(#g5)" stroke-width="3.5" fill="none" stroke-linejoin="miter" opacity="0.3"/>
+  </svg>
+  <div class="option-num">05</div>
+  <div class="option-name">Triple Depth</div>
+  <div class="option-desc">Three nested triangles with fading opacity. Layers of intelligence.</div>
+</div>
+
+<!-- 6. BROKEN/GAPPED -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#00b894"/>
+      </linearGradient>
+    </defs>
+    <!-- Left side -->
+    <path d="M100 20 L15 170" stroke="url(#g6)" stroke-width="10" stroke-linecap="round"/>
+    <!-- Bottom -->
+    <path d="M15 170 L185 170" stroke="url(#g6)" stroke-width="10" stroke-linecap="round"/>
+    <!-- Right side with gap -->
+    <path d="M185 170 L142 95" stroke="url(#g6)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M120 58 L100 20" stroke="url(#g6)" stroke-width="10" stroke-linecap="round"/>
+    <!-- Inner solid -->
+    <path d="M100 60 L152 148 H48 Z" stroke="url(#g6)" stroke-width="5" fill="none" stroke-linejoin="miter"/>
+  </svg>
+  <div class="option-num">06</div>
+  <div class="option-name">Broken Edge</div>
+  <div class="option-desc">Gap in the outer triangle. Disruption. Breaking through the conventional.</div>
+</div>
+
+<!-- 7. HEAVY MONOLINE -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g7" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#00b894"/>
+      </linearGradient>
+    </defs>
+    <!-- Single heavy triangle -->
+    <path d="M100 22 L183 168 H17 Z" stroke="url(#g7)" stroke-width="16" fill="none" stroke-linejoin="round"/>
+  </svg>
+  <div class="option-num">07</div>
+  <div class="option-name">Monoline Heavy</div>
+  <div class="option-desc">Single thick triangle. Maximum simplicity. Bold statement.</div>
+</div>
+
+<!-- 8. STACKED OFFSET -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g8a" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#00b894"/>
+      </linearGradient>
+      <linearGradient id="g8b" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#3b82f6"/>
+        <stop offset="100%" stop-color="#2563eb"/>
+      </linearGradient>
+    </defs>
+    <!-- Back triangle (blue, offset) -->
+    <path d="M110 30 L190 172 H30 Z" stroke="url(#g8b)" stroke-width="7" fill="none" stroke-linejoin="miter" opacity="0.5"/>
+    <!-- Front triangle (cyan) -->
+    <path d="M90 25 L175 170 H5 Z" stroke="url(#g8a)" stroke-width="8" fill="none" stroke-linejoin="miter"/>
+  </svg>
+  <div class="option-num">08</div>
+  <div class="option-name">Dual Shift</div>
+  <div class="option-desc">Two offset triangles. Cyan + blue. AI + Business. Depth through separation.</div>
+</div>
+
+<!-- 9. DELTA WITH GLOW -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g9" x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#007a62"/>
+      </linearGradient>
+      <filter id="glow9">
+        <feGaussianBlur stdDeviation="4" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <!-- Glow triangle -->
+    <path d="M100 25 L180 165 H20 Z" stroke="url(#g9)" stroke-width="10" fill="none" stroke-linejoin="miter" filter="url(#glow9)"/>
+    <!-- Center dot -->
+    <circle cx="100" cy="115" r="6" fill="url(#g9)"/>
+  </svg>
+  <div class="option-num">09</div>
+  <div class="option-name">Delta Core</div>
+  <div class="option-desc">Single triangle with glow + center point. The AI core. Focused energy.</div>
+</div>
+
+<!-- 10. ABSTRACT T -->
+<div class="option">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g10" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d4aa"/>
+        <stop offset="100%" stop-color="#00b894"/>
+      </linearGradient>
+    </defs>
+    <!-- Top of T as a triangle pointing up -->
+    <path d="M100 15 L160 80 H40 Z" stroke="url(#g10)" stroke-width="8" fill="none" stroke-linejoin="miter"/>
+    <!-- Stem of T going down -->
+    <line x1="100" y1="80" x2="100" y2="180" stroke="url(#g10)" stroke-width="8" stroke-linecap="round"/>
+    <!-- Small accent at base -->
+    <line x1="80" y1="180" x2="120" y2="180" stroke="url(#g10)" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+  </svg>
+  <div class="option-num">10</div>
+  <div class="option-name">T-Mark</div>
+  <div class="option-desc">Triangle as the top of the letter T. Icon IS the initial. Clean and unmistakable.</div>
+</div>
+
+</div>
+
+</body>
+</html>

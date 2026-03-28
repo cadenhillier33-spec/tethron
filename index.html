@@ -608,21 +608,114 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 .ind-card-desc { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.5; }
 .results-disclaimer { font-size: 11px; color: rgba(255,255,255,0.2); line-height: 1.6; font-style: italic; }
 
-/* ===== TESTIMONIALS ===== */
-.test-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px; }
-.test-card-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px; }
-.test-card-name { font-size: 16px; font-weight: 600; }
-.test-card-biz { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 2px; }
-.test-card-owns { font-size: 11px; font-weight: 500; color: #00d4aa; background: rgba(0,212,170,0.08); border: 0.5px solid rgba(0,212,170,0.12); padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
-.test-card-tasks { list-style: none; margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
-.test-card-tasks li { font-size: 13px; color: rgba(255,255,255,0.45); padding-left: 16px; position: relative; }
-.test-card-tasks li::before { content: ''; position: absolute; left: 0; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.15); }
-.test-brief { background: rgba(255,255,255,0.02); border: 0.5px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
-.test-brief-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.25); margin-bottom: 6px; }
-.test-brief-text { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; font-style: italic; }
-.test-quote { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; font-style: italic; border-left: 2px solid #00d4aa; padding-left: 16px; }
-.test-bottom-cta { margin-top: 48px; text-align: center; }
+/* ===== TESTIMONIALS (Raycast-style switcher) ===== */
+.test-selector-row { display: flex; justify-content: center; gap: 12px; margin-top: 48px; overflow-x: auto; padding: 8px 0; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.test-selector-row::-webkit-scrollbar { display: none; }
+.test-pill {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+  min-width: 200px;
+  flex-shrink: 0;
+  opacity: 0.45;
+}
+.test-pill:hover { opacity: 0.7; }
+.test-pill.active {
+  opacity: 1;
+  background: linear-gradient(137deg, rgb(17, 18, 20) 4.87%, rgb(12, 13, 15) 75.88%);
+  border-color: rgba(255,255,255,0.06);
+  box-shadow: rgba(255,255,255,0.1) 0px 1px 1px 0px inset, rgba(0,212,170,0.06) 0px 2px 40px 10px, rgba(0,212,170,0.04) 0px 0px 16px -7px;
+}
+.test-pill-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(0,212,170,0.12); border: 1px solid rgba(0,212,170,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: #00d4aa;
+  flex-shrink: 0;
+}
+.test-pill-name { font-size: 15px; font-weight: 600; color: white; letter-spacing: 0.3px; white-space: nowrap; }
+.test-pill-type { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.35); white-space: nowrap; }
+
+/* Testimonial content area */
+.test-content-area {
+  margin-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 64px;
+  background: radial-gradient(50% 65% at 50% 0%, rgba(255,255,255,0.02) 0%, transparent 100%);
+  position: relative;
+}
+.test-content-panel { display: none; animation: testFadeIn 0.4s ease; }
+.test-content-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+@keyframes testFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Left side — details */
+.test-detail-section { margin-bottom: 28px; }
+.test-detail-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+  color: rgba(255,255,255,0.25); margin-bottom: 12px; font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.test-detail-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,212,170,0.06); border: 1px solid rgba(0,212,170,0.12);
+  border-radius: 8px; padding: 8px 14px; font-size: 14px; font-weight: 600; color: #00d4aa;
+  margin-bottom: 8px;
+}
+.test-detail-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+.test-detail-tasks { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.test-detail-tasks li {
+  font-size: 14px; color: rgba(255,255,255,0.5); padding-left: 20px; position: relative; line-height: 1.5;
+}
+.test-detail-tasks li::before {
+  content: ''; position: absolute; left: 0; top: 7px;
+  width: 6px; height: 6px; border-radius: 50%; background: rgba(0,212,170,0.4);
+}
+
+/* Right side — quote */
+.test-quote-area { display: flex; align-items: center; min-height: 200px; }
+.test-quote-marks {
+  font-size: 72px; font-weight: 700; color: rgba(0,212,170,0.15); line-height: 1;
+  position: absolute; top: -10px; left: -8px; font-family: Georgia, serif;
+}
+.test-quote-wrap { position: relative; padding-left: 8px; }
+.test-quote-text {
+  font-size: 22px; font-weight: 500; line-height: 1.6; color: rgba(255,255,255,0.45);
+}
+.test-quote-text strong { color: white; font-weight: 600; }
+.test-quote-author { margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.3); }
+
+/* Morning brief card */
+.test-morning-brief {
+  grid-column: 1 / -1;
+  margin-top: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: rgba(255,255,255,0.03) 0px 1px 0px 0px inset;
+}
+.test-brief-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+}
+.test-brief-dot { width: 8px; height: 8px; border-radius: 50%; background: #00d4aa; box-shadow: 0 0 8px rgba(0,212,170,0.4); }
+.test-brief-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(0,212,170,0.6); font-family: 'SF Mono', 'Fira Code', monospace; margin-bottom: 0; }
+.test-brief-text { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7; font-style: italic; }
+
+.test-bottom-cta { margin-top: 64px; text-align: center; }
 .test-bottom-text { font-size: 15px; color: rgba(255,255,255,0.45); max-width: 600px; margin: 0 auto 24px; line-height: 1.6; }
+
+@media (max-width: 768px) {
+  .test-selector-row { gap: 8px; justify-content: flex-start; padding: 8px 16px; }
+  .test-pill { min-width: 160px; padding: 12px 14px; }
+  .test-content-panel.active { grid-template-columns: 1fr; gap: 32px; }
+  .test-quote-text { font-size: 18px; }
+}
 
 /* ===== BEFORE / AFTER ===== */
 .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
@@ -783,7 +876,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
     <div class="nav-links">
       <a href="#what-we-do" class="nav-link">What We Do</a>
       <a href="#demo" class="nav-link">See It Live</a>
-      <a href="#work" class="nav-link">Our Work</a>
+      <!-- Our Work moved to separate page -->
       <a href="#pricing" class="nav-link">Pricing</a>
       <a href="/contact" class="nav-link">Contact</a>
       <a href="/about" class="nav-link">About</a>
@@ -802,7 +895,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   <div class="mobile-nav-links">
     <a href="#what-we-do" onclick="closeMobileNav()"><span class="mobile-nav-num">01</span>What We Do</a>
     <a href="#demo" onclick="closeMobileNav()"><span class="mobile-nav-num">02</span>See It Live</a>
-    <a href="#work" onclick="closeMobileNav()"><span class="mobile-nav-num">03</span>Our Work</a>
+    <!-- Our Work moved to separate page -->
     <a href="#pricing" onclick="closeMobileNav()"><span class="mobile-nav-num">04</span>Pricing</a>
     <a href="/contact" onclick="closeMobileNav()"><span class="mobile-nav-num">05</span>Contact</a>
     <a href="/about" onclick="closeMobileNav()"><span class="mobile-nav-num">06</span>About</a>
@@ -818,7 +911,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
     <p class="hero-sub">Trained on your business. Speaking in your voice. Working 24/7 — no salary, no sick days, no turnover. What if someone showed up tomorrow who already knew your customers and exactly how you like things done, and they never took a day off?</p>
     <div class="hero-buttons">
       <a href="/contact" class="btn btn-primary">Find Out What They'd Do For You</a>
-      <a href="#work" class="btn btn-secondary">View Our Work</a>
+      <a href="#demo" class="btn btn-secondary">See It Live</a>
     </div>
   </div>
 </section>
@@ -973,41 +1066,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   </div>
 </div>
 
-<!-- 6. OUR WORK -->
-<div class="section" id="work">
-  <div class="eyebrow">Our Work</div>
-  <h2 class="section-h2">We also build the websites <span class="muted">they work behind.</span></h2>
-  <p class="section-p">Every AI employee needs a front door. These are the custom websites we've built from scratch — no templates, no recycled layouts — each one designed to make the business look as premium as the AI employee running it.</p>
-  <div class="work-grid">
-    <div class="glass-card" style="padding: 0; overflow: hidden;">
-      <div class="work-card-preview wcp-obsidian"><span class="work-card-preview-label" style="color: #d4af37;">Luxury Real Estate</span></div>
-      <div style="padding: 20px 24px 24px;">
-        <div class="work-card-name">Obsidian & Co</div>
-        <div class="work-card-type">Ultra-dark luxury brokerage. Gold accents, property cards, invitation-only aesthetic.</div>
-        <div class="work-card-results"><span class="work-result">3x more inquiries</span><span class="work-result">+62% site traffic</span></div>
-      </div>
-    </div>
-    <div class="glass-card" style="padding: 0; overflow: hidden;">
-      <div class="work-card-preview wcp-solara"><span class="work-card-preview-label" style="color: #10b981;">Modern Healthcare</span></div>
-      <div style="padding: 20px 24px 24px;">
-        <div class="work-card-name">Solara Health</div>
-        <div class="work-card-type">Clean wellness platform. Emerald accents, trust architecture, booking flow.</div>
-        <div class="work-card-results"><span class="work-result">+47% online bookings</span><span class="work-result">2.1x new patients</span></div>
-      </div>
-    </div>
-    <div class="glass-card" style="padding: 0; overflow: hidden;">
-      <div class="work-card-preview wcp-atlas"><span class="work-card-preview-label" style="color: #3b82f6;">Venture Capital</span></div>
-      <div style="padding: 20px 24px 24px;">
-        <div class="work-card-name">Atlas Venture</div>
-        <div class="work-card-type">Data-driven VC platform. Grid system, portfolio metrics, Bloomberg aesthetic.</div>
-        <div class="work-card-results"><span class="work-result">+83% deal flow</span><span class="work-result">4.2s avg load time</span></div>
-      </div>
-    </div>
-  </div>
-  <div style="text-align: center; margin-top: 32px;">
-    <a href="/work" class="btn btn-secondary">View Full Case Studies &rarr;</a>
-  </div>
-</div>
+<!-- 6. OUR WORK — moved to /work page, AI employees only on homepage -->
 
 <!-- 7. CLIENT RESULTS -->
 <div class="section" id="results">
@@ -1061,63 +1120,227 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 <div class="section" id="testimonials">
   <div class="eyebrow">Inside Our Clients' Businesses</div>
   <h2 class="section-h2">Here's what their AI employees <span class="muted">handled this month.</span></h2>
-  <p class="section-p">Every AI employee is built for a different business. Here's what six of ours are actually doing right now — and the daily briefs their owners wake up to.</p>
-  <div class="test-grid">
-    <div class="glass-card">
-      <div class="test-card-header">
-        <div><div class="test-card-name">Sarah's AI Employee</div><div class="test-card-biz">Wellness Studio, Westport CT</div></div>
-        <div class="test-card-owns">Scheduling & Calendar</div>
-      </div>
-      <ul class="test-card-tasks"><li>Manages 4 practitioners, 120+ weekly slots</li><li>Fills cancellations from waitlist automatically</li><li>Handles all reschedules & confirmations</li><li>No-show rate: 18% to under 4%</li></ul>
-      <div class="test-brief"><div class="test-brief-label">Morning Brief</div><p class="test-brief-text">"Today's book is full — 32/32 slots. One cancellation at 2pm, already refilled. 3 new requests overnight, all confirmed. Tomorrow has 4 gaps, I've texted waitlisted clients."</p></div>
-      <div class="test-quote">"I haven't touched my calendar in 3 months. She runs it better than I ever did."</div>
+  <p class="section-p">Every AI employee is built for a different business. Click a name to see what theirs actually does.</p>
+
+  <!-- Person selector row -->
+  <div class="test-selector-row">
+    <div class="test-pill active" onclick="switchTestimonial(0)">
+      <div class="test-pill-avatar">S</div>
+      <div><div class="test-pill-name">Sarah</div><div class="test-pill-type">Wellness Studio</div></div>
     </div>
-    <div class="glass-card">
-      <div class="test-card-header">
-        <div><div class="test-card-name">James's AI Employee</div><div class="test-card-biz">Roofing Company, Milford CT</div></div>
-        <div class="test-card-owns">Revenue Recovery</div>
-      </div>
-      <ul class="test-card-tasks"><li>Catches every after-hours lead in under 40 seconds</li><li>Re-engages cold estimates — 4 closed last month</li><li>Reaches out to past customers due for maintenance</li><li>Recovered $38K James didn't know he was losing</li></ul>
-      <div class="test-brief"><div class="test-brief-label">Morning Brief</div><p class="test-brief-text">"3 estimate requests after 9pm — all responded to, 2 booked. Re-engaged the Henderson estimate from February — they want to move forward. That's $8,200."</p></div>
-      <div class="test-quote">"I used to lose every lead that called after 5. Now I wake up to booked jobs."</div>
+    <div class="test-pill" onclick="switchTestimonial(1)">
+      <div class="test-pill-avatar">J</div>
+      <div><div class="test-pill-name">James</div><div class="test-pill-type">Roofing Company</div></div>
     </div>
-    <div class="glass-card">
-      <div class="test-card-header">
-        <div><div class="test-card-name">Tony's AI Employee</div><div class="test-card-biz">Italian Restaurant, New Haven CT</div></div>
-        <div class="test-card-owns">Reputation & Guest Experience</div>
-      </div>
-      <ul class="test-card-tasks"><li>Responds to every Google & Yelp review in Tony's voice</li><li>Sends post-visit thank-yous with review links</li><li>Handles all catering inquiries end-to-end</li><li>Google rating: 4.1 to 4.7 in 60 days</li></ul>
-      <div class="test-brief"><div class="test-brief-label">Morning Brief</div><p class="test-brief-text">"Weekend recap: 6 new Google reviews (all 5-star, all responded to). 2 catering inquiries handled — one corporate lunch for 40. 3-star review flagged for your eyes."</p></div>
-      <div class="test-quote">"My Google page looks like I have a PR team. It's just my AI employee."</div>
+    <div class="test-pill" onclick="switchTestimonial(2)">
+      <div class="test-pill-avatar">T</div>
+      <div><div class="test-pill-name">Tony</div><div class="test-pill-type">Italian Restaurant</div></div>
     </div>
-    <div class="glass-card">
-      <div class="test-card-header">
-        <div><div class="test-card-name">Dr. Patel's AI Employee</div><div class="test-card-biz">Physical Therapy, Stamford CT</div></div>
-        <div class="test-card-owns">Patient Reactivation</div>
-      </div>
-      <ul class="test-card-tasks"><li>Finds patients who dropped off mid-treatment</li><li>Brought back 19 lapsed patients — $14K reactivated</li><li>Sends milestone check-ins between appointments</li><li>Handles all intake so front desk focuses on care</li></ul>
-      <div class="test-brief"><div class="test-brief-label">Morning Brief</div><p class="test-brief-text">"Reactivated 3 patients this week (60+ days inactive). Mrs. Torres rebooked her full 6-visit plan. 8 intake forms pre-filled for tomorrow. Zero phone interruptions at front desk yesterday."</p></div>
-      <div class="test-quote">"We were losing patients we didn't even know had stopped coming. Now nobody slips through."</div>
+    <div class="test-pill" onclick="switchTestimonial(3)">
+      <div class="test-pill-avatar">D</div>
+      <div><div class="test-pill-name">Dr. Patel</div><div class="test-pill-type">Physical Therapy</div></div>
     </div>
-    <div class="glass-card">
-      <div class="test-card-header">
-        <div><div class="test-card-name">Lisa's AI Employee</div><div class="test-card-biz">Interior Design, Madison CT</div></div>
-        <div class="test-card-owns">Client Intake & Screening</div>
-      </div>
-      <ul class="test-card-tasks"><li>Pre-qualifies every inquiry — budget, timeline, scope</li><li>Sends welcome packets to qualified leads instantly</li><li>Follows up with quiet prospects — saved a $12K project</li><li>Lisa only talks to clients who are ready to start</li></ul>
-      <div class="test-brief"><div class="test-brief-label">Morning Brief</div><p class="test-brief-text">"4 new inquiries this week. 2 qualified (both $15K+ full-home projects). 1 disqualified — budget under $3K. The Moretti project confirmed — they're ready to start."</p></div>
-      <div class="test-quote">"I used to spend half my week on calls that went nowhere. Now I only talk to people who are ready."</div>
+    <div class="test-pill" onclick="switchTestimonial(4)">
+      <div class="test-pill-avatar">L</div>
+      <div><div class="test-pill-name">Lisa</div><div class="test-pill-type">Interior Design</div></div>
     </div>
-    <div class="glass-card">
-      <div class="test-card-header">
-        <div><div class="test-card-name">Michael's AI Employee</div><div class="test-card-biz">Financial Advisory, Greenwich CT</div></div>
-        <div class="test-card-owns">Client Relationships</div>
-      </div>
-      <ul class="test-card-tasks"><li>Sends check-ins on birthdays, milestones, life events</li><li>Nurtures referrals with a 90-day drip in Michael's voice</li><li>Flags clients overdue for contact (45+ days)</li><li>3 new referrals last month from AI-managed touchpoints</li></ul>
-      <div class="test-brief"><div class="test-brief-label">Morning Brief</div><p class="test-brief-text">"Birthday messages sent to 2 clients. The Andersons replied — their son just sold his startup. Flagged as referral opportunity. 6 drip touches sent. No clients overdue for contact."</p></div>
-      <div class="test-quote">"My clients think I'm the most attentive advisor they've ever had. I'm not — my AI employee is."</div>
+    <div class="test-pill" onclick="switchTestimonial(5)">
+      <div class="test-pill-avatar">M</div>
+      <div><div class="test-pill-name">Michael</div><div class="test-pill-type">Financial Advisory</div></div>
     </div>
   </div>
+
+  <!-- Content area -->
+  <div class="test-content-area">
+
+    <!-- Sarah -->
+    <div class="test-content-panel active" data-test="0">
+      <div class="test-details-col">
+        <div class="test-detail-section">
+          <div class="test-detail-label">AI Employee Handles:</div>
+          <div class="test-detail-badge">Scheduling & Calendar</div>
+          <p class="test-detail-desc">Wellness Studio, Westport CT</p>
+        </div>
+        <div class="test-detail-section">
+          <div class="test-detail-label">What She Does:</div>
+          <ul class="test-detail-tasks">
+            <li>Manages 4 practitioners, 120+ weekly slots</li>
+            <li>Fills cancellations from waitlist automatically</li>
+            <li>Handles all reschedules & confirmations</li>
+            <li>No-show rate: 18% down to under 4%</li>
+          </ul>
+        </div>
+      </div>
+      <div class="test-quote-area">
+        <div class="test-quote-wrap">
+          <div class="test-quote-marks">&ldquo;</div>
+          <p class="test-quote-text">I haven't touched my calendar in 3 months. <strong>She runs it better than I ever did.</strong></p>
+          <div class="test-quote-author">&mdash; Sarah, Wellness Studio Owner</div>
+        </div>
+      </div>
+      <div class="test-morning-brief">
+        <div class="test-brief-header"><div class="test-brief-dot"></div><div class="test-brief-label">Morning Brief</div></div>
+        <p class="test-brief-text">"Today's book is full — 32/32 slots. One cancellation at 2pm, already refilled. 3 new requests overnight, all confirmed. Tomorrow has 4 gaps, I've texted waitlisted clients."</p>
+      </div>
+    </div>
+
+    <!-- James -->
+    <div class="test-content-panel" data-test="1">
+      <div class="test-details-col">
+        <div class="test-detail-section">
+          <div class="test-detail-label">AI Employee Handles:</div>
+          <div class="test-detail-badge">Revenue Recovery</div>
+          <p class="test-detail-desc">Roofing Company, Milford CT</p>
+        </div>
+        <div class="test-detail-section">
+          <div class="test-detail-label">What It Does:</div>
+          <ul class="test-detail-tasks">
+            <li>Catches every after-hours lead in under 40 seconds</li>
+            <li>Re-engages cold estimates — 4 closed last month</li>
+            <li>Reaches out to past customers due for maintenance</li>
+            <li>Recovered $38K James didn't know he was losing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="test-quote-area">
+        <div class="test-quote-wrap">
+          <div class="test-quote-marks">&ldquo;</div>
+          <p class="test-quote-text">I used to lose every lead that called after 5. <strong>Now I wake up to booked jobs.</strong></p>
+          <div class="test-quote-author">&mdash; James, Roofing Company Owner</div>
+        </div>
+      </div>
+      <div class="test-morning-brief">
+        <div class="test-brief-header"><div class="test-brief-dot"></div><div class="test-brief-label">Morning Brief</div></div>
+        <p class="test-brief-text">"3 estimate requests after 9pm — all responded to, 2 booked. Re-engaged the Henderson estimate from February — they want to move forward. That's $8,200."</p>
+      </div>
+    </div>
+
+    <!-- Tony -->
+    <div class="test-content-panel" data-test="2">
+      <div class="test-details-col">
+        <div class="test-detail-section">
+          <div class="test-detail-label">AI Employee Handles:</div>
+          <div class="test-detail-badge">Reputation & Guest Experience</div>
+          <p class="test-detail-desc">Italian Restaurant, New Haven CT</p>
+        </div>
+        <div class="test-detail-section">
+          <div class="test-detail-label">What It Does:</div>
+          <ul class="test-detail-tasks">
+            <li>Responds to every Google & Yelp review in Tony's voice</li>
+            <li>Sends post-visit thank-yous with review links</li>
+            <li>Handles all catering inquiries end-to-end</li>
+            <li>Google rating: 4.1 to 4.7 in 60 days</li>
+          </ul>
+        </div>
+      </div>
+      <div class="test-quote-area">
+        <div class="test-quote-wrap">
+          <div class="test-quote-marks">&ldquo;</div>
+          <p class="test-quote-text">My Google page looks like I have a PR team. <strong>It's just my AI employee.</strong></p>
+          <div class="test-quote-author">&mdash; Tony, Restaurant Owner</div>
+        </div>
+      </div>
+      <div class="test-morning-brief">
+        <div class="test-brief-header"><div class="test-brief-dot"></div><div class="test-brief-label">Morning Brief</div></div>
+        <p class="test-brief-text">"Weekend recap: 6 new Google reviews (all 5-star, all responded to). 2 catering inquiries handled — one corporate lunch for 40. 3-star review flagged for your eyes."</p>
+      </div>
+    </div>
+
+    <!-- Dr. Patel -->
+    <div class="test-content-panel" data-test="3">
+      <div class="test-details-col">
+        <div class="test-detail-section">
+          <div class="test-detail-label">AI Employee Handles:</div>
+          <div class="test-detail-badge">Patient Reactivation</div>
+          <p class="test-detail-desc">Physical Therapy, Stamford CT</p>
+        </div>
+        <div class="test-detail-section">
+          <div class="test-detail-label">What It Does:</div>
+          <ul class="test-detail-tasks">
+            <li>Finds patients who dropped off mid-treatment</li>
+            <li>Brought back 19 lapsed patients — $14K reactivated</li>
+            <li>Sends milestone check-ins between appointments</li>
+            <li>Handles all intake so front desk focuses on care</li>
+          </ul>
+        </div>
+      </div>
+      <div class="test-quote-area">
+        <div class="test-quote-wrap">
+          <div class="test-quote-marks">&ldquo;</div>
+          <p class="test-quote-text">We were losing patients we didn't even know had stopped coming. <strong>Now nobody slips through.</strong></p>
+          <div class="test-quote-author">&mdash; Dr. Patel, Physical Therapy Practice</div>
+        </div>
+      </div>
+      <div class="test-morning-brief">
+        <div class="test-brief-header"><div class="test-brief-dot"></div><div class="test-brief-label">Morning Brief</div></div>
+        <p class="test-brief-text">"Reactivated 3 patients this week (60+ days inactive). Mrs. Torres rebooked her full 6-visit plan. 8 intake forms pre-filled for tomorrow. Zero phone interruptions at front desk yesterday."</p>
+      </div>
+    </div>
+
+    <!-- Lisa -->
+    <div class="test-content-panel" data-test="4">
+      <div class="test-details-col">
+        <div class="test-detail-section">
+          <div class="test-detail-label">AI Employee Handles:</div>
+          <div class="test-detail-badge">Client Intake & Screening</div>
+          <p class="test-detail-desc">Interior Design, Madison CT</p>
+        </div>
+        <div class="test-detail-section">
+          <div class="test-detail-label">What It Does:</div>
+          <ul class="test-detail-tasks">
+            <li>Pre-qualifies every inquiry — budget, timeline, scope</li>
+            <li>Sends welcome packets to qualified leads instantly</li>
+            <li>Follows up with quiet prospects — saved a $12K project</li>
+            <li>Lisa only talks to clients who are ready to start</li>
+          </ul>
+        </div>
+      </div>
+      <div class="test-quote-area">
+        <div class="test-quote-wrap">
+          <div class="test-quote-marks">&ldquo;</div>
+          <p class="test-quote-text">I used to spend half my week on calls that went nowhere. <strong>Now I only talk to people who are ready.</strong></p>
+          <div class="test-quote-author">&mdash; Lisa, Interior Designer</div>
+        </div>
+      </div>
+      <div class="test-morning-brief">
+        <div class="test-brief-header"><div class="test-brief-dot"></div><div class="test-brief-label">Morning Brief</div></div>
+        <p class="test-brief-text">"4 new inquiries this week. 2 qualified (both $15K+ full-home projects). 1 disqualified — budget under $3K. The Moretti project confirmed — they're ready to start."</p>
+      </div>
+    </div>
+
+    <!-- Michael -->
+    <div class="test-content-panel" data-test="5">
+      <div class="test-details-col">
+        <div class="test-detail-section">
+          <div class="test-detail-label">AI Employee Handles:</div>
+          <div class="test-detail-badge">Client Relationships</div>
+          <p class="test-detail-desc">Financial Advisory, Greenwich CT</p>
+        </div>
+        <div class="test-detail-section">
+          <div class="test-detail-label">What It Does:</div>
+          <ul class="test-detail-tasks">
+            <li>Sends check-ins on birthdays, milestones, life events</li>
+            <li>Nurtures referrals with a 90-day drip in Michael's voice</li>
+            <li>Flags clients overdue for contact (45+ days)</li>
+            <li>3 new referrals last month from AI-managed touchpoints</li>
+          </ul>
+        </div>
+      </div>
+      <div class="test-quote-area">
+        <div class="test-quote-wrap">
+          <div class="test-quote-marks">&ldquo;</div>
+          <p class="test-quote-text">My clients think I'm the most attentive advisor they've ever had. <strong>I'm not — my AI employee is.</strong></p>
+          <div class="test-quote-author">&mdash; Michael, Financial Advisor</div>
+        </div>
+      </div>
+      <div class="test-morning-brief">
+        <div class="test-brief-header"><div class="test-brief-dot"></div><div class="test-brief-label">Morning Brief</div></div>
+        <p class="test-brief-text">"Birthday messages sent to 2 clients. The Andersons replied — their son just sold his startup. Flagged as referral opportunity. 6 drip touches sent. No clients overdue for contact."</p>
+      </div>
+    </div>
+
+  </div>
+
   <div class="test-bottom-cta">
     <p class="test-bottom-text">Six businesses. Six completely different AI employees. Yours would be built around what your business actually needs — and the only way to see that is the free audit.</p>
     <a href="/contact" class="btn btn-orange">What Would Yours Do? &rarr;</a>
@@ -1340,6 +1563,17 @@ document.querySelectorAll('.faq-question').forEach(function(btn) {
     if (!isOpen) { item.classList.add('open'); }
   });
 });
+
+// Testimonial switcher
+function switchTestimonial(index) {
+  document.querySelectorAll('.test-pill').forEach(function(p, i) {
+    p.classList.toggle('active', i === index);
+  });
+  document.querySelectorAll('.test-content-panel').forEach(function(panel) {
+    var isTarget = parseInt(panel.getAttribute('data-test')) === index;
+    panel.classList.toggle('active', isTarget);
+  });
+}
 </script>
 
 <!-- WebGL Light Streaks (Three.js) -->
