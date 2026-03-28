@@ -1599,22 +1599,71 @@ document.querySelectorAll('.faq-question').forEach(function(btn) {
   });
 });
 
-// Raycast-style testimonial carousel
+// Raycast-style infinite testimonial carousel
+var totalClients = 6;
+var currentTestimonial = 0;
+
+function initInfiniteCarousel() {
+  var track = document.getElementById('testCarouselTrack');
+  var originalCards = Array.from(track.querySelectorAll('.test-card'));
+
+  // Clone all cards and append before and after for infinite loop
+  // Add 2 full sets on each side
+  for (var round = 0; round < 2; round++) {
+    originalCards.forEach(function(card) {
+      var cloneBefore = card.cloneNode(true);
+      track.insertBefore(cloneBefore, track.firstChild);
+    });
+    originalCards.forEach(function(card) {
+      var cloneAfter = card.cloneNode(true);
+      track.appendChild(cloneAfter);
+    });
+  }
+
+  // Update all card onclick handlers
+  var allCards = track.querySelectorAll('.test-card');
+  allCards.forEach(function(card, i) {
+    var realIndex = ((i % totalClients) + totalClients) % totalClients;
+    card.setAttribute('data-real-index', realIndex);
+    card.onclick = function() { switchTestimonial(realIndex); };
+  });
+}
+
 function switchTestimonial(index) {
-  var cards = document.querySelectorAll('.test-card');
+  currentTestimonial = index;
   var track = document.getElementById('testCarouselTrack');
   var wrap = track.parentElement;
-
-  // Update active card styling
-  cards.forEach(function(c, i) { c.classList.toggle('active', i === index); });
-
-  // Calculate offset to center the active card in the viewport
+  var allCards = track.querySelectorAll('.test-card');
   var wrapWidth = wrap.offsetWidth;
-  var activeCard = cards[index];
-  var cardLeft = activeCard.offsetLeft;
-  var cardWidth = activeCard.offsetWidth;
-  var centerOffset = (wrapWidth / 2) - cardLeft - (cardWidth / 2);
-  track.style.transform = 'translateX(' + centerOffset + 'px)';
+
+  // Update active styling on ALL cards (including clones)
+  allCards.forEach(function(c) {
+    var ri = parseInt(c.getAttribute('data-real-index'));
+    c.classList.toggle('active', ri === index);
+  });
+
+  // Find the closest card with this index to center (prefer one near the middle of the track)
+  var targetCard = null;
+  var trackCenter = track.scrollWidth / 2;
+  var bestDist = Infinity;
+  allCards.forEach(function(c) {
+    var ri = parseInt(c.getAttribute('data-real-index'));
+    if (ri === index) {
+      var cardCenter = c.offsetLeft + c.offsetWidth / 2;
+      var dist = Math.abs(cardCenter - trackCenter);
+      if (dist < bestDist) {
+        bestDist = dist;
+        targetCard = c;
+      }
+    }
+  });
+
+  if (targetCard) {
+    var cardLeft = targetCard.offsetLeft;
+    var cardWidth = targetCard.offsetWidth;
+    var centerOffset = (wrapWidth / 2) - cardLeft - (cardWidth / 2);
+    track.style.transform = 'translateX(' + centerOffset + 'px)';
+  }
 
   // Update content panels
   document.querySelectorAll('.test-content-panel').forEach(function(panel) {
@@ -1623,10 +1672,12 @@ function switchTestimonial(index) {
   });
 }
 
-// Initialize carousel position on load
+// Initialize carousel
 window.addEventListener('DOMContentLoaded', function() {
-  // Small delay to ensure layout is computed
-  setTimeout(function() { switchTestimonial(0); }, 50);
+  setTimeout(function() {
+    initInfiniteCarousel();
+    switchTestimonial(0);
+  }, 50);
 });
 </script>
 
