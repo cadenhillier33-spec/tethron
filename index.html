@@ -763,19 +763,38 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   letter-spacing: -0.5px;
 }
 .waterfall-statement .muted { color: rgba(255,255,255,0.35); }
-.waterfall-text {
-  font-size: 18px;
-  line-height: 2;
-  font-weight: 500;
+.waterfall-bullets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 32px;
+  list-style: none;
 }
-.waterfall-text .wf-bright { color: rgba(255,255,255,0.9); }
-.waterfall-text .wf-dim { color: rgba(255,255,255,0.4); }
+.waterfall-bullets li {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.8;
+}
+.waterfall-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid #00d4aa;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
 .waterfall-closer {
   display: block;
-  margin-top: 16px;
+  margin-top: 20px;
   font-size: 18px;
   font-weight: 700;
   color: #00d4aa;
+  grid-column: 1 / -1;
 }
 
 /* ===== LIVE DEMO ===== */
@@ -1570,7 +1589,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 
   /* Waterfall */
   .waterfall-statement { font-size: 22px; }
-  .waterfall-text { font-size: 16px; line-height: 1.8; }
+  .waterfall-bullets { grid-template-columns: 1fr; }
 
   /* Feature dock */
   .dock-icon { width: 48px; height: 48px; }
@@ -1772,25 +1791,25 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
       <h2 class="waterfall-statement">It's not about automation.<br><span class="muted">It's about getting your life back.</span></h2>
     </div>
     <div>
-      <p class="waterfall-text">
-        <span class="wf-bright">It answers leads.</span>
-        <span class="wf-dim">Manages your CRM.</span>
-        <span class="wf-bright">Posts on social media.</span>
-        <span class="wf-dim">Fills cancellations.</span>
-        <span class="wf-bright">Qualifies prospects.</span>
-        <span class="wf-dim">Handles intake.</span>
-        <span class="wf-bright">Chases late payments.</span>
-        <span class="wf-dim">Books appointments.</span>
-        <span class="wf-bright">Requests reviews.</span>
-        <span class="wf-dim">Drafts newsletters.</span>
-        <span class="wf-bright">Monitors competitors.</span>
-        <span class="wf-dim">Coordinates vendors.</span>
-        <span class="wf-bright">Sends follow-ups.</span>
-        <span class="wf-dim">Analyzes your data.</span>
-        <span class="wf-bright">Runs daily reports.</span>
-        <span class="wf-dim">Onboards customers.</span>
-        <span class="waterfall-closer">And it never calls in sick.</span>
-      </p>
+      <ul class="waterfall-bullets">
+        <li>Answers leads instantly</li>
+        <li>Manages your CRM</li>
+        <li>Posts on social media</li>
+        <li>Fills cancellations</li>
+        <li>Qualifies prospects</li>
+        <li>Handles intake</li>
+        <li>Chases late payments</li>
+        <li>Books appointments</li>
+        <li>Requests reviews</li>
+        <li>Drafts newsletters</li>
+        <li>Monitors competitors</li>
+        <li>Coordinates vendors</li>
+        <li>Sends follow-ups</li>
+        <li>Analyzes your data</li>
+        <li>Runs daily reports</li>
+        <li>Onboards customers</li>
+      </ul>
+      <div class="waterfall-closer">And it never calls in sick.</div>
     </div>
   </div>
 </div>
