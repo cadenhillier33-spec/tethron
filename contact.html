@@ -125,7 +125,8 @@ textarea.form-input { min-height: 120px; resize: vertical; }
 .footer-legal a:hover { color: rgba(255,255,255,.5); }
 
 /* WebGL */
-#webgl-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+.noise-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; background: #050508; }
+.noise-bg::after { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; opacity: 1; }
 
 /* Responsive */
 @media (max-width: 900px) {
@@ -145,7 +146,7 @@ textarea.form-input { min-height: 120px; resize: vertical; }
 </style>
 </head>
 <body>
-<canvas id="webgl-bg"></canvas>
+<div class="noise-bg"></div>
 
 <!-- NAV -->
 <div class="nav-wrap">
@@ -290,40 +291,5 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 });
 </script>
 
-<!-- WebGL -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-(function() {
-  var canvas = document.getElementById('webgl-bg');
-  var vs = 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }';
-  var fs = [
-    'precision highp float;',
-    'varying vec2 vUv; uniform float uTime; uniform vec2 uResolution;',
-    'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
-    'float noise(vec2 p) { vec2 i=floor(p); vec2 f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y); }',
-    'float fbm(vec2 p) { float v=0.0,a=0.5; for(int i=0;i<4;i++){v+=a*noise(p);p*=2.0;a*=0.5;} return v; }',
-    'float streak(vec2 uv,float xP,float ang,float w,float s,float l,float yo) { float ca=cos(ang),sa=sin(ang); vec2 c=vec2(xP,0.5+yo); vec2 r=vec2(ca*(uv.x-c.x)-sa*(uv.y-c.y),sa*(uv.x-c.x)+ca*(uv.y-c.y)); return exp(-abs(r.x)/w*abs(r.x)/w*s)*smoothstep(1.0,0.3,abs(r.y)/l); }',
-    'void main() { vec2 uv=vUv; float t=uTime*0.08;',
-    'float n1=fbm(vec2(uv.x*2.0,uv.y*0.5+t*0.3))*0.015;',
-    'vec3 col=vec3(0.0); vec3 cyan=vec3(0,0.831,0.667); vec3 teal=vec3(0,0.722,0.580); vec3 mint=vec3(0,0.9,0.75);',
-    'col+=cyan*streak(uv+vec2(n1,0),0.38,-0.22,0.035,8.0,0.7,sin(t*0.5)*0.02)*0.55;',
-    'col+=mint*streak(uv,0.45,-0.28,0.045,6.0,0.75,sin(t*0.4+1.0)*0.015)*0.65;',
-    'col+=teal*streak(uv,0.52,-0.18,0.03,10.0,0.65,sin(t*0.6+2.0)*0.02)*0.5;',
-    'col*=1.0+sin(t*0.6)*0.08;',
-    'vec2 vig=uv-0.5; col*=clamp(pow(1.0-dot(vig,vig)*2.2,1.4),0.0,1.0);',
-    'col=col/(col+0.6); col+=vec3((hash(uv*uResolution+fract(uTime))-0.5)*0.015);',
-    'col=max(col,vec3(0.027,0.031,0.039)); gl_FragColor=vec4(col,1.0); }'
-  ].join('\n');
-  var scene=new THREE.Scene(), camera=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
-  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:false});
-  renderer.setSize(window.innerWidth,window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  var uniforms={uTime:{value:0},uResolution:{value:new THREE.Vector2(window.innerWidth,window.innerHeight)}};
-  var mat=new THREE.ShaderMaterial({vertexShader:vs,fragmentShader:fs,uniforms:uniforms});
-  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat));
-  window.addEventListener('resize',function(){renderer.setSize(window.innerWidth,window.innerHeight);uniforms.uResolution.value.set(window.innerWidth,window.innerHeight);});
-  (function animate(t){uniforms.uTime.value=t*0.001;renderer.render(scene,camera);requestAnimationFrame(animate);})(0);
-})();
-</script>
 </body>
 </html>
