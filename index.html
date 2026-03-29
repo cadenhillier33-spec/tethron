@@ -773,38 +773,59 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   letter-spacing: -0.5px;
 }
 .waterfall-statement .muted { color: rgba(255,255,255,0.35); }
-.waterfall-bullets {
+/* Category cards */
+.wf-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px 32px;
+  gap: 16px;
+}
+.wf-card {
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.03);
+  border-radius: 14px;
+  padding: 22px;
+}
+.wf-card-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #00d4aa;
+  margin-bottom: 14px;
+}
+.wf-card ul {
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
-.waterfall-bullets li {
-  font-size: 15px;
+.wf-card li {
+  font-size: 13px;
   font-weight: 500;
-  color: rgba(255,255,255,0.75);
-  padding-left: 22px;
+  color: rgba(255,255,255,0.55);
+  padding-left: 16px;
   position: relative;
-  line-height: 1.8;
+  line-height: 1.5;
 }
-.waterfall-bullets li::before {
+.wf-card li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 8px;
-  width: 0;
-  height: 0;
-  border-left: 6px solid #00d4aa;
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
+  top: 7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(0,212,170,0.4);
 }
 .waterfall-closer {
   display: block;
-  margin-top: 20px;
+  margin-top: 24px;
   font-size: 18px;
   font-weight: 700;
   color: #00d4aa;
-  grid-column: 1 / -1;
+}
+@media (max-width: 600px) {
+  .wf-cards { grid-template-columns: 1fr; }
 }
 
 /* ===== LIVE DEMO ===== */
@@ -1804,26 +1825,46 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
       <h2 class="waterfall-statement">It doesn't just work for you.<br><span class="muted">It thinks for you.</span></h2>
     </div>
     <div>
-      <ul class="waterfall-bullets">
-        <li>Answers leads instantly</li>
-        <li>Manages your CRM</li>
-        <li>Posts on social media</li>
-        <li>Fills cancellations</li>
-        <li>Qualifies prospects</li>
-        <li>Handles intake</li>
-        <li>Chases late payments</li>
-        <li>Books appointments</li>
-        <li>Requests reviews</li>
-        <li>Drafts newsletters</li>
-        <li>Monitors competitors</li>
-        <li>Coordinates vendors</li>
-        <li>Sends follow-ups</li>
-        <li>Plans next month's strategy</li>
-        <li>Spots revenue you're missing</li>
-        <li>Identifies at-risk customers</li>
-        <li>Analyzes trends in your data</li>
-        <li>Runs daily reports</li>
-      </ul>
+      <div class="wf-cards">
+        <div class="wf-card">
+          <div class="wf-card-label">Communicates</div>
+          <ul>
+            <li>Answers leads instantly</li>
+            <li>Sends follow-ups</li>
+            <li>Requests reviews</li>
+            <li>Drafts newsletters</li>
+          </ul>
+        </div>
+        <div class="wf-card">
+          <div class="wf-card-label">Operates</div>
+          <ul>
+            <li>Manages your CRM</li>
+            <li>Books appointments</li>
+            <li>Coordinates vendors</li>
+            <li>Handles intake</li>
+            <li>Chases late payments</li>
+          </ul>
+        </div>
+        <div class="wf-card">
+          <div class="wf-card-label">Grows</div>
+          <ul>
+            <li>Posts on social media</li>
+            <li>Monitors competitors</li>
+            <li>Fills cancellations</li>
+            <li>Qualifies prospects</li>
+          </ul>
+        </div>
+        <div class="wf-card">
+          <div class="wf-card-label">Thinks</div>
+          <ul>
+            <li>Plans next month's strategy</li>
+            <li>Spots revenue you're missing</li>
+            <li>Identifies at-risk customers</li>
+            <li>Analyzes trends in your data</li>
+            <li>Runs daily reports</li>
+          </ul>
+        </div>
+      </div>
       <div class="waterfall-closer">And it never calls in sick.</div>
     </div>
   </div>
