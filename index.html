@@ -297,6 +297,14 @@ a { color: inherit; text-decoration: none; }
   object-fit: cover;
   opacity: 0.8;
 }
+/* Hide default video controls/play overlay on mobile */
+#video-bg::-webkit-media-controls-panel,
+#video-bg::-webkit-media-controls-play-button,
+#video-bg::-webkit-media-controls-start-playback-button,
+#video-bg::-webkit-media-controls {
+  display: none !important;
+  -webkit-appearance: none;
+}
 #video-overlay {
   position: absolute;
   top: 0;
@@ -3053,6 +3061,23 @@ resetSpotInterval();
   feed.addEventListener('mouseenter',function(){paused=true;clearTimeout(resumeTimer)});
   feed.addEventListener('mouseleave',function(){scheduleResume(1500)});
   feed.addEventListener('wheel',function(){paused=true;scheduleResume(2500)},{passive:true});
+})();
+</script>
+
+<!-- Force video autoplay on mobile -->
+<script>
+(function() {
+  var v = document.getElementById('video-bg');
+  if (!v) return;
+  v.removeAttribute('controls');
+  function tryPlay() {
+    var p = v.play();
+    if (p && p.catch) p.catch(function() {});
+  }
+  tryPlay();
+  document.addEventListener('touchstart', tryPlay, { once: true });
+  document.addEventListener('click', tryPlay, { once: true });
+  document.addEventListener('scroll', tryPlay, { once: true });
 })();
 </script>
 
