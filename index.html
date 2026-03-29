@@ -773,49 +773,54 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   letter-spacing: -0.5px;
 }
 .waterfall-statement .muted { color: rgba(255,255,255,0.35); }
-/* Category cards */
-.wf-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+/* Command palette capabilities */
+.wf-palette {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  overflow: hidden;
 }
-.wf-card {
-  background: rgba(255,255,255,0.015);
-  border: 1px solid rgba(255,255,255,0.03);
-  border-radius: 14px;
-  padding: 22px;
+.wf-group {
+  padding: 14px 18px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
 }
-.wf-card-label {
-  font-size: 11px;
+.wf-group:last-child { border-bottom: none; }
+.wf-group-label {
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: #00d4aa;
-  margin-bottom: 14px;
+  letter-spacing: 1.8px;
+  color: rgba(0,212,170,0.6);
+  margin-bottom: 10px;
 }
-.wf-card ul {
-  list-style: none;
+.wf-items {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 6px;
 }
-.wf-card li {
-  font-size: 13px;
+.wf-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  font-size: 12.5px;
   font-weight: 500;
-  color: rgba(255,255,255,0.55);
-  padding-left: 16px;
-  position: relative;
-  line-height: 1.5;
+  color: rgba(255,255,255,0.6);
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
-.wf-card li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 7px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: rgba(0,212,170,0.4);
+.wf-item:hover {
+  background: rgba(0,212,170,0.08);
+  border-color: rgba(0,212,170,0.2);
+  color: rgba(255,255,255,0.85);
+}
+.wf-item .wf-icon {
+  font-size: 13px;
+  line-height: 1;
+  flex-shrink: 0;
 }
 .waterfall-closer {
   display: block;
@@ -825,7 +830,8 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   color: #00d4aa;
 }
 @media (max-width: 600px) {
-  .wf-cards { grid-template-columns: 1fr; }
+  .wf-group { padding: 12px 14px 8px; }
+  .wf-item { font-size: 11.5px; padding: 4px 10px; }
 }
 
 /* ===== LIVE DEMO ===== */
@@ -1825,44 +1831,44 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
       <h2 class="waterfall-statement">It doesn't just work for you.<br><span class="muted">It thinks for you.</span></h2>
     </div>
     <div>
-      <div class="wf-cards">
-        <div class="wf-card">
-          <div class="wf-card-label">Communicates</div>
-          <ul>
-            <li>Answers leads instantly</li>
-            <li>Sends follow-ups</li>
-            <li>Requests reviews</li>
-            <li>Drafts newsletters</li>
-          </ul>
+      <div class="wf-palette">
+        <div class="wf-group">
+          <div class="wf-group-label">Communicates</div>
+          <div class="wf-items">
+            <span class="wf-item"><span class="wf-icon">⚡</span>Answers leads instantly</span>
+            <span class="wf-item"><span class="wf-icon">↩</span>Sends follow-ups</span>
+            <span class="wf-item"><span class="wf-icon">★</span>Requests reviews</span>
+            <span class="wf-item"><span class="wf-icon">✉</span>Drafts newsletters</span>
+          </div>
         </div>
-        <div class="wf-card">
-          <div class="wf-card-label">Operates</div>
-          <ul>
-            <li>Manages your CRM</li>
-            <li>Books appointments</li>
-            <li>Coordinates vendors</li>
-            <li>Handles intake</li>
-            <li>Chases late payments</li>
-          </ul>
+        <div class="wf-group">
+          <div class="wf-group-label">Operates</div>
+          <div class="wf-items">
+            <span class="wf-item"><span class="wf-icon">◉</span>Manages your CRM</span>
+            <span class="wf-item"><span class="wf-icon">◷</span>Books appointments</span>
+            <span class="wf-item"><span class="wf-icon">⇄</span>Coordinates vendors</span>
+            <span class="wf-item"><span class="wf-icon">⎗</span>Handles intake</span>
+            <span class="wf-item"><span class="wf-icon">$</span>Chases late payments</span>
+          </div>
         </div>
-        <div class="wf-card">
-          <div class="wf-card-label">Grows</div>
-          <ul>
-            <li>Posts on social media</li>
-            <li>Monitors competitors</li>
-            <li>Fills cancellations</li>
-            <li>Qualifies prospects</li>
-          </ul>
+        <div class="wf-group">
+          <div class="wf-group-label">Grows</div>
+          <div class="wf-items">
+            <span class="wf-item"><span class="wf-icon">◈</span>Posts on social media</span>
+            <span class="wf-item"><span class="wf-icon">◎</span>Monitors competitors</span>
+            <span class="wf-item"><span class="wf-icon">⟳</span>Fills cancellations</span>
+            <span class="wf-item"><span class="wf-icon">▸</span>Qualifies prospects</span>
+          </div>
         </div>
-        <div class="wf-card">
-          <div class="wf-card-label">Thinks</div>
-          <ul>
-            <li>Plans next month's strategy</li>
-            <li>Spots revenue you're missing</li>
-            <li>Identifies at-risk customers</li>
-            <li>Analyzes trends in your data</li>
-            <li>Runs daily reports</li>
-          </ul>
+        <div class="wf-group">
+          <div class="wf-group-label">Thinks</div>
+          <div class="wf-items">
+            <span class="wf-item"><span class="wf-icon">◆</span>Plans strategy</span>
+            <span class="wf-item"><span class="wf-icon">↗</span>Spots missed revenue</span>
+            <span class="wf-item"><span class="wf-icon">⚑</span>Flags at-risk customers</span>
+            <span class="wf-item"><span class="wf-icon">⊞</span>Analyzes trends</span>
+            <span class="wf-item"><span class="wf-icon">▦</span>Runs daily reports</span>
+          </div>
         </div>
       </div>
       <div class="waterfall-closer">And it never calls in sick.</div>

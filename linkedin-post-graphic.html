@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+body {
+  width: 1080px;
+  height: 1080px;
+  overflow: hidden;
+  background: rgb(7, 8, 10);
+  font-family: 'Inter', sans-serif;
+}
+.card {
+  position: relative;
+  width: 1080px;
+  height: 1080px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); }
+.blob-1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(0,212,170,0.18) 0%, transparent 70%); top: -250px; right: -200px; }
+.blob-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,180,148,0.14) 0%, transparent 70%); bottom: -200px; left: -150px; }
+.blob-3 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(31,224,208,0.08) 0%, transparent 65%); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.noise { position: absolute; inset: 0; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 128px; }
+.vignette { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 35%, rgba(7,8,10,0.5) 100%); z-index: 1; }
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 80px;
+}
+
+/* Logo */
+.logo-area { display: flex; align-items: center; gap: 14px; margin-bottom: 52px; }
+.logo-svg { width: 36px; height: 36px; filter: drop-shadow(0 0 12px rgba(0,212,170,0.4)); }
+.logo-name { font-size: 16px; font-weight: 700; color: rgba(255,255,255,0.5); letter-spacing: 4px; }
+
+/* Hook */
+.hook {
+  font-size: 54px;
+  font-weight: 900;
+  color: white;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  margin-bottom: 44px;
+}
+
+/* Divider */
+.divider { width: 50px; height: 2px; background: linear-gradient(90deg, transparent, #00d4aa, transparent); margin-bottom: 44px; }
+
+/* Comparison */
+.compare {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 52px;
+}
+.compare-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.compare-num {
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+.compare-num.old { color: rgba(255,255,255,0.25); text-decoration: line-through; text-decoration-color: rgba(255,80,80,0.5); }
+.compare-num.new { color: #00d4aa; }
+.compare-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+.compare-vs {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.15);
+  letter-spacing: 2px;
+}
+
+/* Tagline */
+.tagline {
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+  max-width: 620px;
+  margin-bottom: 52px;
+}
+.tagline .hl { color: white; }
+
+/* URL */
+.url { font-size: 18px; font-weight: 700; color: #00d4aa; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="noise"></div>
+  <div class="vignette"></div>
+
+  <div class="content">
+    <div class="logo-area">
+      <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+        <defs><linearGradient id="grad" x1="18%" y1="8%" x2="82%" y2="92%"><stop offset="0%" stop-color="#1FE0D0"/><stop offset="45%" stop-color="#18CEC0"/><stop offset="100%" stop-color="#0A9A87"/></linearGradient></defs>
+        <polygon points="512,120 160,850 864,850" fill="none" stroke="url(#grad)" stroke-width="44" stroke-linejoin="round"/>
+        <polygon points="512,275.73 272.64,772.13 751.36,772.13" fill="none" stroke="url(#grad)" stroke-width="30" stroke-linejoin="round"/>
+      </svg>
+      <div class="logo-name">TETHRON</div>
+    </div>
+
+    <div class="hook">Your business shouldn't<br>need you to function.</div>
+
+    <div class="divider"></div>
+
+    <div class="compare">
+      <div class="compare-side">
+        <div class="compare-num old">$4,700</div>
+        <div class="compare-label">To hire a human</div>
+      </div>
+      <div class="compare-vs">VS</div>
+      <div class="compare-side">
+        <div class="compare-num new">$600</div>
+        <div class="compare-label">AI employee / month</div>
+      </div>
+    </div>
+
+    <div class="tagline"><span class="hl">No salary. No sick days. No turnover.</span><br>Every role. Every channel. Every hour.</div>
+
+    <div class="url">tethron.ai</div>
+  </div>
+</div>
+</body>
+</html>

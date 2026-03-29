@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+body {
+  width: 1584px;
+  height: 396px;
+  overflow: hidden;
+  background: rgb(7, 8, 10);
+  font-family: 'Inter', sans-serif;
+}
+.banner {
+  position: relative;
+  width: 1584px;
+  height: 396px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Flowing gradient blobs — wide ellipses to fill banner */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 1;
+}
+.blob-1 {
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(0,212,170,0.3) 0%, rgba(0,212,170,0.08) 45%, transparent 70%);
+  top: -100px;
+  left: -200px;
+}
+.blob-2 {
+  width: 900px;
+  height: 450px;
+  background: radial-gradient(ellipse, rgba(0,180,148,0.25) 0%, rgba(0,180,148,0.06) 45%, transparent 70%);
+  top: -80px;
+  right: -250px;
+}
+.blob-3 {
+  width: 700px;
+  height: 350px;
+  background: radial-gradient(ellipse, rgba(10,154,135,0.25) 0%, rgba(10,154,135,0.06) 45%, transparent 70%);
+  bottom: -120px;
+  left: 20%;
+}
+.blob-4 {
+  width: 500px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(31,224,208,0.18) 0%, transparent 60%);
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+}
+.blob-5 {
+  width: 600px;
+  height: 350px;
+  background: radial-gradient(ellipse, rgba(0,212,170,0.2) 0%, rgba(0,212,170,0.05) 45%, transparent 70%);
+  bottom: -100px;
+  right: 5%;
+}
+.blob-6 {
+  width: 500px;
+  height: 280px;
+  background: radial-gradient(ellipse, rgba(31,224,208,0.14) 0%, transparent 60%);
+  top: -60px;
+  left: 40%;
+}
+
+/* Subtle noise overlay */
+.noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* Content layout */
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+}
+
+/* Logo area — pinned top-left */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+  position: absolute;
+  top: 28px;
+  left: 60px;
+}
+.logo-svg {
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 0 25px rgba(0,212,170,0.5)) drop-shadow(0 0 60px rgba(0,212,170,0.2));
+}
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.logo-name {
+  font-size: 52px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 5px;
+}
+.logo-url {
+  font-size: 22px;
+  font-weight: 600;
+  color: #00d4aa;
+  letter-spacing: 2px;
+}
+
+/* Divider line */
+.divider {
+  display: none;
+}
+
+/* Headline — right side, vertically centered */
+.headline-area {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: right;
+}
+.headline {
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+.headline .accent {
+  color: #00d4aa;
+}
+.subline {
+  font-size: 17px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.5px;
+}
+.subline span {
+  color: rgba(255,255,255,0.3);
+  margin: 0 10px;
+}
+
+/* Vignette */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 90% 90% at 50% 50%, transparent 50%, rgba(7,8,10,0.4) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+<div class="banner">
+  <!-- Flowing blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+  <div class="blob blob-5"></div>
+  <div class="blob blob-6"></div>
+
+  <!-- Noise texture -->
+  <div class="noise"></div>
+
+  <!-- Vignette -->
+  <div class="vignette"></div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="logo-area">
+      <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+        <defs>
+          <linearGradient id="grad" x1="18%" y1="8%" x2="82%" y2="92%">
+            <stop offset="0%" stop-color="#1FE0D0"/>
+            <stop offset="45%" stop-color="#18CEC0"/>
+            <stop offset="100%" stop-color="#0A9A87"/>
+          </linearGradient>
+        </defs>
+        <polygon points="512,120 160,850 864,850" fill="none" stroke="url(#grad)" stroke-width="44" stroke-linejoin="round"/>
+        <polygon points="512,275.73 272.64,772.13 751.36,772.13" fill="none" stroke="url(#grad)" stroke-width="30" stroke-linejoin="round"/>
+      </svg>
+      <div class="logo-text">
+        <div class="logo-name">TETHRON</div>
+        <div class="logo-url">tethron.ai</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="headline-area">
+      <div class="headline">We install <span class="accent">AI employees</span><br>that run your business.</div>
+      <div class="subline">Dedicated hardware. <span>&middot;</span> Trained on your business. <span>&middot;</span> Not a chatbot.</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

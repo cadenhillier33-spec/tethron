@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tethron — Background Shader Previews</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #000; color: #fff; font-family: 'Inter', sans-serif; }
+.preview {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.preview-label {
+  position: absolute;
+  top: 24px; left: 32px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #00d4aa;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  z-index: 10;
+  background: rgba(0,0,0,0.5);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+.preview-content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  max-width: 700px;
+  padding: 0 32px;
+}
+.preview-content h1 {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.preview-content p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.5);
+}
+.divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00d4aa, transparent);
+}
+</style>
+</head>
+<body>
+
+<!-- OPTION A: Particle Wave Field -->
+<div class="preview" id="previewA">
+  <div class="preview-label">Option A — Particle Wave Field</div>
+  <canvas id="canvasA"></canvas>
+  <div class="preview-content">
+    <h1>We install AI employees<br>that run your business.</h1>
+    <p>Customer communication. Operations. Marketing. Scheduling. Reporting.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- OPTION B: Flowing Light Streaks -->
+<div class="preview" id="previewB">
+  <div class="preview-label">Option B — Flowing Light Streaks</div>
+  <canvas id="canvasB"></canvas>
+  <div class="preview-content">
+    <h1>We install AI employees<br>that run your business.</h1>
+    <p>Customer communication. Operations. Marketing. Scheduling. Reporting.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- OPTION C: Organic Blobs -->
+<div class="preview" id="previewC">
+  <div class="preview-label">Option C — Organic Metaballs</div>
+  <canvas id="canvasC"></canvas>
+  <div class="preview-content">
+    <h1>We install AI employees<br>that run your business.</h1>
+    <p>Customer communication. Operations. Marketing. Scheduling. Reporting.</p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+function createShader(canvasId, fragCode) {
+  var canvas = document.getElementById(canvasId);
+  var scene = new THREE.Scene();
+  var camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  var vs = 'varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}';
+  var uniforms = { uTime:{value:0}, uResolution:{value:new THREE.Vector2(window.innerWidth, window.innerHeight)} };
+  var mat = new THREE.ShaderMaterial({ vertexShader:vs, fragmentShader:fragCode, uniforms:uniforms });
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), mat));
+  window.addEventListener('resize', function(){
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+  });
+  return { renderer:renderer, scene:scene, camera:camera, uniforms:uniforms };
+}
+
+// OPTION A — Particle Wave Field (closest to the video)
+var fragA = [
+'precision highp float;',
+'varying vec2 vUv;',
+'uniform float uTime;',
+'uniform vec2 uResolution;',
+'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+'float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}',
+'float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<5;i++){v+=a*noise(p);p*=2.0;a*=0.5;}return v;}',
+'void main(){',
+'  vec2 uv = vUv;',
+'  float aspect = uResolution.x / uResolution.y;',
+'  vec2 p = vec2((uv.x - 0.5) * aspect, uv.y - 0.5);',
+'  float t = uTime * 0.15;',
+'  vec3 col = vec3(0.0);',
+'  vec3 cyan = vec3(0.0, 0.83, 0.67);',
+'  vec3 teal = vec3(0.0, 0.6, 0.5);',
+'  // Particle grid',
+'  for(float i = 0.0; i < 25.0; i++) {',
+'    for(float j = 0.0; j < 15.0; j++) {',
+'      vec2 gridPos = vec2((i/25.0 - 0.5) * aspect * 1.8, (j/15.0 - 0.5) * 1.2);',
+'      // Wave displacement',
+'      float wave = sin(gridPos.x * 3.0 + t * 2.0) * 0.04 + cos(gridPos.y * 4.0 + t * 1.5) * 0.03;',
+'      float wave2 = sin(gridPos.x * 5.0 - t * 1.2 + gridPos.y * 2.0) * 0.025;',
+'      gridPos.y += wave + wave2;',
+'      gridPos.x += cos(gridPos.y * 3.0 + t) * 0.015;',
+'      float d = length(p - gridPos);',
+'      float brightness = 0.0012 / (d * d + 0.0005);',
+'      float depthFade = 0.5 + 0.5 * sin(i * 0.5 + j * 0.3 + t);',
+'      col += mix(teal, cyan, depthFade) * brightness * 0.15;',
+'    }',
+'  }',
+'  // Vignette',
+'  vec2 vig = uv - 0.5;',
+'  col *= 1.0 - dot(vig, vig) * 1.5;',
+'  // Tone map',
+'  col = col / (col + 0.4);',
+'  col = max(col, vec3(0.02, 0.025, 0.03));',
+'  gl_FragColor = vec4(col, 1.0);',
+'}'
+].join('\n');
+
+// OPTION B — Flowing Light Streaks (the original shader we had)
+var fragB = [
+'precision highp float;',
+'varying vec2 vUv;',
+'uniform float uTime;',
+'uniform vec2 uResolution;',
+'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+'float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}',
+'float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<4;i++){v+=a*noise(p);p*=2.0;a*=0.5;}return v;}',
+'float streak(vec2 uv,float xP,float ang,float w,float s,float l,float yo){float ca=cos(ang),sa=sin(ang);vec2 c=vec2(xP,0.5+yo);vec2 r=vec2(ca*(uv.x-c.x)-sa*(uv.y-c.y),sa*(uv.x-c.x)+ca*(uv.y-c.y));return exp(-abs(r.x)/w*abs(r.x)/w*s)*smoothstep(1.0,0.3,abs(r.y)/l);}',
+'void main(){',
+'  vec2 uv=vUv; float t=uTime*0.08;',
+'  float n1=fbm(vec2(uv.x*2.0,uv.y*0.5+t*0.3))*0.015;',
+'  float n2=fbm(vec2(uv.x*1.5+3.0,uv.y*0.7+t*0.2))*0.012;',
+'  vec3 col=vec3(0.0);',
+'  vec3 cyan=vec3(0,0.831,0.667); vec3 teal=vec3(0,0.722,0.580);',
+'  vec3 mint=vec3(0,0.9,0.75); vec3 deepTeal=vec3(0,0.55,0.50);',
+'  col+=cyan*streak(uv+vec2(n1,0),0.38,-0.22,0.035,8.0,0.7,sin(t*0.5)*0.02)*0.55;',
+'  col+=mint*streak(uv+vec2(n2,0),0.45,-0.28,0.045,6.0,0.75,sin(t*0.4+1.0)*0.015)*0.65;',
+'  col+=teal*streak(uv+vec2(-n1,0),0.52,-0.18,0.03,10.0,0.65,sin(t*0.6+2.0)*0.02)*0.5;',
+'  col+=cyan*streak(uv+vec2(n1*0.5,0),0.48,-0.20,0.025,12.0,0.6,sin(t*0.45+5.0)*0.025)*0.35;',
+'  col+=mint*streak(uv+vec2(n2*0.3,0),0.42,-0.24,0.012,18.0,0.55,sin(t*0.55+1.5)*0.015)*0.6;',
+'  col+=teal*streak(uv,0.46,-0.22,0.12,2.0,0.9,0.0)*0.08;',
+'  col*=1.0+sin(t*0.6)*0.08;',
+'  vec2 vig=uv-0.5; col*=clamp(pow(1.0-dot(vig,vig)*2.2,1.4),0.0,1.0);',
+'  col=col/(col+0.6);',
+'  col+=vec3((hash(uv*uResolution+fract(uTime))-0.5)*0.015);',
+'  col=max(col,vec3(0.027,0.031,0.039));',
+'  gl_FragColor=vec4(col,1.0);',
+'}'
+].join('\n');
+
+// OPTION C — Organic Metaballs (Hyperliquid style)
+var fragC = [
+'precision highp float;',
+'varying vec2 vUv;',
+'uniform float uTime;',
+'uniform vec2 uResolution;',
+'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+'float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}',
+'float fbm(vec2 p){float v=0.0,a=0.5;mat2 rot=mat2(0.8,0.6,-0.6,0.8);for(int i=0;i<5;i++){v+=a*noise(p);p=rot*p*2.0;a*=0.5;}return v;}',
+'float metaball(vec2 uv,vec2 c,float r){float d=length(uv-c);return r*r/(d*d+0.001);}',
+'void main(){',
+'  vec2 uv=vUv;',
+'  float aspect=uResolution.x/uResolution.y;',
+'  vec2 p=vec2((uv.x-0.5)*aspect,uv.y-0.5);',
+'  float t=uTime*0.06;',
+'  float flow1=fbm(p*1.5+vec2(t*0.4,t*0.3));',
+'  float flow2=fbm(p*2.0+vec2(-t*0.3,t*0.5)+5.0);',
+'  float meta=0.0;',
+'  meta+=metaball(p,vec2(sin(t*0.7)*0.4+flow1*0.1,cos(t*0.5)*0.3+flow2*0.08),0.22);',
+'  meta+=metaball(p,vec2(cos(t*0.6+2.0)*0.35,sin(t*0.8+1.0)*0.25+flow1*0.06),0.20);',
+'  meta+=metaball(p,vec2(sin(t*0.4+4.0)*0.5,cos(t*0.6+3.0)*0.35),0.18);',
+'  meta+=metaball(p,vec2(cos(t*0.9+1.5)*0.3+flow2*0.08,sin(t*0.7+2.5)*0.4),0.15);',
+'  meta+=metaball(p,vec2(sin(t*0.5+3.5)*0.45,cos(t*0.4+0.5)*0.3-flow1*0.05),0.16);',
+'  meta+=metaball(p,vec2(cos(t*1.1)*0.25,sin(t*0.9+4.0)*0.2),0.10);',
+'  vec3 col=vec3(0.0);',
+'  vec3 cyan=vec3(0.122,0.878,0.816);',
+'  vec3 teal=vec3(0.039,0.604,0.529);',
+'  vec3 deepGreen=vec3(0.02,0.30,0.26);',
+'  vec3 darkBg=vec3(0.015,0.06,0.05);',
+'  float blobThresh=smoothstep(0.8,1.8,meta);',
+'  float blobEdge=smoothstep(1.4,2.2,meta);',
+'  float blobCore=smoothstep(2.5,4.0,meta);',
+'  vec3 blobColor=mix(deepGreen,teal,blobEdge);',
+'  blobColor=mix(blobColor,cyan,blobCore*0.6);',
+'  float colorNoise=fbm(p*3.0+t*0.2);',
+'  blobColor=mix(blobColor,cyan*0.8,colorNoise*blobThresh*0.3);',
+'  col=mix(darkBg,blobColor,blobThresh);',
+'  float highlight=smoothstep(2.0,3.5,meta)*(1.0-smoothstep(3.5,5.0,meta));',
+'  col+=cyan*highlight*0.3;',
+'  float ambient=fbm(p*1.0+vec2(t*0.1,-t*0.15));',
+'  col+=deepGreen*ambient*0.08*(1.0-blobThresh);',
+'  vec2 vig=uv-0.5;',
+'  col*=1.0-dot(vig,vig)*1.5;',
+'  col=col/(col+0.5);',
+'  col+=vec3((hash(uv*uResolution+fract(uTime))-0.5)*0.02);',
+'  col=max(col,vec3(0.015,0.02,0.025));',
+'  gl_FragColor=vec4(col,1.0);',
+'}'
+].join('\n');
+
+var sA = createShader('canvasA', fragA);
+var sB = createShader('canvasB', fragB);
+var sC = createShader('canvasC', fragC);
+
+(function animate(time) {
+  var t = time * 0.001;
+  sA.uniforms.uTime.value = t;
+  sB.uniforms.uTime.value = t;
+  sC.uniforms.uTime.value = t;
+  sA.renderer.render(sA.scene, sA.camera);
+  sB.renderer.render(sB.scene, sB.camera);
+  sC.renderer.render(sC.scene, sC.camera);
+  requestAnimationFrame(animate);
+})(0);
+</script>
+</body>
+</html>
