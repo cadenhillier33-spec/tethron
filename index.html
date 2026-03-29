@@ -1220,16 +1220,54 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 .ba-item-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
 /* Slider handle — hidden on desktop */
 .ba-slider-handle { display: none; }
-/* Mobile: stack before/after */
+/* Segmented toggle (mobile only) */
+.ba-toggle { display: none; }
+/* Mobile: toggle between before/after */
 @media (max-width: 900px) {
+  .ba-toggle {
+    display: flex;
+    margin: 0 auto 0;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 3px;
+    width: fit-content;
+  }
+  .ba-toggle-btn {
+    padding: 8px 22px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.35);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .ba-toggle-btn.active {
+    background: rgba(0,212,170,0.12);
+    color: #00d4aa;
+  }
   .ba-slider-inner {
     grid-template-columns: 1fr;
     min-height: auto;
   }
-  .ba-before { padding: 32px 24px; }
-  .ba-after {
-    padding: 32px 24px;
+  .ba-before, .ba-after {
+    padding: 24px 20px;
+    transition: opacity 0.3s, max-height 0.4s;
+    overflow: hidden;
   }
+  .ba-before.ba-hidden, .ba-after.ba-hidden {
+    opacity: 0;
+    max-height: 0;
+    padding: 0 20px;
+    pointer-events: none;
+  }
+  .ba-col-title { display: none; }
+  .ba-item { margin-bottom: 16px; }
+  .ba-item-title { font-size: 14px; }
+  .ba-item-desc { font-size: 12.5px; }
 }
 
 /* ===== TABBED INTEGRATIONS ===== */
@@ -2343,6 +2381,10 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   <div class="eyebrow">The Difference</div>
   <h2 class="section-h2">What your life looks like <span class="muted">before and after.</span></h2>
   <p class="section-p">This is what business owners tell us after their first 30 days with an AI employee.</p>
+  <div class="ba-toggle">
+    <button class="ba-toggle-btn active" onclick="toggleBA('before')">Before Tethron</button>
+    <button class="ba-toggle-btn" onclick="toggleBA('after')">After Tethron</button>
+  </div>
   <div class="ba-slider-wrap" id="baSlider">
     <div class="ba-slider-inner">
       <div class="ba-before">
@@ -2675,6 +2717,29 @@ function switchDock(index) {
     content.querySelector('.dock-content-stat').textContent = dockData[index].stat;
     content.style.opacity = '1';
   }, 150);
+}
+
+// ===== BEFORE/AFTER TOGGLE =====
+function toggleBA(side) {
+  var before = document.querySelector('.ba-before');
+  var after = document.querySelector('.ba-after');
+  var btns = document.querySelectorAll('.ba-toggle-btn');
+  if (side === 'before') {
+    before.classList.remove('ba-hidden');
+    after.classList.add('ba-hidden');
+    btns[0].classList.add('active');
+    btns[1].classList.remove('active');
+  } else {
+    after.classList.remove('ba-hidden');
+    before.classList.add('ba-hidden');
+    btns[1].classList.add('active');
+    btns[0].classList.remove('active');
+  }
+}
+// Init: hide "after" on mobile
+if (window.innerWidth <= 900) {
+  var af = document.querySelector('.ba-after');
+  if (af) af.classList.add('ba-hidden');
 }
 
 // ===== TABBED INTEGRATIONS =====
