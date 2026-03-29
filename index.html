@@ -297,16 +297,11 @@ a { color: inherit; text-decoration: none; }
   object-fit: cover;
   opacity: 0.8;
 }
-/* Hide video on mobile — use gradient fallback instead */
-@media (max-width: 900px) {
-  #video-bg { display: none !important; }
-  .hero {
-    background:
-      radial-gradient(ellipse 80% 60% at 70% 80%, rgba(0,212,170,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 20% 70%, rgba(0,180,148,0.08) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 50% 30%, rgba(10,154,135,0.06) 0%, transparent 50%),
-      rgb(7, 8, 10) !important;
-  }
+/* Force hide native video controls on all platforms */
+video::-webkit-media-controls { display: none !important; opacity: 0 !important; }
+video::-webkit-media-controls-panel { display: none !important; opacity: 0 !important; }
+video::-webkit-media-controls-play-button { display: none !important; opacity: 0 !important; }
+video::-webkit-media-controls-start-playback-button { display: none !important; opacity: 0 !important; }
 }
 #video-overlay {
   position: absolute;
@@ -1763,7 +1758,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 
 <!-- 1. HERO -->
 <section class="hero" style="overflow: hidden;">
-  <video id="video-bg" autoplay muted loop playsinline>
+  <video id="video-bg" autoplay muted loop playsinline webkit-playsinline disableRemotePlayback>
     <source src="/bg-video.mp4" type="video/mp4">
   </video>
   <div id="video-overlay"></div>
@@ -3072,15 +3067,41 @@ resetSpotInterval();
 (function() {
   var v = document.getElementById('video-bg');
   if (!v) return;
+  // Force muted property (some iOS versions need this set via JS)
+  v.muted = true;
+  v.setAttribute('muted', '');
+  v.setAttribute('playsinline', '');
+  v.setAttribute('webkit-playsinline', '');
   v.removeAttribute('controls');
+  // Remove any default controls
+  v.controls = false;
+
   function tryPlay() {
+    v.muted = true;
+    v.controls = false;
     var p = v.play();
-    if (p && p.catch) p.catch(function() {});
+    if (p && p.then) {
+      p.then(function() {}).catch(function() {
+        // If autoplay fails, try again on next user interaction
+      });
+    }
   }
+
+  // Try immediately
   tryPlay();
-  document.addEventListener('touchstart', tryPlay, { once: true });
-  document.addEventListener('click', tryPlay, { once: true });
-  document.addEventListener('scroll', tryPlay, { once: true });
+  // Try on DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', tryPlay);
+  // Try on load
+  window.addEventListener('load', tryPlay);
+  // Try on any user interaction
+  ['touchstart', 'touchend', 'click', 'scroll'].forEach(function(evt) {
+    document.addEventListener(evt, function() {
+      tryPlay();
+    }, { once: true, passive: true });
+  });
+  // Try when video data is loaded
+  v.addEventListener('loadeddata', tryPlay);
+  v.addEventListener('canplay', tryPlay);
 })();
 </script>
 
