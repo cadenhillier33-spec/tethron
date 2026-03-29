@@ -1758,9 +1758,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 
 <!-- 1. HERO -->
 <section class="hero" style="overflow: hidden;">
-  <video id="video-bg" autoplay muted loop playsinline webkit-playsinline disableRemotePlayback>
-    <source src="/bg-video.mp4" type="video/mp4">
-  </video>
+  <video id="video-bg" autoplay muted loop playsinline webkit-playsinline disableRemotePlayback poster="/bg-video-poster.jpg"></video>
   <div id="video-overlay"></div>
   <div class="hero-content">
     <div class="hero-logo">
@@ -3062,46 +3060,46 @@ resetSpotInterval();
 })();
 </script>
 
-<!-- Force video autoplay on mobile -->
+<!-- Force video autoplay — fetch as blob for iOS Safari compatibility -->
 <script>
 (function() {
   var v = document.getElementById('video-bg');
   if (!v) return;
-  // Force muted property (some iOS versions need this set via JS)
+
   v.muted = true;
-  v.setAttribute('muted', '');
-  v.setAttribute('playsinline', '');
-  v.setAttribute('webkit-playsinline', '');
-  v.removeAttribute('controls');
-  // Remove any default controls
   v.controls = false;
+  v.playsInline = true;
 
-  function tryPlay() {
-    v.muted = true;
-    v.controls = false;
-    var p = v.play();
-    if (p && p.then) {
-      p.then(function() {}).catch(function() {
-        // If autoplay fails, try again on next user interaction
-      });
-    }
-  }
+  // Fetch video as blob — this bypasses iOS Safari autoplay restrictions
+  fetch('/bg-video.mp4')
+    .then(function(r) { return r.blob(); })
+    .then(function(blob) {
+      var url = URL.createObjectURL(blob);
+      v.src = url;
+      v.load();
+      v.muted = true;
+      v.controls = false;
+      var p = v.play();
+      if (p && p.catch) p.catch(function() {});
+    })
+    .catch(function() {
+      // Fallback: use source directly
+      v.src = '/bg-video.mp4';
+      v.load();
+      v.muted = true;
+      var p = v.play();
+      if (p && p.catch) p.catch(function() {});
+    });
 
-  // Try immediately
-  tryPlay();
-  // Try on DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', tryPlay);
-  // Try on load
-  window.addEventListener('load', tryPlay);
-  // Try on any user interaction
+  // Also try play on any user interaction as backup
   ['touchstart', 'touchend', 'click', 'scroll'].forEach(function(evt) {
     document.addEventListener(evt, function() {
-      tryPlay();
+      v.muted = true;
+      v.controls = false;
+      var p = v.play();
+      if (p && p.catch) p.catch(function() {});
     }, { once: true, passive: true });
   });
-  // Try when video data is loaded
-  v.addEventListener('loadeddata', tryPlay);
-  v.addEventListener('canplay', tryPlay);
 })();
 </script>
 
