@@ -1370,6 +1370,12 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 .pricing-note { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
 .pricing-bottom { text-align: center; margin-top: 48px; }
 .pricing-scarcity { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 20px; font-weight: 500; }
+.scarcity-bar { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 20px; }
+.scarcity-dots { display: flex; gap: 6px; }
+.scarcity-dot { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.1); background: transparent; }
+.scarcity-dot.filled { background: #00d4aa; border-color: #00d4aa; box-shadow: 0 0 8px rgba(0,212,170,0.4); }
+.scarcity-dot.taken { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.15); }
+.scarcity-label { font-size: 13px; font-weight: 600; color: #00d4aa; letter-spacing: 0.5px; }
 
 /* ===== FAQ ===== */
 .faq-list { margin-top: 48px; }
@@ -2608,6 +2614,15 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
     </div>
   </div>
   <div class="pricing-bottom">
+    <div class="scarcity-bar">
+      <div class="scarcity-dots">
+        <div class="scarcity-dot taken"></div>
+        <div class="scarcity-dot taken"></div>
+        <div class="scarcity-dot taken"></div>
+        <div class="scarcity-dot filled"></div>
+      </div>
+      <div class="scarcity-label">1 spot left for April</div>
+    </div>
     <p class="pricing-scarcity">We only onboard 4 new businesses per month to maintain quality.</p>
     <a href="/contact" class="btn btn-orange">Book Your Free AI Audit — See What Your Employee Would Do &rarr;</a>
   </div>
@@ -2618,6 +2633,10 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   <div class="eyebrow">Common Questions</div>
   <h2 class="section-h2">Everything you need to know <span class="muted">before starting.</span></h2>
   <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question">How is this different from a chatbot?</button>
+      <div class="faq-answer"><div class="faq-answer-inner">Night and day. Chatbots sit on your website and answer basic questions from a script. An AI employee runs your entire operation — it handles customer communication across every channel, manages your CRM, posts on social media, follows up on leads, books appointments, chases payments, coordinates vendors, and delivers you a daily report. It runs on its own dedicated hardware, is trained specifically on your business, and speaks in your voice. It's not a widget on your site. It's a team member that works 24/7.</div></div>
+    </div>
     <div class="faq-item">
       <button class="faq-question">What can the AI employee actually do?</button>
       <div class="faq-answer"><div class="faq-answer-inner">The short answer: a lot more than you'd expect. AI employees handle customer communication across every channel (phone, email, text, social, web chat), manage your CRM and operations, run your marketing and social media, handle scheduling and calendar management, monitor and respond to reviews, coordinate with vendors, chase late payments, draft newsletters, deliver daily intelligence reports, and more. Every business is different — that's why we do the free audit first. It maps every role your AI employee would fill on Day 1, and shows the roadmap for what they'll take on over time. Most owners are shocked by how many hats they've been wearing that don't require a human.</div></div>
