@@ -1132,14 +1132,119 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   .test-quote-text { font-size: 18px; }
 }
 
-/* ===== BEFORE / AFTER ===== */
-.ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
-.ba-col-title { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-.ba-before .ba-col-title { color: rgba(255,255,255,0.35); }
-.ba-after .ba-col-title { color: #22c55e; }
-.ba-item { margin-bottom: 20px; }
+/* ===== BEFORE / AFTER SLIDER ===== */
+.ba-slider-wrap {
+  position: relative;
+  margin-top: 48px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.025);
+}
+.ba-slider-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 460px;
+}
+.ba-before, .ba-after {
+  padding: 40px;
+}
+.ba-before {
+  background: rgba(255,255,255,0.01);
+}
+.ba-after {
+  background: rgba(0,212,170,0.02);
+}
+.ba-col-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.ba-before .ba-col-title { color: rgba(255,255,255,0.3); }
+.ba-after .ba-col-title { color: #00d4aa; }
+.ba-item { margin-bottom: 22px; }
 .ba-item-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
 .ba-item-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+/* Slider handle */
+.ba-slider-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,212,170,0.5) 20%, rgba(0,212,170,0.5) 80%, transparent 100%);
+  z-index: 10;
+  cursor: col-resize;
+  transform: translateX(-50%);
+  transition: left 0.05s ease-out;
+}
+.ba-slider-knob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgb(7, 8, 10);
+  border: 2px solid rgba(0,212,170,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0,212,170,0.15);
+  cursor: col-resize;
+}
+.ba-slider-knob svg {
+  width: 18px;
+  height: 18px;
+  fill: #00d4aa;
+}
+/* Clip the after panel based on slider */
+.ba-after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 50%;
+  overflow: hidden;
+}
+/* Mobile: vertical slider */
+@media (max-width: 900px) {
+  .ba-slider-inner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .ba-before { padding: 32px 24px; }
+  .ba-after {
+    position: relative;
+    left: auto;
+    padding: 32px 24px;
+    clip-path: inset(0 0 0 0);
+  }
+  .ba-slider-handle {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, rgba(0,212,170,0.5) 20%, rgba(0,212,170,0.5) 80%, transparent 100%);
+    position: relative;
+    transform: none;
+    cursor: row-resize;
+  }
+  .ba-slider-knob {
+    cursor: row-resize;
+  }
+  .ba-slider-knob svg {
+    transform: rotate(90deg);
+  }
+}
 
 /* ===== TABBED INTEGRATIONS ===== */
 .int-tabs {
@@ -2312,22 +2417,29 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   <div class="eyebrow">The Difference</div>
   <h2 class="section-h2">What your life looks like <span class="muted">before and after.</span></h2>
   <p class="section-p">This is what business owners tell us after their first 30 days with an AI employee.</p>
-  <div class="ba-grid">
-    <div class="ba-before">
-      <div class="ba-col-title">Before Tethron</div>
-      <div class="ba-item"><div class="ba-item-title">You ARE the business</div><p class="ba-item-desc">If you stop working, everything stops. You can't step away without things falling apart.</p></div>
-      <div class="ba-item"><div class="ba-item-title">Buried in busywork</div><p class="ba-item-desc">You didn't start this business to answer emails at 10pm and chase down no-shows all day.</p></div>
-      <div class="ba-item"><div class="ba-item-title">Money slipping through the cracks</div><p class="ba-item-desc">You know you're losing revenue — you just can't pinpoint where because you're too busy running the day-to-day.</p></div>
-      <div class="ba-item"><div class="ba-item-title">Can't afford to hire, can't afford not to</div><p class="ba-item-desc">You need help yesterday but a full-time salary plus benefits isn't in the budget.</p></div>
-      <div class="ba-item"><div class="ba-item-title">Growing means grinding harder</div><p class="ba-item-desc">More clients just means more work on your plate — there's no leverage.</p></div>
-    </div>
-    <div class="ba-after">
-      <div class="ba-col-title">After Tethron</div>
-      <div class="ba-item"><div class="ba-item-title">Your business runs without you</div><p class="ba-item-desc">Customers answered, operations managed, marketing posted, reports delivered — all before you finish your coffee.</p></div>
-      <div class="ba-item"><div class="ba-item-title">You only do work that matters</div><p class="ba-item-desc">The grind is gone. Customer communication, scheduling, vendor coordination, and back-office busywork are someone else's job now.</p></div>
-      <div class="ba-item"><div class="ba-item-title">Nothing falls through the cracks</div><p class="ba-item-desc">Every customer, every invoice, every review, every social post, every follow-up — someone's always on it. 24 hours a day.</p></div>
-      <div class="ba-item"><div class="ba-item-title">A team member who never leaves</div><p class="ba-item-desc">No turnover, no training new hires, no two-week notice. They just keep taking on more — marketing this month, vendor management the next.</p></div>
-      <div class="ba-item"><div class="ba-item-title">Growth without the growing pains</div><p class="ba-item-desc">Double your clients without doubling your team. Your AI employee handles the operations, marketing, and customer relationships that used to require extra staff.</p></div>
+  <div class="ba-slider-wrap" id="baSlider">
+    <div class="ba-slider-inner">
+      <div class="ba-before">
+        <div class="ba-col-title">Before Tethron</div>
+        <div class="ba-item"><div class="ba-item-title">You ARE the business</div><p class="ba-item-desc">If you stop working, everything stops. You can't step away without things falling apart.</p></div>
+        <div class="ba-item"><div class="ba-item-title">Buried in busywork</div><p class="ba-item-desc">You didn't start this business to answer emails at 10pm and chase down no-shows all day.</p></div>
+        <div class="ba-item"><div class="ba-item-title">Money slipping through the cracks</div><p class="ba-item-desc">You know you're losing revenue — you just can't pinpoint where because you're too busy running the day-to-day.</p></div>
+        <div class="ba-item"><div class="ba-item-title">Can't afford to hire, can't afford not to</div><p class="ba-item-desc">You need help yesterday but a full-time salary plus benefits isn't in the budget.</p></div>
+        <div class="ba-item"><div class="ba-item-title">Growing means grinding harder</div><p class="ba-item-desc">More clients just means more work on your plate — there's no leverage.</p></div>
+      </div>
+      <div class="ba-slider-handle" id="baHandle">
+        <div class="ba-slider-knob">
+          <svg viewBox="0 0 24 24"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/><path d="M8 5l-5 7 5 7" fill="none" stroke="#00d4aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 5l5 7-5 7" fill="none" stroke="#00d4aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="ba-after">
+        <div class="ba-col-title">After Tethron</div>
+        <div class="ba-item"><div class="ba-item-title">Your business runs without you</div><p class="ba-item-desc">Customers answered, operations managed, marketing posted, reports delivered — all before you finish your coffee.</p></div>
+        <div class="ba-item"><div class="ba-item-title">You only do work that matters</div><p class="ba-item-desc">The grind is gone. Customer communication, scheduling, vendor coordination, and back-office busywork are someone else's job now.</p></div>
+        <div class="ba-item"><div class="ba-item-title">Nothing falls through the cracks</div><p class="ba-item-desc">Every customer, every invoice, every review, every social post, every follow-up — someone's always on it. 24 hours a day.</p></div>
+        <div class="ba-item"><div class="ba-item-title">A team member who never leaves</div><p class="ba-item-desc">No turnover, no training new hires, no two-week notice. They just keep taking on more — marketing this month, vendor management the next.</p></div>
+        <div class="ba-item"><div class="ba-item-title">Growth without the growing pains</div><p class="ba-item-desc">Double your clients without doubling your team. Your AI employee handles the operations, marketing, and customer relationships that used to require extra staff.</p></div>
+      </div>
     </div>
   </div>
 </div>
@@ -2941,6 +3053,47 @@ resetSpotInterval();
   feed.addEventListener('mouseenter',function(){paused=true;clearTimeout(resumeTimer)});
   feed.addEventListener('mouseleave',function(){scheduleResume(1500)});
   feed.addEventListener('wheel',function(){paused=true;scheduleResume(2500)},{passive:true});
+})();
+</script>
+
+<!-- Before/After Slider -->
+<script>
+(function() {
+  var wrap = document.getElementById('baSlider');
+  var handle = document.getElementById('baHandle');
+  var afterPanel = wrap ? wrap.querySelector('.ba-after') : null;
+  if (!wrap || !handle || !afterPanel) return;
+
+  var dragging = false;
+  var isMobile = window.innerWidth <= 900;
+
+  function updateSlider(pct) {
+    if (isMobile) return;
+    pct = Math.max(15, Math.min(85, pct));
+    handle.style.left = pct + '%';
+    afterPanel.style.left = pct + '%';
+  }
+
+  function getPercent(e) {
+    var rect = wrap.getBoundingClientRect();
+    var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    return (x / rect.width) * 100;
+  }
+
+  handle.addEventListener('mousedown', function(e) { dragging = true; e.preventDefault(); });
+  handle.addEventListener('touchstart', function(e) { dragging = true; }, { passive: true });
+
+  document.addEventListener('mousemove', function(e) { if (dragging) updateSlider(getPercent(e)); });
+  document.addEventListener('touchmove', function(e) { if (dragging) updateSlider(getPercent(e)); }, { passive: true });
+
+  document.addEventListener('mouseup', function() { dragging = false; });
+  document.addEventListener('touchend', function() { dragging = false; });
+
+  wrap.addEventListener('click', function(e) {
+    if (!isMobile) updateSlider(getPercent(e));
+  });
+
+  window.addEventListener('resize', function() { isMobile = window.innerWidth <= 900; });
 })();
 </script>
 
