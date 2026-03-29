@@ -20,7 +20,9 @@
 <style>
 /* ===== RESET & BASE ===== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { overflow-x: hidden; width: 100%; }
+html { overflow-x: hidden; overscroll-behavior-x: none; }
+body { overflow-x: hidden; width: 100%; position: relative; }
+.section, .waterfall-section, .trust-bar, .closing-cta, footer, .hero { overflow-x: clip; }
 html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 body {
   background: rgb(7, 8, 10);
