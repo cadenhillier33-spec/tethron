@@ -1180,50 +1180,9 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 .ba-item { margin-bottom: 22px; }
 .ba-item-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
 .ba-item-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
-/* Slider handle */
-.ba-slider-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 3px;
-  background: linear-gradient(180deg, transparent 0%, rgba(0,212,170,0.5) 20%, rgba(0,212,170,0.5) 80%, transparent 100%);
-  z-index: 10;
-  cursor: col-resize;
-  transform: translateX(-50%);
-  transition: left 0.05s ease-out;
-}
-.ba-slider-knob {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgb(7, 8, 10);
-  border: 2px solid rgba(0,212,170,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 20px rgba(0,212,170,0.15);
-  cursor: col-resize;
-}
-.ba-slider-knob svg {
-  width: 18px;
-  height: 18px;
-  fill: #00d4aa;
-}
-/* Clip the after panel based on slider */
-.ba-after {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 50%;
-  overflow: hidden;
-}
-/* Mobile: vertical slider */
+/* Slider handle — hidden on desktop */
+.ba-slider-handle { display: none; }
+/* Mobile: stack before/after */
 @media (max-width: 900px) {
   .ba-slider-inner {
     grid-template-columns: 1fr;
@@ -1231,28 +1190,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   }
   .ba-before { padding: 32px 24px; }
   .ba-after {
-    position: relative;
-    left: auto;
     padding: 32px 24px;
-    clip-path: inset(0 0 0 0);
-  }
-  .ba-slider-handle {
-    left: 0;
-    right: 0;
-    top: auto;
-    bottom: auto;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent 0%, rgba(0,212,170,0.5) 20%, rgba(0,212,170,0.5) 80%, transparent 100%);
-    position: relative;
-    transform: none;
-    cursor: row-resize;
-  }
-  .ba-slider-knob {
-    cursor: row-resize;
-  }
-  .ba-slider-knob svg {
-    transform: rotate(90deg);
   }
 }
 
@@ -2353,11 +2291,6 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
         <div class="ba-item"><div class="ba-item-title">Can't afford to hire, can't afford not to</div><p class="ba-item-desc">You need help yesterday but a full-time salary plus benefits isn't in the budget.</p></div>
         <div class="ba-item"><div class="ba-item-title">Growing means grinding harder</div><p class="ba-item-desc">More clients just means more work on your plate — there's no leverage.</p></div>
       </div>
-      <div class="ba-slider-handle" id="baHandle">
-        <div class="ba-slider-knob">
-          <svg viewBox="0 0 24 24"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/><path d="M8 5l-5 7 5 7" fill="none" stroke="#00d4aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 5l5 7-5 7" fill="none" stroke="#00d4aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-      </div>
       <div class="ba-after">
         <div class="ba-col-title">After Tethron</div>
         <div class="ba-item"><div class="ba-item-title">Your business runs without you</div><p class="ba-item-desc">Customers answered, operations managed, marketing posted, reports delivered — all before you finish your coffee.</p></div>
@@ -3068,46 +3001,7 @@ resetSpotInterval();
 })();
 </script>
 
-<!-- Before/After Slider -->
-<script>
-(function() {
-  var wrap = document.getElementById('baSlider');
-  var handle = document.getElementById('baHandle');
-  var afterPanel = wrap ? wrap.querySelector('.ba-after') : null;
-  if (!wrap || !handle || !afterPanel) return;
-
-  var dragging = false;
-  var isMobile = window.innerWidth <= 900;
-
-  function updateSlider(pct) {
-    if (isMobile) return;
-    pct = Math.max(15, Math.min(85, pct));
-    handle.style.left = pct + '%';
-    afterPanel.style.left = pct + '%';
-  }
-
-  function getPercent(e) {
-    var rect = wrap.getBoundingClientRect();
-    var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    return (x / rect.width) * 100;
-  }
-
-  handle.addEventListener('mousedown', function(e) { dragging = true; e.preventDefault(); });
-  handle.addEventListener('touchstart', function(e) { dragging = true; }, { passive: true });
-
-  document.addEventListener('mousemove', function(e) { if (dragging) updateSlider(getPercent(e)); });
-  document.addEventListener('touchmove', function(e) { if (dragging) updateSlider(getPercent(e)); }, { passive: true });
-
-  document.addEventListener('mouseup', function() { dragging = false; });
-  document.addEventListener('touchend', function() { dragging = false; });
-
-  wrap.addEventListener('click', function(e) {
-    if (!isMobile) updateSlider(getPercent(e));
-  });
-
-  window.addEventListener('resize', function() { isMobile = window.innerWidth <= 900; });
-})();
-</script>
+<!-- Before/After slider JS removed -->
 
 <!-- WebGL Light Streaks (Three.js) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
