@@ -792,17 +792,19 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   letter-spacing: 1.8px;
   color: rgba(0,212,170,0.6);
   margin-bottom: 10px;
+  text-align: center;
 }
 .wf-items {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 6px;
 }
 .wf-item {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 5px 12px;
+  padding: 6px 10px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -810,6 +812,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   font-weight: 500;
   color: rgba(255,255,255,0.6);
   white-space: nowrap;
+  text-align: center;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 .wf-item:hover {
@@ -817,6 +820,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   border-color: rgba(0,212,170,0.2);
   color: rgba(255,255,255,0.85);
 }
+.wf-item.wf-full { grid-column: 1 / -1; max-width: 60%; margin: 0 auto; }
 .wf-item .wf-icon {
   font-size: 13px;
   line-height: 1;
@@ -832,7 +836,8 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 }
 @media (max-width: 600px) {
   .wf-group { padding: 12px 14px 8px; }
-  .wf-item { font-size: 11.5px; padding: 4px 10px; }
+  .wf-item { font-size: 11.5px; padding: 5px 8px; }
+  .wf-items { gap: 5px; }
 }
 
 /* ===== LIVE DEMO ===== */
@@ -1849,7 +1854,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
             <span class="wf-item"><span class="wf-icon">◷</span>Books appointments</span>
             <span class="wf-item"><span class="wf-icon">⇄</span>Coordinates vendors</span>
             <span class="wf-item"><span class="wf-icon">⎗</span>Handles intake</span>
-            <span class="wf-item"><span class="wf-icon">$</span>Chases late payments</span>
+            <span class="wf-item wf-full"><span class="wf-icon">$</span>Chases late payments</span>
           </div>
         </div>
         <div class="wf-group">
@@ -1868,7 +1873,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
             <span class="wf-item"><span class="wf-icon">↗</span>Spots missed revenue</span>
             <span class="wf-item"><span class="wf-icon">⚑</span>Flags at-risk customers</span>
             <span class="wf-item"><span class="wf-icon">⊞</span>Analyzes trends</span>
-            <span class="wf-item"><span class="wf-icon">▦</span>Runs daily reports</span>
+            <span class="wf-item wf-full"><span class="wf-icon">▦</span>Runs daily reports</span>
           </div>
         </div>
       </div>
