@@ -2618,7 +2618,7 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
       <div class="scarcity-dots" id="scarcityDots"></div>
       <div class="scarcity-label" id="scarcityLabel"></div>
     </div>
-    <p class="pricing-scarcity">We only onboard 4 new businesses per month to maintain quality.</p>
+    <p class="pricing-scarcity">We only onboard 15 new businesses per month to maintain quality.</p>
     <a href="/contact" class="btn btn-orange">Book Your Free AI Audit — See What Your Employee Would Do &rarr;</a>
   </div>
 </div>
@@ -3135,16 +3135,20 @@ resetSpotInterval();
   var day = now.getDate();
   var month = now.getMonth();
   var monthName = months[month];
-  // Spots fill up as the month progresses: 1-7 = 3 left, 8-14 = 2 left, 15-22 = 1 left, 23+ = 0 left (waitlist)
+  // 15 spots per month. Show 5 dots as visual summary. Spots fill as month progresses.
+  var total = 15;
   var taken;
-  if (day <= 7) taken = 1;
-  else if (day <= 14) taken = 2;
-  else if (day <= 22) taken = 3;
-  else taken = 4;
-  var remaining = 4 - taken;
-  for (var i = 0; i < 4; i++) {
+  if (day <= 7) taken = 4;
+  else if (day <= 14) taken = 8;
+  else if (day <= 22) taken = 12;
+  else if (day <= 28) taken = 14;
+  else taken = 15;
+  var remaining = total - taken;
+  // Show 5 dots as visual indicator (each dot = 3 spots)
+  var dotsFilled = Math.ceil(taken / 3);
+  for (var i = 0; i < 5; i++) {
     var d = document.createElement('div');
-    d.className = 'scarcity-dot ' + (i < taken ? 'taken' : 'filled');
+    d.className = 'scarcity-dot ' + (i < dotsFilled ? 'taken' : 'filled');
     dots.appendChild(d);
   }
   if (remaining > 0) {
