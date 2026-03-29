@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Employee vs Hiring: The Real Cost Comparison | Tethron Blog</title>
+<meta name="description" content="A full-time hire costs $45K-$65K in salary, $4,700 to recruit, and months to train. An AI employee costs $600/month and works 24/7. Here's the honest math.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="AI Employee vs Hiring: The Real Cost Comparison | Tethron" />
+<meta property="og:description" content="A full-time hire costs $45K-$65K plus benefits. An AI employee costs $600/month and never calls in sick. The real math." />
+<meta property="og:url" content="https://tethron.ai/blog/ai-employee-vs-hiring" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-29" />
+<meta property="article:author" content="Caden Hillier" />
+<link rel="canonical" href="https://tethron.ai/blog/ai-employee-vs-hiring" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: rgb(7, 8, 10);
+  color: #fff;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav-wrap { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100; padding: 0 16px; width: 100%; max-width: 1240px; }
+.nav {
+  display: flex; align-items: center;
+  background: linear-gradient(137deg, rgba(17,18,20,0.75) 4.87%, rgba(12,13,15,0.9) 75.88%);
+  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
+  padding: 16px 32px; height: 76px;
+  box-shadow: rgba(255,255,255,0.15) 0 1px 1px 0 inset;
+}
+.nav-left { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+.nav-icon { width: 28px; height: 28px; } .nav-icon img { width: 100%; height: 100%; object-fit: contain; }
+.nav-brand { font-size: 16px; font-weight: 600; }
+.nav-links { display: flex; gap: 8px; }
+.nav-link { padding: 8px 14px; font-size: 16px; font-weight: 400; color: white; opacity: 0.7; transition: opacity 0.15s; }
+.nav-link:hover { opacity: 1; }
+.nav-link.active { opacity: 1; }
+.nav-btn { margin-left: 16px; padding: 8px 16px; background: rgb(230,230,230); color: rgb(47,48,49); font-size: 14px; font-weight: 500; border-radius: 8px; border: none; height: 36px; display: flex; align-items: center; cursor: pointer; box-shadow: rgba(0,0,0,0.5) 0 0 0 2px, rgba(255,255,255,0.19) 0 0 14px 0, rgba(0,0,0,0.2) 0 -1px 0.4px 0 inset, rgb(255,255,255) 0 1px 0.4px 0 inset; transition: background-color 0.2s; }
+.nav-btn:hover { background: white; }
+
+.hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; width: 44px; height: 44px; margin-left: 16px; z-index: 10001; }
+.hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all .4s cubic-bezier(.4,0,.2,1); }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); background: #00d4aa; }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); background: #00d4aa; }
+
+.mobile-nav { position: fixed; inset: 0; z-index: 10000; background: rgba(7,8,10,0.98); backdrop-filter: blur(24px); display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; pointer-events: none; transition: all .4s cubic-bezier(.4,0,.2,1); }
+.mobile-nav.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.mobile-nav-close { position: absolute; top: 20px; right: 20px; background: none; border: 1px solid rgba(255,255,255,.08); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: rgba(255,255,255,.5); }
+.mobile-nav-close:hover { color: #00d4aa; }
+.mobile-nav-label { font-size: 10px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: #00d4aa; margin-bottom: 12px; }
+.mobile-nav-sub { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 32px; }
+.mobile-nav-divider { width: 200px; height: 1px; background: linear-gradient(90deg,transparent,#00d4aa,transparent); margin-bottom: 36px; }
+.mobile-nav-links { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 340px; padding: 0 28px; }
+.mobile-nav-links a { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid rgba(255,255,255,.06); border-radius: 14px; background: rgba(255,255,255,.02); color: rgba(255,255,255,.75); font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; transition: all .25s ease; transform: translateY(20px); opacity: 0; }
+.mobile-nav.open .mobile-nav-links a { transform: translateY(0); opacity: 1; }
+.mobile-nav-links a:nth-child(1){transition-delay:.05s}
+.mobile-nav-links a:nth-child(2){transition-delay:.08s}
+.mobile-nav-links a:nth-child(3){transition-delay:.11s}
+.mobile-nav-links a:nth-child(4){transition-delay:.14s}
+.mobile-nav-links a:nth-child(5){transition-delay:.17s}
+.mobile-nav-links a:nth-child(6){transition-delay:.20s}
+.mobile-nav-links a:nth-child(7){transition-delay:.23s}
+.mobile-nav-links a:hover { background: rgba(255,255,255,.06); border-color: rgba(0,212,170,.25); color: #fff; }
+.mobile-nav-num { font-size: 11px; font-weight: 700; color: #00d4aa; opacity: .5; min-width: 24px; }
+.mobile-nav-cta { margin-top: 32px; display: inline-flex; padding: 16px 40px; border-radius: 999px; background: linear-gradient(135deg,#00d4aa,#00b894); color: #0a0a0a; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; transform: translateY(20px); opacity: 0; }
+.mobile-nav.open .mobile-nav-cta { transform: translateY(0); opacity: 1; transition-delay: .28s; }
+
+/* ARTICLE */
+.article-wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 160px 32px 80px; }
+.article-date { font-size: 13px; font-weight: 500; color: #00d4aa; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; }
+.article-wrap h1 { font-size: 42px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; margin: 0 0 48px; }
+.article-wrap h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; margin: 48px 0 20px; color: #fff; }
+.article-wrap p { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.65); margin: 0 0 24px; }
+.article-wrap strong { color: #fff; font-weight: 600; }
+.article-wrap ul { margin: 0 0 24px 20px; }
+.article-wrap li { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.65); margin-bottom: 8px; }
+.article-wrap li strong { color: #fff; }
+
+/* COMPARISON TABLE */
+.compare-table { width: 100%; border-collapse: collapse; margin: 0 0 32px; }
+.compare-table th { text-align: left; padding: 14px 16px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #00d4aa; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.compare-table td { padding: 14px 16px; font-size: 15px; color: rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.03); }
+.compare-table td:first-child { color: rgba(255,255,255,0.4); font-weight: 500; font-size: 14px; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table .highlight { color: #00d4aa; font-weight: 600; }
+
+/* CTA BOX */
+.article-cta {
+  margin: 56px 0 0;
+  padding: 40px;
+  border-radius: 16px;
+  background: rgba(0,212,170,0.04);
+  border: 1px solid rgba(0,212,170,0.15);
+  text-align: center;
+}
+.article-cta h3 { font-size: 22px; font-weight: 600; margin: 0 0 12px; }
+.article-cta p { font-size: 15px; color: rgba(255,255,255,0.55); margin: 0 0 24px; }
+.article-cta a.cta-btn {
+  display: inline-flex; align-items: center; padding: 14px 32px; border-radius: 10px;
+  background: #00d4aa; color: #0a0a0a; font-size: 14px; font-weight: 600;
+  transition: all 0.15s; border: none; cursor: pointer;
+}
+.article-cta a.cta-btn:hover { background: #00e6b8; }
+
+/* BACK LINK */
+.back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.4); margin-bottom: 32px; transition: color 0.15s; }
+.back-link:hover { color: #00d4aa; }
+.back-link svg { width: 16px; height: 16px; }
+
+/* FOOTER */
+.footer { border-top: 0.5px solid rgba(255,255,255,0.06); padding: 48px 32px 32px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,.2); }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 12px; color: rgba(255,255,255,.2); transition: color .15s; }
+.footer-legal a:hover { color: rgba(255,255,255,.5); }
+
+#webgl-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-btn.desktop-only { display: none; }
+  .hamburger { display: flex; }
+}
+@media (max-width: 600px) {
+  .article-wrap { padding: 130px 20px 60px; }
+  .article-wrap h1 { font-size: 28px; }
+  .article-wrap h2 { font-size: 20px; }
+  .article-cta { padding: 28px 20px; }
+  .compare-table { font-size: 13px; }
+  .compare-table th, .compare-table td { padding: 10px 8px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .nav { padding: 12px 16px; height: 64px; }
+}
+</style>
+</head>
+<body>
+<canvas id="webgl-bg"></canvas>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="/" class="nav-left">
+      <div class="nav-icon"><img src="/logo-icon.png" alt="Tethron"></div>
+      <span class="nav-brand">Tethron</span>
+    </a>
+    <div class="nav-links">
+      <a href="/#what-we-do" class="nav-link">What We Do</a>
+      <a href="/#demo" class="nav-link">See It Live</a>
+      <a href="/#pricing" class="nav-link">Pricing</a>
+      <a href="/contact" class="nav-link">Contact</a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="/blog" class="nav-link active">Blog</a>
+    </div>
+    <a href="/contact" class="nav-btn desktop-only">Get Started</a>
+    <button class="hamburger" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</div>
+
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close">&times;</button>
+  <div class="mobile-nav-label">Tethron</div>
+  <div class="mobile-nav-sub">Navigate</div>
+  <div class="mobile-nav-divider"></div>
+  <div class="mobile-nav-links">
+    <a href="/#what-we-do" onclick="closeMobileNav()"><span class="mobile-nav-num">01</span>What We Do</a>
+    <a href="/#demo" onclick="closeMobileNav()"><span class="mobile-nav-num">02</span>See It Live</a>
+    <a href="/#pricing" onclick="closeMobileNav()"><span class="mobile-nav-num">03</span>Pricing</a>
+    <a href="/contact" onclick="closeMobileNav()"><span class="mobile-nav-num">04</span>Contact</a>
+    <a href="/about" onclick="closeMobileNav()"><span class="mobile-nav-num">05</span>About</a>
+    <a href="/blog" onclick="closeMobileNav()"><span class="mobile-nav-num">06</span>Blog</a>
+  </div>
+  <a class="mobile-nav-cta" href="/contact" onclick="closeMobileNav()">Get Started</a>
+</nav>
+
+<!-- ARTICLE -->
+<article class="article-wrap">
+  <a href="/blog" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to Blog</a>
+  <div class="article-date">March 29, 2026</div>
+  <h1>AI Employee vs Hiring: The Real Cost Comparison</h1>
+
+  <p>Every business owner hits the same wall. You're growing, you're busy, leads are coming in, and you physically cannot do everything yourself anymore. The obvious answer is to hire someone. But hiring is expensive, slow, and risky — and most small business owners don't realize how expensive until they're already in too deep.</p>
+
+  <p>I'm going to lay out the real numbers. Not hypothetical numbers. The actual cost of hiring a full-time employee versus deploying an AI employee. And then you can decide which one makes more sense for where your business is right now.</p>
+
+  <h2>The real cost of a full-time hire</h2>
+
+  <p>Most people think about salary when they think about hiring. But salary is just the beginning. Here's what a single full-time hire actually costs a small business:</p>
+
+  <table class="compare-table">
+    <tr><th>Expense</th><th>Full-Time Hire</th><th>AI Employee</th></tr>
+    <tr><td>Recruiting cost</td><td>$4,700</td><td class="highlight">$0</td></tr>
+    <tr><td>Annual salary</td><td>$45,000 - $65,000</td><td class="highlight">$7,200/yr</td></tr>
+    <tr><td>Benefits (health, dental)</td><td>$6,000 - $12,000/yr</td><td class="highlight">$0</td></tr>
+    <tr><td>PTO (2 weeks avg)</td><td>$1,700 - $2,500</td><td class="highlight">$0</td></tr>
+    <tr><td>Training time</td><td>2 - 4 weeks</td><td class="highlight">48 hours</td></tr>
+    <tr><td>Turnover risk</td><td>$15,000 - $25,000</td><td class="highlight">$0</td></tr>
+    <tr><td>Hours per week</td><td>40</td><td class="highlight">168</td></tr>
+    <tr><td>Setup cost</td><td>$0</td><td>$3,500</td></tr>
+  </table>
+
+  <p>Add it all up. A single entry-level operations hire costs you somewhere between <strong>$57,000 and $85,000 in year one</strong> when you factor in recruiting, salary, benefits, PTO, and the ramp-up period where they're learning instead of producing.</p>
+
+  <p>An AI employee costs <strong>$10,700 in year one</strong> ($3,500 setup + $7,200 in monthly fees). And in year two it drops to $7,200. Total.</p>
+
+  <h2>What a human hire does better</h2>
+
+  <p>I'm not going to pretend an AI employee replaces a person in every scenario. That would be dishonest, and I'm not in the business of lying to sell something.</p>
+
+  <p>A human employee is better at:</p>
+
+  <ul>
+    <li><strong>Judgment calls.</strong> Situations that require nuance, empathy, or reading a room. A client is upset and needs someone to listen. A deal needs creative problem-solving to close. An angry customer needs de-escalation that goes beyond a script.</li>
+    <li><strong>Relationship building.</strong> Handshakes, face-to-face meetings, networking events, building genuine trust over time. AI can maintain relationships through consistent communication, but it can't build them from scratch the way a human can.</li>
+    <li><strong>Creative strategy.</strong> High-level business decisions, brand positioning, new market entry — the work that requires vision and context that only comes from deep experience.</li>
+  </ul>
+
+  <p>If your next hire needs to do those things, hire a person. Full stop.</p>
+
+  <h2>What an AI employee does better</h2>
+
+  <p>But here's the thing — most of the tasks that are eating your day don't require any of that. They require speed, consistency, and showing up at 11pm on a Tuesday when no one else will.</p>
+
+  <ul>
+    <li><strong>Lead response.</strong> The average business takes 47 hours to respond to a new lead. An AI employee responds in under 60 seconds, every time, with a personalized message that sounds like you wrote it. Studies show that responding within 5 minutes makes you 21x more likely to qualify the lead. Forty-seven hours versus sixty seconds.</li>
+    <li><strong>Follow-up sequences.</strong> 80% of sales require 5+ follow-ups, but 44% of salespeople give up after one. Your AI employee never gives up. It follows up on day 1, day 3, day 7, day 14 — whatever cadence you set — until the lead converts or explicitly says no.</li>
+    <li><strong>Scheduling and booking.</strong> Customer wants to book? Done. No back-and-forth emails, no phone tag. Your AI employee checks your calendar, books the slot, sends the confirmation, and adds a reminder.</li>
+    <li><strong>CRM and data entry.</strong> Every interaction logged. Every lead tracked. Every follow-up scheduled. No more "I forgot to update the spreadsheet" or "I lost that lead's phone number."</li>
+    <li><strong>After-hours coverage.</strong> Your human employee works 40 hours a week. Your AI employee works 168. That's every single hour of every single day, including weekends, holidays, and 3am on a random Wednesday.</li>
+    <li><strong>Reporting.</strong> Daily summaries. Weekly rollups. Monthly trends. All automated, all in your inbox before your coffee is ready.</li>
+  </ul>
+
+  <h2>The math that actually matters</h2>
+
+  <p>Forget the cost comparison for a second. Let's talk about revenue.</p>
+
+  <p>The average service business loses 40-60% of incoming leads because of slow follow-up. If you're getting 30 leads a month and your average job is worth $2,000, that's potentially <strong>$24,000 to $36,000 in lost revenue every single month</strong> because you didn't respond fast enough.</p>
+
+  <p>Your AI employee responds in under a minute. Let's say it only saves you 3 of those lost leads per month — that's an extra $6,000 in revenue. Your AI employee costs $600/month. <strong>That's a 10x return, and we're being conservative.</strong></p>
+
+  <p>It pays for itself in the first month. By month three, you've covered the setup cost too. Everything after that is pure margin.</p>
+
+  <h2>It's not AI vs humans</h2>
+
+  <p>The biggest misconception I hear is that this is about replacing people. It's not. It's about being honest about which tasks actually need a human brain and which ones don't.</p>
+
+  <p>Your best employee shouldn't be spending their day copying data between spreadsheets. They shouldn't be sending the same follow-up email for the 400th time. They shouldn't be answering "what are your hours?" at midnight.</p>
+
+  <p>That's not a good use of a $55,000 salary. That's a good use of $600 a month.</p>
+
+  <p><strong>Let your people do people work. Let your AI employee do everything else.</strong></p>
+
+  <p>The businesses that figure this out first are going to have an unfair advantage over everyone who's still doing it the old way. And that gap is only going to get wider.</p>
+
+  <!-- CTA -->
+  <div class="article-cta">
+    <h3>Want to see the math for your business?</h3>
+    <p>Free audit. We'll break down exactly where you're leaking time and money, and show you what an AI employee would handle on day one.</p>
+    <a href="/contact" class="cta-btn">Get Your Free Audit</a>
+  </div>
+</article>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 Tethron. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="mailto:hello@tethron.ai?subject=Privacy%20Policy%20Request">Privacy</a>
+      <a href="mailto:hello@tethron.ai?subject=Terms%20of%20Service%20Request">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('menuToggle').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobileNav').classList.contains('open') ? 'hidden' : '';
+});
+function closeMobileNav() {
+  document.getElementById('menuToggle').classList.remove('active');
+  document.getElementById('mobileNav').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  var canvas = document.getElementById('webgl-bg');
+  var vs = 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }';
+  var fs = [
+    'precision highp float;',
+    'varying vec2 vUv; uniform float uTime; uniform vec2 uResolution;',
+    'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
+    'float noise(vec2 p) { vec2 i=floor(p); vec2 f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y); }',
+    'float fbm(vec2 p) { float v=0.0,a=0.5; for(int i=0;i<4;i++){v+=a*noise(p);p*=2.0;a*=0.5;} return v; }',
+    'float streak(vec2 uv,float xP,float ang,float w,float s,float l,float yo) { float ca=cos(ang),sa=sin(ang); vec2 c=vec2(xP,0.5+yo); vec2 r=vec2(ca*(uv.x-c.x)-sa*(uv.y-c.y),sa*(uv.x-c.x)+ca*(uv.y-c.y)); return exp(-abs(r.x)/w*abs(r.x)/w*s)*smoothstep(1.0,0.3,abs(r.y)/l); }',
+    'void main() { vec2 uv=vUv; float t=uTime*0.08;',
+    'float n1=fbm(vec2(uv.x*2.0,uv.y*0.5+t*0.3))*0.015;',
+    'vec3 col=vec3(0.0); vec3 cyan=vec3(0,0.831,0.667); vec3 teal=vec3(0,0.722,0.580); vec3 mint=vec3(0,0.9,0.75);',
+    'col+=cyan*streak(uv+vec2(n1,0),0.38,-0.22,0.035,8.0,0.7,sin(t*0.5)*0.02)*0.55;',
+    'col+=mint*streak(uv,0.45,-0.28,0.045,6.0,0.75,sin(t*0.4+1.0)*0.015)*0.65;',
+    'col+=teal*streak(uv,0.52,-0.18,0.03,10.0,0.65,sin(t*0.6+2.0)*0.02)*0.5;',
+    'col*=1.0+sin(t*0.6)*0.08;',
+    'vec2 vig=uv-0.5; col*=clamp(pow(1.0-dot(vig,vig)*2.2,1.4),0.0,1.0);',
+    'col=col/(col+0.6); col+=vec3((hash(uv*uResolution+fract(uTime))-0.5)*0.015);',
+    'col=max(col,vec3(0.027,0.031,0.039)); gl_FragColor=vec4(col,1.0); }'
+  ].join('\n');
+  var scene=new THREE.Scene(), camera=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:false});
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  var uniforms={uTime:{value:0},uResolution:{value:new THREE.Vector2(window.innerWidth,window.innerHeight)}};
+  var mat=new THREE.ShaderMaterial({vertexShader:vs,fragmentShader:fs,uniforms:uniforms});
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat));
+  window.addEventListener('resize',function(){renderer.setSize(window.innerWidth,window.innerHeight);uniforms.uResolution.value.set(window.innerWidth,window.innerHeight);});
+  (function animate(t){uniforms.uTime.value=t*0.001;renderer.render(scene,camera);requestAnimationFrame(animate);})(0);
+})();
+</script>
+</body>
+</html>

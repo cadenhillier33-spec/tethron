@@ -3,14 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — Caden Hillier | Tethron</title>
-<meta name="description" content="Meet Caden Hillier — Founder & CEO of Tethron. We install AI employees that run your business 24/7. Based in Connecticut.">
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta property="og:title" content="About Caden Hillier — Tethron" />
-<meta property="og:description" content="Meet the founder behind Tethron. We install AI employees that run your business 24/7. Based in Connecticut." />
-<meta property="og:url" content="https://tethron.ai/about" />
-<meta property="og:type" content="website" />
+<title>What Is an AI Employee? | Tethron Blog</title>
+<meta name="description" content="An AI employee isn't a chatbot or another SaaS subscription. It's a dedicated AI system running 24/7 on its own hardware, trained on your business. Here's how it actually works.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="What Is an AI Employee? | Tethron" />
+<meta property="og:description" content="An AI employee isn't a chatbot or another SaaS subscription. It's a dedicated system running 24/7, trained on your business." />
+<meta property="og:url" content="https://tethron.ai/blog/what-is-an-ai-employee" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-29" />
+<meta property="article:author" content="Caden Hillier" />
+<link rel="canonical" href="https://tethron.ai/blog/what-is-an-ai-employee" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -66,56 +69,47 @@ a { color: inherit; text-decoration: none; }
 .mobile-nav-links a:nth-child(4){transition-delay:.14s}
 .mobile-nav-links a:nth-child(5){transition-delay:.17s}
 .mobile-nav-links a:nth-child(6){transition-delay:.20s}
+.mobile-nav-links a:nth-child(7){transition-delay:.23s}
 .mobile-nav-links a:hover { background: rgba(255,255,255,.06); border-color: rgba(0,212,170,.25); color: #fff; }
 .mobile-nav-num { font-size: 11px; font-weight: 700; color: #00d4aa; opacity: .5; min-width: 24px; }
 .mobile-nav-cta { margin-top: 32px; display: inline-flex; padding: 16px 40px; border-radius: 999px; background: linear-gradient(135deg,#00d4aa,#00b894); color: #0a0a0a; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; transform: translateY(20px); opacity: 0; }
-.mobile-nav.open .mobile-nav-cta { transform: translateY(0); opacity: 1; transition-delay: .25s; }
+.mobile-nav.open .mobile-nav-cta { transform: translateY(0); opacity: 1; transition-delay: .28s; }
 
-/* CONTENT */
-.container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
-.section { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 100px 32px; }
-.eyebrow { font-size: 14px; color: #00d4aa; font-weight: 500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+/* ARTICLE */
+.article-wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 160px 32px 80px; }
+.article-date { font-size: 13px; font-weight: 500; color: #00d4aa; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; }
+.article-wrap h1 { font-size: 42px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; margin: 0 0 48px; }
+.article-wrap h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; margin: 48px 0 20px; color: #fff; }
+.article-wrap p { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.65); margin: 0 0 24px; }
+.article-wrap strong { color: #fff; font-weight: 600; }
+.article-wrap ul { margin: 0 0 24px 20px; }
+.article-wrap li { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.65); margin-bottom: 8px; }
+.article-wrap li strong { color: #fff; }
 
-/* About Hero */
-.about-hero { padding: 140px 0 80px; position: relative; z-index: 1; }
-.about-grid { display: grid; grid-template-columns: 380px 1fr; gap: 80px; align-items: start; }
-.photo-wrap { position: relative; }
-.photo-wrap img { width: 100%; border-radius: 20px; display: block; filter: grayscale(15%); }
-.photo-wrap::after { content: ""; position: absolute; inset: -8px; border-radius: 26px; border: 1px solid rgba(0,212,170,0.2); pointer-events: none; }
-.photo-label { margin-top: 20px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.4); }
-.about-name { margin: 20px 0 0; font-size: 52px; font-weight: 600; letter-spacing: -2px; line-height: 1.05; }
-.about-title { margin: 12px 0 0; font-size: 16px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #00d4aa; }
-.about-bio { margin: 36px 0 0; }
-.about-bio p { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,.6); margin: 0 0 24px; }
-.about-bio strong { color: #fff; font-weight: 600; }
-
-/* Stats */
-.founder-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; padding-top: 40px; border-top: 0.5px solid rgba(255,255,255,.06); }
-.f-stat { text-align: center; padding: 28px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); }
-.f-stat-num { font-size: 36px; font-weight: 700; letter-spacing: -1px; color: #00d4aa; }
-.f-stat-label { margin-top: 8px; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.4); }
-
-/* Philosophy */
-.philosophy { border-top: 0.5px solid rgba(255,255,255,.06); }
-.phil-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
-.glass-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px; box-shadow: rgba(255,255,255,0.03) 0 0 40px 10px, rgba(255,255,255,0.15) 0 0.5px 0 0 inset; }
-.phil-num { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #00d4aa; margin-bottom: 18px; }
-.phil-card h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.5px; margin: 0 0 16px; }
-.phil-card p { font-size: 15px; line-height: 1.85; color: rgba(255,255,255,.55); margin: 0; }
-
-/* CTA */
-.about-cta { text-align: center; border-top: 0.5px solid rgba(255,255,255,.06); }
-.about-cta h2 { font-size: 42px; font-weight: 600; letter-spacing: -1px; margin: 0 0 16px; }
-.about-cta p { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,.45); margin: 0 auto 40px; max-width: 600px; }
-.btn-secondary {
+/* CTA BOX */
+.article-cta {
+  margin: 56px 0 0;
+  padding: 40px;
+  border-radius: 16px;
+  background: rgba(0,212,170,0.04);
+  border: 1px solid rgba(0,212,170,0.15);
+  text-align: center;
+}
+.article-cta h3 { font-size: 22px; font-weight: 600; margin: 0 0 12px; }
+.article-cta p { font-size: 15px; color: rgba(255,255,255,0.55); margin: 0 0 24px; }
+.article-cta a.cta-btn {
   display: inline-flex; align-items: center; padding: 14px 32px; border-radius: 10px;
-  background: rgba(255,255,255,0.06); color: white; font-size: 14px; font-weight: 500;
-  box-shadow: rgba(0,0,0,0.5) 0 0 0 2px, rgba(255,255,255,0.05) 0 0 10px 0;
+  background: #00d4aa; color: #0a0a0a; font-size: 14px; font-weight: 600;
   transition: all 0.15s; border: none; cursor: pointer;
 }
-.btn-secondary:hover { background: rgba(255,255,255,0.1); }
+.article-cta a.cta-btn:hover { background: #00e6b8; }
 
-/* Footer */
+/* BACK LINK */
+.back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.4); margin-bottom: 32px; transition: color 0.15s; }
+.back-link:hover { color: #00d4aa; }
+.back-link svg { width: 16px; height: 16px; }
+
+/* FOOTER */
 .footer { border-top: 0.5px solid rgba(255,255,255,0.06); padding: 48px 32px 32px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
 .footer-copy { font-size: 12px; color: rgba(255,255,255,.2); }
@@ -129,17 +123,12 @@ a { color: inherit; text-decoration: none; }
   .nav-links { display: none; }
   .nav-btn.desktop-only { display: none; }
   .hamburger { display: flex; }
-  .about-grid { grid-template-columns: 1fr; gap: 48px; }
-  .photo-wrap { max-width: 360px; margin: 0 auto; }
-  .about-name { font-size: 42px; }
-  .phil-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
-  .container, .section { padding-left: 20px; padding-right: 20px; }
-  .about-hero { padding: 120px 0 50px; }
-  .about-name { font-size: 36px; }
-  .about-cta h2 { font-size: 32px; }
-  .founder-stats { grid-template-columns: 1fr; }
+  .article-wrap { padding: 130px 20px 60px; }
+  .article-wrap h1 { font-size: 30px; }
+  .article-wrap h2 { font-size: 20px; }
+  .article-cta { padding: 28px 20px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
   .nav { padding: 12px 16px; height: 64px; }
 }
@@ -158,11 +147,10 @@ a { color: inherit; text-decoration: none; }
     <div class="nav-links">
       <a href="/#what-we-do" class="nav-link">What We Do</a>
       <a href="/#demo" class="nav-link">See It Live</a>
-      <a href="/work" class="nav-link">Our Work</a>
       <a href="/#pricing" class="nav-link">Pricing</a>
       <a href="/contact" class="nav-link">Contact</a>
-      <a href="/about" class="nav-link active">About</a>
-      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="/blog" class="nav-link active">Blog</a>
     </div>
     <a href="/contact" class="nav-btn desktop-only">Get Started</a>
     <button class="hamburger" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -177,78 +165,86 @@ a { color: inherit; text-decoration: none; }
   <div class="mobile-nav-links">
     <a href="/#what-we-do" onclick="closeMobileNav()"><span class="mobile-nav-num">01</span>What We Do</a>
     <a href="/#demo" onclick="closeMobileNav()"><span class="mobile-nav-num">02</span>See It Live</a>
-    <a href="/work" onclick="closeMobileNav()"><span class="mobile-nav-num">03</span>Our Work</a>
-    <a href="/#pricing" onclick="closeMobileNav()"><span class="mobile-nav-num">04</span>Pricing</a>
-    <a href="/contact" onclick="closeMobileNav()"><span class="mobile-nav-num">05</span>Contact</a>
-    <a href="/about" onclick="closeMobileNav()"><span class="mobile-nav-num">06</span>About</a>
-    <a href="/blog" onclick="closeMobileNav()"><span class="mobile-nav-num">07</span>Blog</a>
+    <a href="/#pricing" onclick="closeMobileNav()"><span class="mobile-nav-num">03</span>Pricing</a>
+    <a href="/contact" onclick="closeMobileNav()"><span class="mobile-nav-num">04</span>Contact</a>
+    <a href="/about" onclick="closeMobileNav()"><span class="mobile-nav-num">05</span>About</a>
+    <a href="/blog" onclick="closeMobileNav()"><span class="mobile-nav-num">06</span>Blog</a>
   </div>
   <a class="mobile-nav-cta" href="/contact" onclick="closeMobileNav()">Get Started</a>
 </nav>
 
-<!-- ABOUT HERO -->
-<section class="about-hero">
-  <div class="container">
-    <div class="about-grid">
-      <div>
-        <div class="photo-wrap">
-          <img src="caden.jpg" alt="Caden Hillier — Founder & CEO of Tethron" />
-        </div>
-        <div class="photo-label">Madison, Connecticut</div>
-      </div>
-      <div>
-        <div class="eyebrow">Meet the Founder</div>
-        <h1 class="about-name">Caden Hillier</h1>
-        <div class="about-title">Founder & CEO</div>
-        <div class="about-bio">
-          <p>I started Tethron because I kept watching business owners drown in work that shouldn't require a human. Following up on leads. Answering the same customer questions for the hundredth time. Chasing late payments. Managing schedules. Posting on social media. <strong>Running a business had become more busywork than actual business.</strong></p>
-          <p>So I built a solution. We install AI employees — not chatbots, not SaaS tools, not another subscription you'll forget about. These are dedicated AI systems running 24/7 on their own hardware, trained specifically on your business. They speak in your voice, know your pricing, follow your processes, and handle the operational work that buries most owners.</p>
-          <p>Think about it: a lead comes in at 11pm, your AI employee responds in 38 seconds with a personalized message. A customer asks about scheduling — booked automatically. A review comes in — responded to instantly. Morning report lands in your inbox before you wake up. <strong>That's not automation. That's a team member who never sleeps.</strong></p>
-          <p>Every AI employee is custom-built around how your business actually operates. I personally oversee every deployment before it goes live. <strong>Nothing ships without my sign off.</strong> Your AI employee represents your business — it has to be perfect.</p>
-        </div>
-        <div class="founder-stats">
-          <div class="f-stat"><div class="f-stat-num">47+</div><div class="f-stat-label">AI Employees Installed</div></div>
-          <div class="f-stat"><div class="f-stat-num">24/7</div><div class="f-stat-label">Always Running</div></div>
-          <div class="f-stat"><div class="f-stat-num">100%</div><div class="f-stat-label">Client Satisfaction</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ARTICLE -->
+<article class="article-wrap">
+  <a href="/blog" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to Blog</a>
+  <div class="article-date">March 29, 2026</div>
+  <h1>What Is an AI Employee?</h1>
 
-<!-- PHILOSOPHY -->
-<div class="section philosophy">
-  <div class="container">
-    <div class="eyebrow">How I Work</div>
-    <h2 style="font-size:40px;font-weight:600;letter-spacing:-1px;margin:0 0 0">No shortcuts. No compromises. No excuses.</h2>
-    <div class="phil-grid">
-      <div class="glass-card phil-card">
-        <div class="phil-num">01</div>
-        <h3>Dedicated hardware, not cloud software</h3>
-        <p>Your AI employee runs on its own dedicated machine — not a shared server, not a SaaS platform. It's always on, always yours, always working. That's how we guarantee performance, privacy, and zero downtime. This isn't a subscription tool. It's an employee.</p>
-      </div>
-      <div class="glass-card phil-card">
-        <div class="phil-num">02</div>
-        <h3>Custom-built for your business</h3>
-        <p>Every AI employee is trained on how you actually operate — your voice, your pricing, your processes, your customers. We audit your business first, then build around it. No two deployments are the same because no two businesses are the same.</p>
-      </div>
-      <div class="glass-card phil-card">
-        <div class="phil-num">03</div>
-        <h3>I oversee every deployment</h3>
-        <p>You work directly with me — not a rotating cast of freelancers or a support ticket queue. I personally audit every AI employee before it goes live and monitor performance after launch. When your AI represents your business, there's no room for "good enough."</p>
-      </div>
-    </div>
-  </div>
-</div>
+  <p>Every business owner I talk to has heard about AI. Most of them have tried something — a chatbot on their website, some automation tool they found on AppSumo, maybe ChatGPT for writing emails. And almost all of them walked away thinking AI was overhyped.</p>
 
-<!-- CTA -->
-<div class="section about-cta">
-  <div class="container">
-    <h2>Let's talk about your business.</h2>
-    <p>15 minutes. No pitch, no pressure. Just a conversation about where you are and where you want to be.</p>
-    <a class="btn-secondary" href="/#pricing">View Pricing</a>
+  <p>I get it. Because most of that stuff <strong>is</strong> overhyped. A chatbot that answers three canned questions isn't going to change your business. Another SaaS subscription with a dashboard you'll forget to log into isn't going to save you time. That's not what we do.</p>
+
+  <p>An AI employee is something fundamentally different.</p>
+
+  <h2>It's not software. It's a team member.</h2>
+
+  <p>When we install an AI employee for a business, we're not giving them a login to some platform. We're deploying a dedicated system — running on its own physical hardware — that operates 24 hours a day, 7 days a week, with zero breaks and zero overhead.</p>
+
+  <p>This system is trained specifically on your business. Your pricing. Your services. Your tone of voice. Your processes. Your customer FAQs. Your scheduling rules. It doesn't give generic answers because it doesn't know generic information. <strong>It only knows your business, and it knows it better than most of your employees do.</strong></p>
+
+  <h2>What does it actually do?</h2>
+
+  <p>Here's the short list of what an AI employee handles on a daily basis:</p>
+
+  <ul>
+    <li><strong>Lead response:</strong> A new inquiry comes in at 11pm on a Saturday? Your AI employee responds in under 60 seconds with a personalized message. Not a template. A real, contextual response that sounds like you wrote it.</li>
+    <li><strong>CRM management:</strong> Every lead, every interaction, every follow-up — logged automatically. No more forgetting to update the spreadsheet or losing track of who you talked to last week.</li>
+    <li><strong>Follow-up sequences:</strong> Your AI employee runs drip campaigns, sends check-in messages, and follows up with leads who went cold. The average business loses 40-60% of leads to slow follow-up. That stops immediately.</li>
+    <li><strong>Scheduling:</strong> Customers want to book an appointment? Handled. Your AI employee knows your availability, books the slot, sends the confirmation, and adds a reminder.</li>
+    <li><strong>Social media:</strong> Consistent posting, engagement tracking, review responses — all handled without you touching your phone.</li>
+    <li><strong>Reporting:</strong> Morning summary in your inbox before you wake up. What happened yesterday, what's scheduled today, what needs your attention. Three minutes and you know the state of your business.</li>
+  </ul>
+
+  <h2>Dedicated hardware matters</h2>
+
+  <p>This is where most people's eyes widen. Your AI employee doesn't run on some shared cloud server where it competes with a thousand other users for processing power. It runs on its own dedicated machine — a Mac Mini sitting in our facility, always on, always connected, always working.</p>
+
+  <p>Why does that matter? Three reasons:</p>
+
+  <p><strong>Performance.</strong> No throttling, no rate limits, no "please try again later." Your AI employee has dedicated resources and consistent speed.</p>
+
+  <p><strong>Privacy.</strong> Your business data lives on your machine, not on some shared server with a thousand other businesses. Your competitor's AI isn't running on the same hardware as yours.</p>
+
+  <p><strong>Reliability.</strong> Shared platforms go down. We've all seen the "Status: Degraded Performance" pages. Your dedicated machine doesn't care what's happening at OpenAI's data centers because it's not dependent on a single provider going through an outage.</p>
+
+  <h2>Why it's different from everything else</h2>
+
+  <p>I've used every AI tool on the market. Built automations with Zapier. Deployed chatbots with Intercom. Tested every "AI assistant" that launched in the last two years. They all share the same problem: <strong>they're generic.</strong></p>
+
+  <p>They know a little about everything and a lot about nothing. They can't tell a customer your Saturday hours without you manually programming a decision tree. They can't write a follow-up email that sounds like the way you actually talk.</p>
+
+  <p>An AI employee is custom-built. I personally audit every business before we deploy anything. I sit down, understand how you operate, and build a system that mirrors your processes. When it goes live, it doesn't feel like software — it feels like you hired someone who already knows the job.</p>
+
+  <h2>The numbers</h2>
+
+  <p>A full-time employee costs roughly $4,700 just to recruit. Then you're looking at $45,000 to $65,000 in annual salary for an entry-level operations person, plus benefits, PTO, training time, and the risk that they leave in six months and you start over.</p>
+
+  <p>An AI employee costs $3,500 to set up and $600 per month to run. That's $7,200 per year. It doesn't take vacation. It doesn't call in sick. It doesn't need to be trained twice. And it works while you sleep.</p>
+
+  <p>Even if your AI employee catches two or three leads that would have fallen through the cracks — leads that come in after hours, leads that needed a faster follow-up — <strong>it pays for itself in the first month.</strong></p>
+
+  <h2>This isn't about replacing people</h2>
+
+  <p>I want to be clear about something. An AI employee doesn't replace your team. It replaces the busywork that's burying your team. The repetitive tasks. The follow-ups. The scheduling. The data entry. The stuff that doesn't need a human brain but still eats eight hours a day.</p>
+
+  <p>Your people should be doing work that matters — building relationships, closing deals, solving problems that actually require judgment. Everything else? That's what your AI employee is for.</p>
+
+  <!-- CTA -->
+  <div class="article-cta">
+    <h3>See what an AI employee would do for your business.</h3>
+    <p>Free audit. No pitch. Just a breakdown of where you're leaking time and money — and exactly how we'd fix it.</p>
+    <a href="/contact" class="cta-btn">Get Your Free Audit</a>
   </div>
-</div>
+</article>
 
 <!-- FOOTER -->
 <footer class="footer">
