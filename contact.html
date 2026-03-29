@@ -271,7 +271,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     website: f.website.value,
     email: f.email.value,
     phone: f.phone.value,
-    message: 'Free Business Audit Request (via tethron.ai)'
+    message: f.about_business.value || 'Free Business Audit Request (via tethron.ai)'
   };
   if (f.querySelector('[name="_gotcha"]').value) { f.style.display = 'none'; document.getElementById('formSuccess').style.display = 'block'; return; }
   fetch('https://slmdfgunkmvbqbzjfpdz.supabase.co/functions/v1/contact-form', {
