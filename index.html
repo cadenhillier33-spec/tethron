@@ -297,13 +297,16 @@ a { color: inherit; text-decoration: none; }
   object-fit: cover;
   opacity: 0.8;
 }
-/* Hide default video controls/play overlay on mobile */
-#video-bg::-webkit-media-controls-panel,
-#video-bg::-webkit-media-controls-play-button,
-#video-bg::-webkit-media-controls-start-playback-button,
-#video-bg::-webkit-media-controls {
-  display: none !important;
-  -webkit-appearance: none;
+/* Hide video on mobile — use gradient fallback instead */
+@media (max-width: 900px) {
+  #video-bg { display: none !important; }
+  .hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 80%, rgba(0,212,170,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 20% 70%, rgba(0,180,148,0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 50% 30%, rgba(10,154,135,0.06) 0%, transparent 50%),
+      rgb(7, 8, 10) !important;
+  }
 }
 #video-overlay {
   position: absolute;
