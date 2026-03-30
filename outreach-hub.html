@@ -269,9 +269,17 @@ const leads = [
   { name: "Michael Collins, CFA", background: "financial advisory and portfolio management", title: "Financial Advisor | Portfolio Manager | Professor | Fiduciary", compliment: "the advisory space is ripe for AI-powered client management" },
   { name: "Jeff Rabhan", background: "media, entertainment, and music innovation", title: "Media/Entertainment & Music Innovation. Higher Ed Advocate", compliment: "that's where the early adopters live" },
   { name: "Gregg Bauer", company: "ScaleUp Labs", title: "Managing Partner at ScaleUp Labs", compliment: "scaling businesses is exactly where an AI employee creates the most leverage" },
+  { name: "Steven Lepke", company: "HaA LLC", title: "President & Founder | ISO 13485 | Medical & Healthcare Product Innovation", compliment: "leading innovation in medical products with ISO 13485 certification is serious credibility" },
 ];
 
-let contactedState = JSON.parse(localStorage.getItem('outreach_contacted_v3') || '{}');
+// Default contacted state — everyone Caden already messaged (all except Steven Lepke, last in array)
+const defaultContacted = {};
+for (let i = 0; i < leads.length - 1; i++) { defaultContacted[i] = { date: "2026-03-30T00:00:00.000Z" }; }
+
+// Merge: localStorage wins if it exists AND has entries, otherwise use defaults
+const stored = JSON.parse(localStorage.getItem('outreach_contacted_v3') || '{}');
+let contactedState = Object.keys(stored).length > 0 ? stored : defaultContacted;
+localStorage.setItem('outreach_contacted_v3', JSON.stringify(contactedState));
 let currentTab = 'queue';
 
 function updateMetrics() {
