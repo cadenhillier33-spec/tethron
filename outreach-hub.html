@@ -140,6 +140,32 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
 .reset-btn { margin-top: 24px; padding: 8px 16px; background: none; border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.25); font-size: 11px; font-weight: 500; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
 .reset-btn:hover { border-color: rgba(239,68,68,0.3); color: #ef4444; }
 
+/* Delete mode */
+.delete-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.btn-delete-mode {
+  padding: 8px 16px; background: none; border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.35);
+  font-size: 11px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;
+}
+.btn-delete-mode:hover { border-color: rgba(239,68,68,0.3); color: #ef4444; }
+.btn-delete-mode.active { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.4); color: #ef4444; }
+.btn-select-all {
+  padding: 8px 16px; background: none; border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.35);
+  font-size: 11px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: none;
+}
+.btn-select-all:hover { border-color: rgba(245,158,11,0.3); color: #f59e0b; }
+.btn-select-all.active { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.4); color: #f59e0b; }
+.btn-confirm-delete {
+  padding: 8px 16px; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); color: #ef4444;
+  font-size: 11px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: none;
+}
+.btn-confirm-delete:hover { background: rgba(239,68,68,0.25); }
+.delete-count { font-size: 11px; color: rgba(239,68,68,0.6); display: none; }
+.lead-card.selected { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.04); }
+.lead-checkbox { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.15); border-radius: 4px; cursor: pointer; display: none; flex-shrink: 0; transition: all 0.2s; appearance: none; -webkit-appearance: none; background: none; }
+.lead-checkbox:checked { background: #ef4444; border-color: #ef4444; }
+.lead-checkbox:checked::after { content: '\2713'; color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; height: 100%; }
+.delete-active .lead-checkbox { display: block; }
+
 /* Responsive */
 @media (max-width: 600px) {
   .metrics { grid-template-columns: repeat(2, 1fr); }
@@ -201,6 +227,13 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
   <div id="contacted-view" style="display:none;">
     <div id="contacted-leads"></div>
     <div class="empty-state" id="empty-contacted" style="display:none;">No contacted leads yet. Start sending!</div>
+  </div>
+
+  <div class="delete-bar">
+    <button class="btn-delete-mode" id="btn-dm" onclick="toggleDeleteMode()">Delete</button>
+    <button class="btn-select-all" id="btn-sa" onclick="toggleSelectAll()">Select All</button>
+    <button class="btn-confirm-delete" id="btn-cd" onclick="confirmDelete()">Delete Selected</button>
+    <span class="delete-count" id="delete-count"></span>
   </div>
 
   <button class="reset-btn" onclick="resetAll()">Reset All</button>
@@ -280,13 +313,23 @@ for (let i = 0; i < leads.length - 1; i++) { defaultContacted[i] = { date: "2026
 const stored = JSON.parse(localStorage.getItem('outreach_contacted_v3') || '{}');
 let contactedState = Object.keys(stored).length > 0 ? stored : defaultContacted;
 localStorage.setItem('outreach_contacted_v3', JSON.stringify(contactedState));
+
+// Deleted leads (persisted)
+let deletedState = JSON.parse(localStorage.getItem('outreach_deleted_v1') || '{}');
+let deleteMode = false;
+let selectedForDelete = {};
 let currentTab = 'queue';
 
+function activeLeadCount() {
+  return leads.filter((_, i) => !deletedState[i]).length;
+}
+
 function updateMetrics() {
-  const contacted = Object.keys(contactedState).length;
-  const total = leads.length;
+  const deleted = Object.keys(deletedState).length;
+  const contacted = Object.keys(contactedState).filter(k => !deletedState[k]).length;
+  const total = leads.length - deleted;
   const remaining = total - contacted;
-  const pct = Math.round((contacted / total) * 100);
+  const pct = total > 0 ? Math.round((contacted / total) * 100) : 0;
 
   document.getElementById('m-total').textContent = total;
   document.getElementById('m-sent').textContent = contacted;
@@ -297,7 +340,7 @@ function updateMetrics() {
   document.getElementById('tc-queue').textContent = remaining;
   document.getElementById('tc-contacted').textContent = contacted;
 
-  if (remaining === 0) document.getElementById('m-remaining').style.color = '#00d4aa';
+  if (remaining === 0 && total > 0) document.getElementById('m-remaining').style.color = '#00d4aa';
 }
 
 function switchTab(tab) {
@@ -317,21 +360,26 @@ function render() {
 
   let queueNum = 0;
   let contactedNum = 0;
+  const dmClass = deleteMode ? ' delete-active' : '';
 
   leads.forEach((lead, i) => {
+    if (deletedState[i]) return;
     const isContacted = contactedState[i];
+    const isSelected = selectedForDelete[i];
+    const checkbox = `<input type="checkbox" class="lead-checkbox" ${isSelected ? 'checked' : ''} onchange="toggleSelect(${i}, this.checked)">`;
 
     if (!isContacted) {
       queueNum++;
       const card = document.createElement('div');
-      card.className = 'lead-card';
+      card.className = 'lead-card' + dmClass + (isSelected ? ' selected' : '');
       card.innerHTML = `
+        ${checkbox}
         <div class="lead-info">
           <div class="lead-row">
             <span class="lead-num">${String(queueNum).padStart(2, '0')}</span>
             <span class="lead-name">${lead.name}</span>
           </div>
-          <div class="lead-title"><span class="lead-company">${lead.company}</span> — ${lead.title}</div>
+          <div class="lead-title"><span class="lead-company">${lead.company || 'undefined'}</span> — ${lead.title}</div>
         </div>
         <div style="display:flex;gap:6px;">
           <button class="btn-copy" onclick="copyMsg(${i})">Copy</button>
@@ -342,14 +390,15 @@ function render() {
     } else {
       contactedNum++;
       const card = document.createElement('div');
-      card.className = 'lead-card copied';
+      card.className = 'lead-card copied' + dmClass + (isSelected ? ' selected' : '');
       card.innerHTML = `
+        ${checkbox}
         <div class="lead-info">
           <div class="lead-row">
             <span class="lead-num">${String(contactedNum).padStart(2, '0')}</span>
             <span class="lead-name">${lead.name}</span>
           </div>
-          <div class="lead-title"><span class="lead-company">${lead.company}</span> — ${lead.title}</div>
+          <div class="lead-title"><span class="lead-company">${lead.company || 'undefined'}</span> — ${lead.title}</div>
         </div>
         <button class="btn-undo" onclick="undoContacted(${i})">Undo</button>
       `;
@@ -361,6 +410,7 @@ function render() {
   if (contactedNum === 0) emptyMsg.style.display = 'block';
   else emptyMsg.style.display = 'none';
 
+  updateDeleteUI();
   updateMetrics();
 }
 
@@ -394,6 +444,77 @@ function markContacted(i) {
 function undoContacted(i) {
   delete contactedState[i];
   localStorage.setItem('outreach_contacted_v3', JSON.stringify(contactedState));
+  render();
+}
+
+function toggleDeleteMode() {
+  deleteMode = !deleteMode;
+  selectedForDelete = {};
+  document.getElementById('btn-dm').classList.toggle('active', deleteMode);
+  document.getElementById('btn-sa').style.display = deleteMode ? 'inline-block' : 'none';
+  document.getElementById('btn-sa').classList.remove('active');
+  render();
+}
+
+function toggleSelect(i, checked) {
+  if (checked) selectedForDelete[i] = true;
+  else delete selectedForDelete[i];
+  updateDeleteUI();
+  // Update card highlight without full re-render
+  document.querySelectorAll('.lead-card').forEach(card => {
+    const cb = card.querySelector('.lead-checkbox');
+    if (cb) card.classList.toggle('selected', cb.checked);
+  });
+}
+
+function toggleSelectAll() {
+  const visibleIndices = [];
+  leads.forEach((_, i) => {
+    if (deletedState[i]) return;
+    const inQueue = !contactedState[i] && currentTab === 'queue';
+    const inContacted = contactedState[i] && currentTab === 'contacted';
+    if (inQueue || inContacted) visibleIndices.push(i);
+  });
+
+  const allSelected = visibleIndices.every(i => selectedForDelete[i]);
+  if (allSelected) {
+    visibleIndices.forEach(i => delete selectedForDelete[i]);
+    document.getElementById('btn-sa').classList.remove('active');
+  } else {
+    visibleIndices.forEach(i => selectedForDelete[i] = true);
+    document.getElementById('btn-sa').classList.add('active');
+  }
+  render();
+}
+
+function updateDeleteUI() {
+  const count = Object.keys(selectedForDelete).length;
+  const btnCD = document.getElementById('btn-cd');
+  const delCount = document.getElementById('delete-count');
+  if (deleteMode && count > 0) {
+    btnCD.style.display = 'inline-block';
+    btnCD.textContent = `Delete Selected (${count})`;
+    delCount.style.display = 'inline';
+    delCount.textContent = `${count} selected`;
+  } else {
+    btnCD.style.display = 'none';
+    delCount.style.display = 'none';
+  }
+}
+
+function confirmDelete() {
+  const count = Object.keys(selectedForDelete).length;
+  if (!confirm(`Permanently delete ${count} lead${count > 1 ? 's' : ''}?`)) return;
+  Object.keys(selectedForDelete).forEach(i => {
+    deletedState[i] = true;
+    delete contactedState[i];
+  });
+  localStorage.setItem('outreach_deleted_v1', JSON.stringify(deletedState));
+  localStorage.setItem('outreach_contacted_v3', JSON.stringify(contactedState));
+  selectedForDelete = {};
+  deleteMode = false;
+  document.getElementById('btn-dm').classList.remove('active');
+  document.getElementById('btn-sa').style.display = 'none';
   render();
 }
 
