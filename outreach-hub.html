@@ -3,58 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tethron LinkedIn Outreach Hub</title>
+<title>Tethron — Outreach Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #0a0a0c; color: #fff; font-family: 'Inter', -apple-system, sans-serif; padding: 24px; }
-h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
-.subtitle { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 32px; }
-.counter { display: inline-block; background: rgba(0,212,170,0.1); color: #00d4aa; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-left: 12px; }
-.lead-card {
+body { background: #050508; color: #fff; font-family: 'Inter', -apple-system, sans-serif; min-height: 100vh; }
+
+/* Noise bg */
+body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
+
+.container { max-width: 900px; margin: 0 auto; padding: 48px 24px; position: relative; z-index: 1; }
+
+/* Header */
+.header { margin-bottom: 40px; }
+.header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.logo { width: 32px; height: 32px; background: linear-gradient(135deg, #00d4aa, #00b894); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; color: #050508; }
+.header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+.header h1 span { color: rgba(255,255,255,0.3); }
+.header-sub { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+/* Metrics Bar */
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 36px; }
+.metric-card {
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px;
-  padding: 18px 20px;
-  margin-bottom: 10px;
+  padding: 16px 18px;
+  text-align: center;
+}
+.metric-value { font-size: 28px; font-weight: 800; letter-spacing: -1px; color: #00d4aa; }
+.metric-value.white { color: #fff; }
+.metric-value.orange { color: #f59e0b; }
+.metric-value.red { color: #ef4444; }
+.metric-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.3); margin-top: 4px; }
+
+/* Progress Bar */
+.progress-wrap { margin-bottom: 36px; }
+.progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.4); }
+.progress-pct { font-size: 13px; font-weight: 700; color: #00d4aa; }
+.progress-bar { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #00d4aa, #00b894); border-radius: 3px; transition: width 0.5s ease; }
+
+/* Section Label */
+.section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: rgba(0,212,170,0.5); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.04); }
+
+/* Lead Cards */
+.lead-card {
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 8px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
-  transition: border-color 0.2s;
+  transition: all 0.25s;
 }
-.lead-card:hover { border-color: rgba(0,212,170,0.2); }
-.lead-card.copied { border-color: rgba(0,212,170,0.5); background: rgba(0,212,170,0.03); }
-.lead-info { flex: 1; }
-.lead-name { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
-.lead-title { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.4; }
-.lead-company { color: #00d4aa; font-weight: 500; }
+.lead-card:hover { border-color: rgba(0,212,170,0.15); background: rgba(255,255,255,0.025); }
+.lead-card.copied { border-color: rgba(0,212,170,0.3); background: rgba(0,212,170,0.02); }
+.lead-info { flex: 1; min-width: 0; }
+.lead-row { display: flex; align-items: center; gap: 10px; }
+.lead-num { font-size: 10px; font-weight: 700; color: rgba(0,212,170,0.3); min-width: 20px; }
+.lead-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lead-title { font-size: 11.5px; color: rgba(255,255,255,0.35); line-height: 1.4; margin-top: 2px; padding-left: 30px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lead-company { color: rgba(0,212,170,0.7); font-weight: 500; }
+
 .btn-copy {
-  padding: 8px 20px;
-  background: rgba(0,212,170,0.12);
-  color: #00d4aa;
-  border: 1px solid rgba(0,212,170,0.25);
+  padding: 7px 18px;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s;
   flex-shrink: 0;
+  letter-spacing: 0.3px;
 }
-.btn-copy:hover { background: rgba(0,212,170,0.2); }
-.btn-copy.done { background: #00d4aa; color: #0a0a0c; border-color: #00d4aa; }
-.section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(0,212,170,0.5); margin: 24px 0 12px; }
-textarea { display: none; }
+.btn-copy:hover { background: rgba(0,212,170,0.1); border-color: rgba(0,212,170,0.25); color: #00d4aa; }
+.btn-copy.done { background: rgba(0,212,170,0.15); color: #00d4aa; border-color: rgba(0,212,170,0.3); }
+
+/* Reset button */
+.reset-btn { margin-top: 24px; padding: 8px 16px; background: none; border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.25); font-size: 11px; font-weight: 500; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+.reset-btn:hover { border-color: rgba(239,68,68,0.3); color: #ef4444; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  .lead-title { display: none; }
+  .container { padding: 24px 16px; }
+}
 </style>
 </head>
 <body>
 
-<h1>LinkedIn Outreach Hub <span class="counter" id="counter">0 / 19 sent</span></h1>
-<p class="subtitle">Click "Copy Message" then paste directly into LinkedIn. Template auto-filled for each lead.</p>
+<div class="container">
+  <div class="header">
+    <div class="header-top">
+      <div class="logo">T</div>
+      <h1>Outreach Command Center <span>/ LinkedIn</span></h1>
+    </div>
+    <p class="header-sub">Click copy. Paste into LinkedIn. Track your progress. Close deals.</p>
+  </div>
 
-<div class="section-label">New Connections — Ready to Message</div>
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-value white" id="m-total">19</div>
+      <div class="metric-label">Total Leads</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="m-sent">0</div>
+      <div class="metric-label">Messages Sent</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value orange" id="m-remaining">19</div>
+      <div class="metric-label">Remaining</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="m-rate">0%</div>
+      <div class="metric-label">Completion</div>
+    </div>
+  </div>
 
-<div id="leads"></div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-title">Outreach Progress</span>
+      <span class="progress-pct" id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <div class="section-label">Leads — Ready to Message</div>
+  <div id="leads"></div>
+
+  <button class="reset-btn" onclick="resetAll()">Reset All</button>
+</div>
 
 <script>
 const template = `Hey {name},
@@ -73,71 +163,96 @@ Caden
 tethron.ai`;
 
 const leads = [
-  { name: "Concetta Raz", company: "Upward On", title: "Founder/CEO — Executive Search for Real Estate Organizations", compliment: "love the niche focus on real estate exec search" },
+  { name: "Concetta Raz", company: "Upward On", title: "Founder/CEO — Executive Search for Real Estate Orgs", compliment: "love the niche focus on real estate exec search" },
   { name: "Brett A. Allren", company: "Claimify", title: "Co-Founder & CEO at Claimify", compliment: "Claimify's a smart concept" },
-  { name: "Adarsh Doshi", company: "Ex-Bed Bath & Beyond", title: "Value Creation for People + Businesses | Strategic Operator | AI-Enabled Scale Builder", compliment: "your background scaling operations at that level is impressive" },
-  { name: "Stacey Mennillo Dieterle", company: "Healthcare Consulting", title: "Rethinking, Reimagining, Redesigning Healthcare | Turning Overlooked Challenges into Ecosystem Wins", compliment: "the healthcare ecosystem angle is a fascinating space" },
+  { name: "Adarsh Doshi", company: "Strategic Ops", title: "Value Creation | Strategic Operator | AI-Enabled Scale Builder", compliment: "your background scaling operations at that level is impressive" },
+  { name: "Stacey Mennillo Dieterle", company: "Healthcare Consulting", title: "Redesigning Healthcare | Turning Challenges into Ecosystem Wins", compliment: "the healthcare ecosystem angle is a fascinating space" },
   { name: "Ozan TEKIN", company: "Founder", title: "Founder", compliment: "like what you're building" },
-  { name: "David DeMuth", company: "DeMuth Consulting", title: "Senior Finance Professional — outsourced business/financial/noncorporate solutions on a global basis", compliment: "the outsourced finance model is smart — businesses need that flexibility" },
+  { name: "David DeMuth", company: "DeMuth Consulting", title: "Senior Finance Professional — outsourced business/financial solutions", compliment: "the outsourced finance model is smart — businesses need that flexibility" },
   { name: "Daniel Szender", company: "Sure Lock & Key LLC", title: "Owner at Sure Lock & Key LLC", compliment: "locksmith is one of those businesses where response time is literally everything" },
   { name: "Hernan Chiosso", company: "HR/AI Consulting", title: "CSPO, SPHR — Translates between AI capabilities and HR reality", compliment: "bridging AI and HR is exactly where the market is heading" },
-  { name: "Lonnie McRorey", company: "Platform OS", title: "Making agentic distributed engineering topologies predictable at scale | CTO", compliment: "distributed engineering at scale is no joke" },
+  { name: "Lonnie McRorey", company: "Platform OS", title: "Agentic distributed engineering topologies at scale | CTO", compliment: "distributed engineering at scale is no joke" },
   { name: "Josh Brandt", company: "Stack + Co", title: "Owner, Stack + Co", compliment: "like what you're building at Stack + Co" },
-  { name: "Alan S. Michaels", company: "Industry Knowledge Graph LLC", title: "Director of Industry Research | MBA | Industry Knowledge Graph LLC", compliment: "the industry research angle through knowledge graphs is clever" },
+  { name: "Alan S. Michaels", company: "Industry Knowledge Graph LLC", title: "Director of Industry Research | MBA", compliment: "the industry research angle through knowledge graphs is clever" },
   { name: "Anthony Milne", company: "millermedal7", title: "Founder and CEO | Digital Transformation | UX", compliment: "digital transformation is exactly the world we operate in" },
-  { name: "Jared Coseglia", company: "Fortune 1000 Legal/AI", title: "Securing AI-enabled legal talent for Fortune 1000 & AmLaw 200 teams globally", compliment: "AI legal talent placement is a massive growing market" },
-  { name: "Jose Tomas Dominguez Fuenzalida", company: "Engineria Materials", title: "CTO & Co-Founder, Engineria Materials", compliment: "materials engineering is a space ripe for operational efficiency" },
-  { name: "MD SABBIR KHAN", company: "Digital Marketing/SaaS", title: "SEO Specialist & Digital Marketing Expert | Web Design | SaaS Founder", compliment: "you clearly understand the digital game" },
-  { name: "Guy Primus", company: "Valenz", title: "CEO @ Valenz | 250+ Employee AI Value Creation Partner | Mid-market & PE AI", compliment: "250+ AI value creation deployments is serious proof of concept" },
-  { name: "Eugene Karyakin", company: "Fractional CTO", title: "Fractional CTO | AI-Accelerated Modernization & SW Dev Project Rescue | Ex-IBM", compliment: "the fractional CTO model with AI acceleration is a smart combo" },
+  { name: "Jared Coseglia", company: "TRU Staffing", title: "Securing AI-enabled legal talent for Fortune 1000 & AmLaw 200", compliment: "AI legal talent placement is a massive growing market" },
+  { name: "Jose Tomas Dominguez", company: "Engineria Materials", title: "CTO & Co-Founder, Engineria Materials", compliment: "materials engineering is a space ripe for operational efficiency" },
+  { name: "MD Sabbir Khan", company: "SaaS Founder", title: "SEO Specialist & Digital Marketing Expert | SaaS Founder", compliment: "you clearly understand the digital game" },
+  { name: "Guy Primus", company: "Valenz", title: "CEO @ Valenz | 250+ AI Value Creation Partner", compliment: "250+ AI value creation deployments is serious proof of concept" },
+  { name: "Eugene Karyakin", company: "Fractional CTO", title: "Fractional CTO | AI-Accelerated Modernization | Ex-IBM", compliment: "the fractional CTO model with AI acceleration is a smart combo" },
   { name: "Ben Jones", company: "Sundogs.io", title: "Founder, Sundogs.io", compliment: "like what you're building at Sundogs" },
 ];
 
-let sentCount = 0;
-const sentState = JSON.parse(localStorage.getItem('outreach_sent') || '{}');
+let sentState = JSON.parse(localStorage.getItem('outreach_sent_v2') || '{}');
+
+function updateMetrics() {
+  const sent = Object.keys(sentState).length;
+  const total = leads.length;
+  const remaining = total - sent;
+  const pct = Math.round((sent / total) * 100);
+
+  document.getElementById('m-total').textContent = total;
+  document.getElementById('m-sent').textContent = sent;
+  document.getElementById('m-remaining').textContent = remaining;
+  document.getElementById('m-rate').textContent = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  if (remaining === 0) {
+    document.getElementById('m-remaining').style.color = '#00d4aa';
+  }
+}
 
 function renderLeads() {
   const container = document.getElementById('leads');
-  sentCount = Object.keys(sentState).length;
-  updateCounter();
+  container.innerHTML = '';
 
   leads.forEach((lead, i) => {
     const card = document.createElement('div');
     card.className = 'lead-card' + (sentState[i] ? ' copied' : '');
     card.innerHTML = `
       <div class="lead-info">
-        <div class="lead-name">${lead.name}</div>
+        <div class="lead-row">
+          <span class="lead-num">${String(i + 1).padStart(2, '0')}</span>
+          <span class="lead-name">${lead.name}</span>
+        </div>
         <div class="lead-title"><span class="lead-company">${lead.company}</span> — ${lead.title}</div>
       </div>
       <button class="btn-copy ${sentState[i] ? 'done' : ''}" onclick="copyMsg(${i})" id="btn-${i}">
-        ${sentState[i] ? 'Copied' : 'Copy Message'}
+        ${sentState[i] ? 'Sent' : 'Copy'}
       </button>
     `;
     container.appendChild(card);
   });
+
+  updateMetrics();
 }
 
 function copyMsg(i) {
   const lead = leads[i];
+  const firstName = lead.name.split(' ')[0];
   const msg = template
-    .replace(/{name}/g, lead.name.split(' ')[0])
+    .replace(/{name}/g, firstName)
     .replace(/{company}/g, lead.company)
     .replace(/{compliment}/g, lead.compliment);
 
   navigator.clipboard.writeText(msg).then(() => {
     const btn = document.getElementById('btn-' + i);
-    btn.textContent = 'Copied';
+    btn.textContent = 'Sent';
     btn.classList.add('done');
     btn.closest('.lead-card').classList.add('copied');
     sentState[i] = true;
-    localStorage.setItem('outreach_sent', JSON.stringify(sentState));
-    sentCount = Object.keys(sentState).length;
-    updateCounter();
+    localStorage.setItem('outreach_sent_v2', JSON.stringify(sentState));
+    updateMetrics();
   });
 }
 
-function updateCounter() {
-  document.getElementById('counter').textContent = sentCount + ' / ' + leads.length + ' sent';
+function resetAll() {
+  if (confirm('Reset all sent status?')) {
+    sentState = {};
+    localStorage.removeItem('outreach_sent_v2');
+    renderLeads();
+  }
 }
 
 renderLeads();
