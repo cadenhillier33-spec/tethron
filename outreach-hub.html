@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tethron LinkedIn Outreach Hub</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0c; color: #fff; font-family: 'Inter', -apple-system, sans-serif; padding: 24px; }
+h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+.subtitle { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 32px; }
+.counter { display: inline-block; background: rgba(0,212,170,0.1); color: #00d4aa; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-left: 12px; }
+.lead-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  transition: border-color 0.2s;
+}
+.lead-card:hover { border-color: rgba(0,212,170,0.2); }
+.lead-card.copied { border-color: rgba(0,212,170,0.5); background: rgba(0,212,170,0.03); }
+.lead-info { flex: 1; }
+.lead-name { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+.lead-title { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.4; }
+.lead-company { color: #00d4aa; font-weight: 500; }
+.btn-copy {
+  padding: 8px 20px;
+  background: rgba(0,212,170,0.12);
+  color: #00d4aa;
+  border: 1px solid rgba(0,212,170,0.25);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.btn-copy:hover { background: rgba(0,212,170,0.2); }
+.btn-copy.done { background: #00d4aa; color: #0a0a0c; border-color: #00d4aa; }
+.section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(0,212,170,0.5); margin: 24px 0 12px; }
+textarea { display: none; }
+</style>
+</head>
+<body>
+
+<h1>LinkedIn Outreach Hub <span class="counter" id="counter">0 / 19 sent</span></h1>
+<p class="subtitle">Click "Copy Message" then paste directly into LinkedIn. Template auto-filled for each lead.</p>
+
+<div class="section-label">New Connections — Ready to Message</div>
+
+<div id="leads"></div>
+
+<script>
+const template = `Hey {name},
+
+Came across {company} — {compliment}.
+
+I run Tethron. We install AI employees that run your business. Not a tool. Not software. An actual AI employee built around your company — your voice, your knowledge, your standards — running 24/7 on dedicated hardware.
+
+Customer communication. Operations. Marketing. Strategy. Reporting. It doesn't just handle tasks — it thinks about your business. Spots trends you're missing. Plans ahead. Finds revenue you're leaving on the table. Flags problems before they cost you money.
+
+Most owners are shocked by how many hats they've been wearing that don't require a human. We take those hats off your head and put them on someone who never stops working.
+
+I put together a breakdown of what your AI employee would do at {company} — want me to send it over?
+
+Caden
+tethron.ai`;
+
+const leads = [
+  { name: "Concetta Raz", company: "Upward On", title: "Founder/CEO — Executive Search for Real Estate Organizations", compliment: "love the niche focus on real estate exec search" },
+  { name: "Brett A. Allren", company: "Claimify", title: "Co-Founder & CEO at Claimify", compliment: "Claimify's a smart concept" },
+  { name: "Adarsh Doshi", company: "Ex-Bed Bath & Beyond", title: "Value Creation for People + Businesses | Strategic Operator | AI-Enabled Scale Builder", compliment: "your background scaling operations at that level is impressive" },
+  { name: "Stacey Mennillo Dieterle", company: "Healthcare Consulting", title: "Rethinking, Reimagining, Redesigning Healthcare | Turning Overlooked Challenges into Ecosystem Wins", compliment: "the healthcare ecosystem angle is a fascinating space" },
+  { name: "Ozan TEKIN", company: "Founder", title: "Founder", compliment: "like what you're building" },
+  { name: "David DeMuth", company: "DeMuth Consulting", title: "Senior Finance Professional — outsourced business/financial/noncorporate solutions on a global basis", compliment: "the outsourced finance model is smart — businesses need that flexibility" },
+  { name: "Daniel Szender", company: "Sure Lock & Key LLC", title: "Owner at Sure Lock & Key LLC", compliment: "locksmith is one of those businesses where response time is literally everything" },
+  { name: "Hernan Chiosso", company: "HR/AI Consulting", title: "CSPO, SPHR — Translates between AI capabilities and HR reality", compliment: "bridging AI and HR is exactly where the market is heading" },
+  { name: "Lonnie McRorey", company: "Platform OS", title: "Making agentic distributed engineering topologies predictable at scale | CTO", compliment: "distributed engineering at scale is no joke" },
+  { name: "Josh Brandt", company: "Stack + Co", title: "Owner, Stack + Co", compliment: "like what you're building at Stack + Co" },
+  { name: "Alan S. Michaels", company: "Industry Knowledge Graph LLC", title: "Director of Industry Research | MBA | Industry Knowledge Graph LLC", compliment: "the industry research angle through knowledge graphs is clever" },
+  { name: "Anthony Milne", company: "millermedal7", title: "Founder and CEO | Digital Transformation | UX", compliment: "digital transformation is exactly the world we operate in" },
+  { name: "Jared Coseglia", company: "Fortune 1000 Legal/AI", title: "Securing AI-enabled legal talent for Fortune 1000 & AmLaw 200 teams globally", compliment: "AI legal talent placement is a massive growing market" },
+  { name: "Jose Tomas Dominguez Fuenzalida", company: "Engineria Materials", title: "CTO & Co-Founder, Engineria Materials", compliment: "materials engineering is a space ripe for operational efficiency" },
+  { name: "MD SABBIR KHAN", company: "Digital Marketing/SaaS", title: "SEO Specialist & Digital Marketing Expert | Web Design | SaaS Founder", compliment: "you clearly understand the digital game" },
+  { name: "Guy Primus", company: "Valenz", title: "CEO @ Valenz | 250+ Employee AI Value Creation Partner | Mid-market & PE AI", compliment: "250+ AI value creation deployments is serious proof of concept" },
+  { name: "Eugene Karyakin", company: "Fractional CTO", title: "Fractional CTO | AI-Accelerated Modernization & SW Dev Project Rescue | Ex-IBM", compliment: "the fractional CTO model with AI acceleration is a smart combo" },
+  { name: "Ben Jones", company: "Sundogs.io", title: "Founder, Sundogs.io", compliment: "like what you're building at Sundogs" },
+];
+
+let sentCount = 0;
+const sentState = JSON.parse(localStorage.getItem('outreach_sent') || '{}');
+
+function renderLeads() {
+  const container = document.getElementById('leads');
+  sentCount = Object.keys(sentState).length;
+  updateCounter();
+
+  leads.forEach((lead, i) => {
+    const card = document.createElement('div');
+    card.className = 'lead-card' + (sentState[i] ? ' copied' : '');
+    card.innerHTML = `
+      <div class="lead-info">
+        <div class="lead-name">${lead.name}</div>
+        <div class="lead-title"><span class="lead-company">${lead.company}</span> — ${lead.title}</div>
+      </div>
+      <button class="btn-copy ${sentState[i] ? 'done' : ''}" onclick="copyMsg(${i})" id="btn-${i}">
+        ${sentState[i] ? 'Copied' : 'Copy Message'}
+      </button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function copyMsg(i) {
+  const lead = leads[i];
+  const msg = template
+    .replace(/{name}/g, lead.name.split(' ')[0])
+    .replace(/{company}/g, lead.company)
+    .replace(/{compliment}/g, lead.compliment);
+
+  navigator.clipboard.writeText(msg).then(() => {
+    const btn = document.getElementById('btn-' + i);
+    btn.textContent = 'Copied';
+    btn.classList.add('done');
+    btn.closest('.lead-card').classList.add('copied');
+    sentState[i] = true;
+    localStorage.setItem('outreach_sent', JSON.stringify(sentState));
+    sentCount = Object.keys(sentState).length;
+    updateCounter();
+  });
+}
+
+function updateCounter() {
+  document.getElementById('counter').textContent = sentCount + ' / ' + leads.length + ' sent';
+}
+
+renderLeads();
+</script>
+</body>
+</html>
