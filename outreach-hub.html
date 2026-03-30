@@ -88,6 +88,48 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
 .btn-copy:hover { background: rgba(0,212,170,0.1); border-color: rgba(0,212,170,0.25); color: #00d4aa; }
 .btn-copy.done { background: rgba(0,212,170,0.15); color: #00d4aa; border-color: rgba(0,212,170,0.3); }
 
+/* Tabs */
+.tabs { display: flex; gap: 4px; margin-bottom: 20px; background: rgba(255,255,255,0.03); border-radius: 10px; padding: 3px; }
+.tab { flex: 1; padding: 10px 16px; background: none; border: none; color: rgba(255,255,255,0.35); font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.tab.active { background: rgba(0,212,170,0.1); color: #00d4aa; }
+.tab:hover:not(.active) { color: rgba(255,255,255,0.6); }
+.tab-count { background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+.tab.active .tab-count { background: rgba(0,212,170,0.2); }
+
+/* Contacted button */
+.btn-contacted {
+  padding: 7px 14px;
+  background: none;
+  color: rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.btn-contacted:hover { border-color: rgba(0,212,170,0.25); color: #00d4aa; }
+
+/* Undo button (on contacted page) */
+.btn-undo {
+  padding: 7px 14px;
+  background: none;
+  color: rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.btn-undo:hover { border-color: rgba(239,68,68,0.3); color: #ef4444; }
+
+.empty-state { text-align: center; padding: 48px 24px; color: rgba(255,255,255,0.2); font-size: 13px; }
+
 /* Reset button */
 .reset-btn { margin-top: 24px; padding: 8px 16px; background: none; border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.25); font-size: 11px; font-weight: 500; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
 .reset-btn:hover { border-color: rgba(239,68,68,0.3); color: #ef4444; }
@@ -140,8 +182,20 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
     </div>
   </div>
 
-  <div class="section-label">Leads — Ready to Message</div>
-  <div id="leads"></div>
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" id="tab-queue" onclick="switchTab('queue')">Ready to Send <span class="tab-count" id="tc-queue">0</span></button>
+    <button class="tab" id="tab-contacted" onclick="switchTab('contacted')">Contacted <span class="tab-count" id="tc-contacted">0</span></button>
+  </div>
+
+  <div id="queue-view">
+    <div id="leads"></div>
+  </div>
+
+  <div id="contacted-view" style="display:none;">
+    <div id="contacted-leads"></div>
+    <div class="empty-state" id="empty-contacted" style="display:none;">No contacted leads yet. Start sending!</div>
+  </div>
 
   <button class="reset-btn" onclick="resetAll()">Reset All</button>
 </div>
@@ -183,47 +237,87 @@ const leads = [
   { name: "Ben Jones", company: "Sundogs.io", title: "Founder, Sundogs.io", compliment: "like what you're building at Sundogs" },
 ];
 
-let sentState = JSON.parse(localStorage.getItem('outreach_sent_v2') || '{}');
+let contactedState = JSON.parse(localStorage.getItem('outreach_contacted_v3') || '{}');
+let currentTab = 'queue';
 
 function updateMetrics() {
-  const sent = Object.keys(sentState).length;
+  const contacted = Object.keys(contactedState).length;
   const total = leads.length;
-  const remaining = total - sent;
-  const pct = Math.round((sent / total) * 100);
+  const remaining = total - contacted;
+  const pct = Math.round((contacted / total) * 100);
 
   document.getElementById('m-total').textContent = total;
-  document.getElementById('m-sent').textContent = sent;
+  document.getElementById('m-sent').textContent = contacted;
   document.getElementById('m-remaining').textContent = remaining;
   document.getElementById('m-rate').textContent = pct + '%';
   document.getElementById('progress-pct').textContent = pct + '%';
   document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('tc-queue').textContent = remaining;
+  document.getElementById('tc-contacted').textContent = contacted;
 
-  if (remaining === 0) {
-    document.getElementById('m-remaining').style.color = '#00d4aa';
-  }
+  if (remaining === 0) document.getElementById('m-remaining').style.color = '#00d4aa';
 }
 
-function renderLeads() {
-  const container = document.getElementById('leads');
-  container.innerHTML = '';
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tab-queue').classList.toggle('active', tab === 'queue');
+  document.getElementById('tab-contacted').classList.toggle('active', tab === 'contacted');
+  document.getElementById('queue-view').style.display = tab === 'queue' ? 'block' : 'none';
+  document.getElementById('contacted-view').style.display = tab === 'contacted' ? 'block' : 'none';
+  render();
+}
+
+function render() {
+  const queueContainer = document.getElementById('leads');
+  const contactedContainer = document.getElementById('contacted-leads');
+  queueContainer.innerHTML = '';
+  contactedContainer.innerHTML = '';
+
+  let queueNum = 0;
+  let contactedNum = 0;
 
   leads.forEach((lead, i) => {
-    const card = document.createElement('div');
-    card.className = 'lead-card' + (sentState[i] ? ' copied' : '');
-    card.innerHTML = `
-      <div class="lead-info">
-        <div class="lead-row">
-          <span class="lead-num">${String(i + 1).padStart(2, '0')}</span>
-          <span class="lead-name">${lead.name}</span>
+    const isContacted = contactedState[i];
+
+    if (!isContacted) {
+      queueNum++;
+      const card = document.createElement('div');
+      card.className = 'lead-card';
+      card.innerHTML = `
+        <div class="lead-info">
+          <div class="lead-row">
+            <span class="lead-num">${String(queueNum).padStart(2, '0')}</span>
+            <span class="lead-name">${lead.name}</span>
+          </div>
+          <div class="lead-title"><span class="lead-company">${lead.company}</span> — ${lead.title}</div>
         </div>
-        <div class="lead-title"><span class="lead-company">${lead.company}</span> — ${lead.title}</div>
-      </div>
-      <button class="btn-copy ${sentState[i] ? 'done' : ''}" onclick="copyMsg(${i})" id="btn-${i}">
-        ${sentState[i] ? 'Sent' : 'Copy'}
-      </button>
-    `;
-    container.appendChild(card);
+        <div style="display:flex;gap:6px;">
+          <button class="btn-copy" onclick="copyMsg(${i})">Copy</button>
+          <button class="btn-contacted" onclick="markContacted(${i})">Contacted</button>
+        </div>
+      `;
+      queueContainer.appendChild(card);
+    } else {
+      contactedNum++;
+      const card = document.createElement('div');
+      card.className = 'lead-card copied';
+      card.innerHTML = `
+        <div class="lead-info">
+          <div class="lead-row">
+            <span class="lead-num">${String(contactedNum).padStart(2, '0')}</span>
+            <span class="lead-name">${lead.name}</span>
+          </div>
+          <div class="lead-title"><span class="lead-company">${lead.company}</span> — ${lead.title}</div>
+        </div>
+        <button class="btn-undo" onclick="undoContacted(${i})">Undo</button>
+      `;
+      contactedContainer.appendChild(card);
+    }
   });
+
+  const emptyMsg = document.getElementById('empty-contacted');
+  if (contactedNum === 0) emptyMsg.style.display = 'block';
+  else emptyMsg.style.display = 'none';
 
   updateMetrics();
 }
@@ -237,25 +331,37 @@ function copyMsg(i) {
     .replace(/{compliment}/g, lead.compliment);
 
   navigator.clipboard.writeText(msg).then(() => {
-    const btn = document.getElementById('btn-' + i);
-    btn.textContent = 'Sent';
-    btn.classList.add('done');
-    btn.closest('.lead-card').classList.add('copied');
-    sentState[i] = true;
-    localStorage.setItem('outreach_sent_v2', JSON.stringify(sentState));
-    updateMetrics();
+    // Brief visual feedback
+    event.target.textContent = 'Copied!';
+    event.target.classList.add('done');
+    setTimeout(() => {
+      event.target.textContent = 'Copy';
+      event.target.classList.remove('done');
+    }, 1500);
   });
 }
 
+function markContacted(i) {
+  contactedState[i] = { date: new Date().toISOString() };
+  localStorage.setItem('outreach_contacted_v3', JSON.stringify(contactedState));
+  render();
+}
+
+function undoContacted(i) {
+  delete contactedState[i];
+  localStorage.setItem('outreach_contacted_v3', JSON.stringify(contactedState));
+  render();
+}
+
 function resetAll() {
-  if (confirm('Reset all sent status?')) {
-    sentState = {};
-    localStorage.removeItem('outreach_sent_v2');
-    renderLeads();
+  if (confirm('Reset all contacted status?')) {
+    contactedState = {};
+    localStorage.removeItem('outreach_contacted_v3');
+    render();
   }
 }
 
-renderLeads();
+render();
 </script>
 </body>
 </html>
