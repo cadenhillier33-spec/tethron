@@ -201,7 +201,7 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
 </div>
 
 <script>
-const template = `Hey {name},
+const templateCompany = `Hey {name},
 
 Came across {company} — {compliment}.
 
@@ -216,38 +216,52 @@ I put together a breakdown of what your AI employee would do at {company} — wa
 Caden
 tethron.ai`;
 
+const templateBackground = `Hey {name},
+
+Came across your background in {background} — {compliment}.
+
+I run Tethron. We install AI employees that run your business. Not a tool. Not software. An actual AI employee built around your company — your voice, your knowledge, your standards — running 24/7 on dedicated hardware.
+
+Customer communication. Operations. Marketing. Strategy. Reporting. It doesn't just handle tasks — it thinks about your business. Spots trends you're missing. Plans ahead. Finds revenue you're leaving on the table. Flags problems before they cost you money.
+
+Most owners are shocked by how many hats they've been wearing that don't require a human. We take those hats off your head and put them on someone who never stops working.
+
+I put together a breakdown of what an AI employee would do for your business — want me to send it over?
+
+Caden
+tethron.ai`;
+
 const leads = [
   { name: "Concetta Raz", company: "Upward On", title: "Founder/CEO — Executive Search for Real Estate Orgs", compliment: "love the niche focus on real estate exec search" },
   { name: "Brett A. Allren", company: "Claimify", title: "Co-Founder & CEO at Claimify", compliment: "Claimify's a smart concept" },
-  { name: "Adarsh Doshi", company: "Strategic Ops", title: "Value Creation | Strategic Operator | AI-Enabled Scale Builder", compliment: "your background scaling operations at that level is impressive" },
-  { name: "Stacey Mennillo Dieterle", company: "Healthcare Consulting", title: "Redesigning Healthcare | Turning Challenges into Ecosystem Wins", compliment: "the healthcare ecosystem angle is a fascinating space" },
-  { name: "Ozan TEKIN", company: "Founder", title: "Founder", compliment: "like what you're building" },
-  { name: "David DeMuth", company: "DeMuth Consulting", title: "Senior Finance Professional — outsourced business/financial solutions", compliment: "the outsourced finance model is smart — businesses need that flexibility" },
+  { name: "Adarsh Doshi", background: "value creation and strategic operations", title: "Value Creation | Strategic Operator | AI-Enabled Scale Builder", compliment: "scaling operations at that level is impressive" },
+  { name: "Stacey Mennillo Dieterle", background: "healthcare redesign and ecosystem innovation", title: "Redesigning Healthcare | Turning Challenges into Ecosystem Wins", compliment: "the ecosystem approach to healthcare challenges is fascinating" },
+  { name: "Ozan TEKIN", background: "entrepreneurship", title: "Founder", compliment: "always respect a founder building something from scratch" },
+  { name: "David DeMuth", background: "outsourced financial solutions", title: "Senior Finance Professional — outsourced business/financial solutions", compliment: "businesses need that flexibility now more than ever" },
   { name: "Daniel Szender", company: "Sure Lock & Key LLC", title: "Owner at Sure Lock & Key LLC", compliment: "locksmith is one of those businesses where response time is literally everything" },
-  { name: "Hernan Chiosso", company: "HR/AI Consulting", title: "CSPO, SPHR — Translates between AI capabilities and HR reality", compliment: "bridging AI and HR is exactly where the market is heading" },
-  { name: "Lonnie McRorey", company: "Platform OS", title: "Agentic distributed engineering topologies at scale | CTO", compliment: "distributed engineering at scale is no joke" },
+  { name: "Hernan Chiosso", background: "AI and HR integration", title: "CSPO, SPHR — Translates between AI capabilities and HR reality", compliment: "bridging AI and HR is exactly where the market is heading" },
   { name: "Josh Brandt", company: "Stack + Co", title: "Owner, Stack + Co", compliment: "like what you're building at Stack + Co" },
   { name: "Alan S. Michaels", company: "Industry Knowledge Graph LLC", title: "Director of Industry Research | MBA", compliment: "the industry research angle through knowledge graphs is clever" },
-  { name: "Anthony Milne", company: "millermedal7", title: "Founder and CEO | Digital Transformation | UX", compliment: "digital transformation is exactly the world we operate in" },
+  { name: "Anthony Milne", background: "digital transformation and UX", title: "Founder and CEO | Digital Transformation | UX", compliment: "that's exactly the world we operate in" },
   { name: "Jared Coseglia", company: "TRU Staffing", title: "Securing AI-enabled legal talent for Fortune 1000 & AmLaw 200", compliment: "AI legal talent placement is a massive growing market" },
   { name: "Jose Tomas Dominguez", company: "Engineria Materials", title: "CTO & Co-Founder, Engineria Materials", compliment: "materials engineering is a space ripe for operational efficiency" },
-  { name: "MD Sabbir Khan", company: "SaaS Founder", title: "SEO Specialist & Digital Marketing Expert | SaaS Founder", compliment: "you clearly understand the digital game" },
+  { name: "MD Sabbir Khan", background: "SEO, digital marketing, and SaaS", title: "SEO Specialist & Digital Marketing Expert | SaaS Founder", compliment: "you clearly understand the digital game" },
   { name: "Guy Primus", company: "Valenz", title: "CEO @ Valenz | 250+ AI Value Creation Partner", compliment: "250+ AI value creation deployments is serious proof of concept" },
-  { name: "Eugene Karyakin", company: "Fractional CTO", title: "Fractional CTO | AI-Accelerated Modernization | Ex-IBM", compliment: "the fractional CTO model with AI acceleration is a smart combo" },
+  { name: "Eugene Karyakin", background: "fractional CTO work and AI-accelerated modernization", title: "Fractional CTO | AI-Accelerated Modernization | Ex-IBM", compliment: "the fractional model with AI acceleration is a smart combo" },
   { name: "Ben Jones", company: "Sundogs.io", title: "Founder, Sundogs.io", compliment: "like what you're building at Sundogs" },
-  { name: "Benjamin Silluzio", company: "Fintech Payments", title: "Fintech Payments Founder | Investor Relations | Hedge Fund CGO | Strategic Growth", compliment: "the bridge between fintech and investor relations is a powerful position" },
+  { name: "Benjamin Silluzio", background: "fintech payments and investor relations", title: "Fintech Payments Founder | Investor Relations | Hedge Fund CGO | Strategic Growth", compliment: "the bridge between fintech and investor relations is a powerful position" },
   { name: "Michael X. Burns III", company: "LEGION", title: "LEGION Networking and Solutions Provider | Gathering, Organizing, Selling Data", compliment: "data as a business is only getting more valuable" },
-  { name: "Ciarán Hynes", company: "Digital Assets / Web3", title: "Entrepreneur, Investor specializing in Digital Assets, Web3 & Blockchain", compliment: "the Web3 investment space needs more operational efficiency" },
+  { name: "Ciarán Hynes", background: "digital assets and Web3 investing", title: "Entrepreneur, Investor specializing in Digital Assets, Web3 & Blockchain", compliment: "the investment space needs more operational efficiency" },
   { name: "Dionysis Panagiotopouios", company: "Aether VC", title: "Co-Founder & Managing Partner @ Aether VC", compliment: "VC from the operator side is where the best deals get found" },
-  { name: "Anupam Ghildyal", company: "Venture Capital", title: "Technology Development | Product Commercialization | Venture Capital", compliment: "product commercialization is where most companies drop the ball" },
-  { name: "Luciane Serifovic", company: "Real Estate / HNWI", title: "CEO & Founder | Luxury Real Estate Broker & Advisor for HNWI Sports, Entertainment Clients", compliment: "luxury real estate for HNWI clients is a perfect fit for what we build" },
-  { name: "Mark Grupposo", company: "Real Estate Coaching", title: "Real Estate Business Coach | Helping Agents & Brokers Scale Listings, Profit & M'rkt Share", compliment: "helping brokers scale is exactly the problem an AI employee solves" },
-  { name: "Richard Hearn", company: "PE & VC", title: "CEO, Chairman, PE & VC Investor, Board Member, Operator, Serial Entrepreneur, Fortune 500 Executive", compliment: "serial entrepreneur with Fortune 500 experience — you've seen what operational leverage can do" },
-  { name: "Andrea Ridi", company: "Digital Transformation", title: "Serial high-tech entrepreneur with a clear vision into value driven intelligent digital transformation", compliment: "intelligent digital transformation is literally what we deliver" },
+  { name: "Anupam Ghildyal", background: "product commercialization and venture capital", title: "Technology Development | Product Commercialization | Venture Capital", compliment: "product commercialization is where most companies drop the ball" },
+  { name: "Luciane Serifovic", background: "luxury real estate and HNWI advisory", title: "CEO & Founder | Luxury Real Estate Broker & Advisor for HNWI Sports, Entertainment Clients", compliment: "luxury real estate for high-net-worth clients is a perfect fit for what we build" },
+  { name: "Mark Grupposo", background: "real estate coaching and broker scaling", title: "Real Estate Business Coach | Helping Agents & Brokers Scale Listings, Profit & M'rkt Share", compliment: "helping brokers scale is exactly the problem an AI employee solves" },
+  { name: "Richard Hearn", background: "PE, VC, and serial entrepreneurship", title: "CEO, Chairman, PE & VC Investor, Board Member, Operator, Serial Entrepreneur, Fortune 500 Executive", compliment: "with Fortune 500 experience you've seen what operational leverage can do" },
+  { name: "Andrea Ridi", background: "high-tech entrepreneurship and digital transformation", title: "Serial high-tech entrepreneur with a clear vision into value driven intelligent digital transformation", compliment: "intelligent digital transformation is literally what we deliver" },
   { name: "Justin Lee", company: "Palladin Consumer Retail Partners", title: "Vice President at Palladin Consumer Retail Partners", compliment: "consumer retail is one of the industries that benefits most from AI operations" },
   { name: "Joel Richman", company: "Escalate PR", title: "Founder & Partner @ Escalate PR | Communications Strategies | B2B Technology", compliment: "B2B tech comms is a space where AI can handle the repetitive outreach at scale" },
-  { name: "Michael Collins, CFA", company: "Financial Advisory", title: "Financial Advisor | Portfolio Manager | Professor | Fiduciary", compliment: "the advisory space is ripe for AI-powered client management" },
-  { name: "Jeff Rabhan", company: "Media/Entertainment", title: "Media/Entertainment & Music Innovation. Higher Ed Advocate", compliment: "media and entertainment innovation is where the early adopters live" },
+  { name: "Michael Collins, CFA", background: "financial advisory and portfolio management", title: "Financial Advisor | Portfolio Manager | Professor | Fiduciary", compliment: "the advisory space is ripe for AI-powered client management" },
+  { name: "Jeff Rabhan", background: "media, entertainment, and music innovation", title: "Media/Entertainment & Music Innovation. Higher Ed Advocate", compliment: "that's where the early adopters live" },
 ];
 
 let contactedState = JSON.parse(localStorage.getItem('outreach_contacted_v3') || '{}');
@@ -338,9 +352,11 @@ function render() {
 function copyMsg(i) {
   const lead = leads[i];
   const firstName = lead.name.split(' ')[0];
-  const msg = template
+  const tpl = lead.company ? templateCompany : templateBackground;
+  const msg = tpl
     .replace(/{name}/g, firstName)
-    .replace(/{company}/g, lead.company)
+    .replace(/{company}/g, lead.company || '')
+    .replace(/{background}/g, lead.background || '')
     .replace(/{compliment}/g, lead.compliment);
 
   navigator.clipboard.writeText(msg).then(() => {
