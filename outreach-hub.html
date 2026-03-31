@@ -303,11 +303,17 @@ const leads = [
   { name: "Jeff Rabhan", background: "media, entertainment, and music innovation", title: "Media/Entertainment & Music Innovation. Higher Ed Advocate", compliment: "that's where the early adopters live" },
   { name: "Gregg Bauer", company: "ScaleUp Labs", title: "Managing Partner at ScaleUp Labs", compliment: "scaling businesses is exactly where an AI employee creates the most leverage" },
   { name: "Steven Lepke", company: "HaA LLC", title: "President & Founder | ISO 13485 | Medical & Healthcare Product Innovation", compliment: "leading innovation in medical products with ISO 13485 certification is serious credibility" },
+  { name: "David Bernardino", background: "connecting people and transforming lives", title: "Connecting People. Transforming Lives.", compliment: "that mission statement tells me you understand the human side of business" },
+  { name: "Scott A. Scanlon", company: "Hunt Scanlon Ventures", title: "CEO at Hunt Scanlon Ventures | Co-Founder Hunt Scanlon Media | Co-Founder HSiQ", compliment: "building a media empire around executive search is a smart play" },
+  { name: "Marc Shepard", company: "NECANN", title: "B2B Cannabis Industry Conventions | Helping Local Businesses", compliment: "the cannabis B2B convention space is wide open and you're owning it" },
+  { name: "Cathy Minter", company: "Wisdom", title: "Co-Founder and CEO at Wisdom | Intelligent Home Technology | Safety & Innovation", compliment: "intelligent home tech is one of those markets that's about to explode" },
+  { name: "Melih Abdulhayoglu", company: "Xcitium", title: "Founder & Executive Chairman | Cyber Security, AI, ITSM, Cloud", compliment: "building at the intersection of cybersecurity and AI is exactly where the market is headed" },
+  { name: "Preston Repenning", company: "Paragon 360", title: "Founder, Paragon 360 | Founder, beatmondo immersive", compliment: "immersive experiences are the next frontier and you're already building in it" },
 ];
 
-// Default contacted state — everyone Caden already messaged (all except Steven Lepke, last in array)
+// Default contacted state — first 31 leads already messaged, Steven Lepke + 6 new leads are not contacted
 const defaultContacted = {};
-for (let i = 0; i < leads.length - 1; i++) { defaultContacted[i] = { date: "2026-03-30T00:00:00.000Z" }; }
+for (let i = 0; i < 31; i++) { defaultContacted[i] = { date: "2026-03-30T00:00:00.000Z" }; }
 
 // Merge: localStorage wins if it exists AND has entries, otherwise use defaults
 const stored = JSON.parse(localStorage.getItem('outreach_contacted_v3') || '{}');
