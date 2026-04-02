@@ -1362,46 +1362,41 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   .ba-item-desc { font-size: 12.5px; }
 }
 
-/* ===== TABBED INTEGRATIONS ===== */
-.int-tabs {
+/* ===== LOGO CAROUSEL ===== */
+.logo-carousel-wrap {
+  overflow: hidden;
+  margin-top: 48px;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+.logo-carousel-wrap:hover .logo-carousel-track { animation-play-state: paused; }
+.logo-carousel-track {
   display: flex;
+  width: max-content;
+  animation: logoScroll 40s linear infinite;
+  will-change: transform;
+}
+@keyframes logoScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.logo-carousel-item {
+  flex: 0 0 auto;
+  min-width: 160px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.35);
+  white-space: nowrap;
+  transition: color 0.3s;
 }
-.int-tab {
-  padding: 10px 20px;
-  border-radius: 100px;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.5);
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.03);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.int-tab:hover {
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.8);
-}
-.int-tab.active {
-  background: rgba(0,212,170,0.1);
-  border-color: rgba(0,212,170,0.25);
-  color: #00d4aa;
-}
-.int-tab-content {
-  display: none;
-  animation: tabFadeIn 0.35s ease;
-}
-.int-tab-content.active { display: grid; }
-@keyframes tabFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.int-tab-content {
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 24px;
-}
+.logo-carousel-item:hover { color: rgba(255,255,255,0.6); }
+.logo-carousel-item .lc-icon { margin-right: 8px; font-size: 22px; opacity: 0.5; }
 .int-card {
   padding: 24px;
   text-align: left;
@@ -2499,116 +2494,55 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   </div>
 </div>
 
-<!-- 10. INTEGRATIONS — TABBED -->
+<!-- 10. INTEGRATIONS — LOGO CAROUSEL -->
 <div class="section animate-section" id="integrations">
   <div class="section-center">
     <div class="eyebrow">Integrations</div>
     <h2 class="section-h2" style="max-width: 100%; text-align: center;">Plugs into the tools <span class="muted">you already use.</span></h2>
     <p class="section-p">No rip-and-replace. Your AI employee wires directly into your existing stack — from day one.</p>
   </div>
-  <div class="int-tabs">
-    <div class="int-tab active" onclick="switchIntTab(0)">Communication</div>
-    <div class="int-tab" onclick="switchIntTab(1)">Operations</div>
-    <div class="int-tab" onclick="switchIntTab(2)">Marketing</div>
-    <div class="int-tab" onclick="switchIntTab(3)">Sales</div>
-  </div>
-  <!-- Communication -->
-  <div class="int-tab-content active" data-inttab="0">
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#9993;</div>
-        <div class="int-card-name">Gmail / Email</div>
-      </div>
-      <p class="int-card-desc">Responds to inquiries in your voice within 38 seconds. Drafts, sends, and tracks every email automatically.</p>
-    </div>
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#128222;</div>
-        <div class="int-card-name">Phone / SMS</div>
-      </div>
-      <p class="int-card-desc">Answers calls, sends texts, follows up with leads and customers via their preferred channel.</p>
-    </div>
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#128172;</div>
-        <div class="int-card-name">Website Chat</div>
-      </div>
-      <p class="int-card-desc">Lives on your website 24/7. Qualifies visitors, answers questions, and books appointments in real time.</p>
-    </div>
-  </div>
-  <!-- Operations -->
-  <div class="int-tab-content" data-inttab="1">
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#128197;</div>
-        <div class="int-card-name">Google Calendar</div>
-      </div>
-      <p class="int-card-desc">Manages your entire schedule. Books, reschedules, sends reminders, and fills cancellations from your waitlist.</p>
-    </div>
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#128100;</div>
-        <div class="int-card-name">CRM / Leads</div>
-      </div>
-      <p class="int-card-desc">Logs every interaction, updates contact records, and moves leads through your pipeline automatically.</p>
-    </div>
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#128210;</div>
-        <div class="int-card-name">QuickBooks</div>
-      </div>
-      <p class="int-card-desc">Tracks invoices, flags overdue payments, and compiles financial summaries for your daily report.</p>
+  <div class="logo-carousel-wrap">
+    <div class="logo-carousel-track">
+      <div class="logo-carousel-item"><span class="lc-icon">&#9993;</span>Gmail</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128172;</span>Slack</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128197;</span>Google Calendar</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128179;</span>Stripe</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128100;</span>HubSpot</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#127760;</span>Instagram</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128210;</span>QuickBooks</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#11088;</span>Google Reviews</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128222;</span>SMS / Phone</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128101;</span>LinkedIn</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128231;</span>Mailchimp</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128203;</span>Salesforce</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128196;</span>Notion</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#9733;</span>Yelp</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128187;</span>Shopify</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128200;</span>Google Analytics</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128276;</span>Zapier</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128221;</span>Facebook</div>
+      <!-- Duplicate for seamless loop -->
+      <div class="logo-carousel-item"><span class="lc-icon">&#9993;</span>Gmail</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128172;</span>Slack</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128197;</span>Google Calendar</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128179;</span>Stripe</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128100;</span>HubSpot</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#127760;</span>Instagram</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128210;</span>QuickBooks</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#11088;</span>Google Reviews</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128222;</span>SMS / Phone</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128101;</span>LinkedIn</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128231;</span>Mailchimp</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128203;</span>Salesforce</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128196;</span>Notion</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#9733;</span>Yelp</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128187;</span>Shopify</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128200;</span>Google Analytics</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128276;</span>Zapier</div>
+      <div class="logo-carousel-item"><span class="lc-icon">&#128221;</span>Facebook</div>
     </div>
   </div>
-  <!-- Marketing -->
-  <div class="int-tab-content" data-inttab="2">
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#11088;</div>
-        <div class="int-card-name">Google Reviews</div>
-      </div>
-      <p class="int-card-desc">Requests reviews at peak satisfaction, responds to every review in your brand voice, flags negative ones.</p>
-    </div>
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#9733;</div>
-        <div class="int-card-name">Yelp</div>
-      </div>
-      <p class="int-card-desc">Monitors and responds to Yelp reviews. Maintains your reputation across platforms consistently.</p>
-    </div>
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#102;</div>
-        <div class="int-card-name">Facebook / Social</div>
-      </div>
-      <p class="int-card-desc">Responds to messages, comments, and inquiries across your social channels. Drafts posts for approval.</p>
-    </div>
-  </div>
-  <!-- Sales -->
-  <div class="int-tab-content" data-inttab="3">
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#128179;</div>
-        <div class="int-card-name">Stripe / Payments</div>
-      </div>
-      <p class="int-card-desc">Sends payment links, tracks transactions, follows up on failed payments and outstanding invoices.</p>
-    </div>
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#128203;</div>
-        <div class="int-card-name">Lead Forms</div>
-      </div>
-      <p class="int-card-desc">Captures and qualifies every form submission instantly. Pre-screens budget, timeline, and fit before you talk.</p>
-    </div>
-    <div class="glass-card int-card">
-      <div class="int-card-top">
-        <div class="int-card-icon">&#127760;</div>
-        <div class="int-card-name">Your Website</div>
-      </div>
-      <p class="int-card-desc">Monitors traffic, captures leads from every page, and triggers personalized follow-ups based on behavior.</p>
-    </div>
-  </div>
-  <p class="int-more">+ dozens more. If your business uses it, we can probably wire into it.</p>
+  <p class="section-p" style="text-align:center; margin-top: 24px; opacity: 0.5; font-size: 14px;">+ dozens more. If your business uses it, we can wire into it.</p>
 </div>
 
 <!-- 11. PRICING -->
