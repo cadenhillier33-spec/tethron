@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Employee — A-lete Vision & Guilford Optical Shoppe</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fafafa;--text:#1a1a1a;--muted:#6b7280;--light:#e5e7eb;
+  --teal:#0d9488;--teal-light:#f0fdfa;--teal-dark:#0f766e;
+  --gold:#b8860b;--red:#dc2626;--green:#16a34a;
+  --radius:16px;--shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.04);
+  --shadow-lg:0 4px 12px rgba(0,0,0,.06),0 20px 48px rgba(0,0,0,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#fff;color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+.sticky-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.06);padding:12px 24px;display:flex;justify-content:center;align-items:center;opacity:0;transform:translateY(-100%);transition:all .4s ease}
+.sticky-nav.show{opacity:1;transform:translateY(0)}
+.sticky-nav span{font-size:14px;font-weight:600;color:var(--text)}
+.sticky-nav span em{color:var(--teal);font-style:normal}
+
+section{padding:100px 24px;max-width:900px;margin:0 auto;opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94)}
+section.visible{opacity:1;transform:translateY(0)}
+
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(40px,7vw,72px);font-weight:400;line-height:1.08;letter-spacing:-1.5px;color:var(--text)}
+h2{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(32px,5vw,52px);font-weight:400;line-height:1.12;letter-spacing:-1px;color:var(--text);margin-bottom:12px}
+h2 em{font-style:italic;color:var(--teal)}
+.section-desc{font-size:18px;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:40px}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:60px;background:#fff}
+.hero-brand{font-size:13px;font-weight:500;color:var(--muted);letter-spacing:1.5px;margin-bottom:48px;padding:10px 24px;border:1px solid var(--light);border-radius:100px;text-transform:uppercase}
+.hero h1{margin-bottom:28px}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--teal),#0891b2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:21px;color:var(--muted);max-width:500px;line-height:1.7;margin-bottom:72px}
+.scroll-hint{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;color:var(--muted);opacity:.6}
+.scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--muted),transparent);animation:sa 2s infinite}
+@keyframes sa{0%{opacity:.3}50%{opacity:1}100%{opacity:.3}}
+
+.play-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--teal);color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:32px;transition:all .2s}
+.play-btn:hover{background:var(--teal-dark);transform:translateY(-1px);box-shadow:var(--shadow)}
+.play-btn:disabled{opacity:.5;cursor:default;transform:none}
+.replay-btn{display:none;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--teal);border:1px solid var(--teal);border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:32px;margin-left:8px;transition:all .2s}
+.replay-btn.show{display:inline-flex}
+
+.phone-wrapper{display:flex;gap:32px;align-items:flex-start;margin-top:20px}
+.phone{width:320px;min-height:400px;background:#fff;border-radius:24px;border:2px solid #e5e7eb;padding:16px;box-shadow:var(--shadow-lg);flex-shrink:0}
+.phone-header{display:flex;align-items:center;gap:10px;padding:8px 0 16px;border-bottom:1px solid #f0f0f0;margin-bottom:12px}
+.phone-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#0891b2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+.phone-name{font-size:14px;font-weight:600}
+.phone-online{font-size:11px;color:var(--green)}
+.phone-context{flex:1}
+.sms{opacity:0;transform:translateY(10px);transition:all .4s ease}
+.sms.show{opacity:1;transform:translateY(0)}
+.sms-bubble{padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.55;max-width:85%;margin-bottom:8px}
+.sms-in{background:#f3f4f6;border-bottom-left-radius:4px;color:var(--text)}
+.sms-out{background:var(--teal);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.sms-time{text-align:center;font-size:11px;color:#999;margin:12px 0 8px}
+
+.context-callout{background:#f8fffe;border:1px solid #d1fae5;border-radius:12px;padding:16px 20px;margin-bottom:16px}
+.cc-label{font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.context-callout p{font-size:14px;color:var(--muted);line-height:1.65}
+.context-callout strong{color:var(--text)}
+
+.typing{display:flex;gap:5px;padding:12px 16px;background:#f0f0f0;border-radius:20px;border-bottom-left-radius:6px;width:fit-content}
+.typing span{width:7px;height:7px;background:#aaa;border-radius:50%;animation:tb 1.4s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes tb{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:24px 16px;text-align:center;box-shadow:var(--shadow)}
+.stat-num{font-family:'Instrument Serif',serif;font-size:48px;font-weight:400;color:var(--teal);line-height:1}
+.stat-num.gold{color:var(--gold)}
+.stat-num.green{color:var(--green)}
+.stat-num.red{color:var(--red)}
+.stat-label{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.3}
+
+.action-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-lg);max-width:700px}
+.action-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5;opacity:0;transform:translateX(-10px);transition:all .4s ease}
+.action-item.show{opacity:1;transform:translateX(0)}
+.action-check{width:24px;height:24px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.action-text{font-size:14px;color:var(--text);line-height:1.5}
+.action-time{font-size:12px;color:var(--muted);margin-left:auto;flex-shrink:0}
+.action-total{display:flex;justify-content:space-between;padding:16px 0 0;margin-top:8px;border-top:2px solid var(--teal)}
+.action-total .label{font-size:14px;font-weight:600;color:var(--muted)}
+.action-total .value{font-size:20px;font-weight:700;color:var(--teal)}
+
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.result-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:32px 16px;text-align:center;box-shadow:var(--shadow)}
+.result-num{font-family:'Instrument Serif',serif;font-size:52px;font-weight:400;color:var(--teal);line-height:1}
+.result-num.gold{color:var(--gold)}
+.result-num.green{color:var(--green)}
+.result-label{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.3}
+
+.bottom-line{text-align:center;padding:40px 0 20px}
+.bottom-line p{font-size:17px;color:var(--muted);line-height:1.7}
+.bottom-line strong{color:var(--text)}
+.bottom-line .price{font-family:'Instrument Serif',serif;font-size:42px;color:var(--teal);margin-top:16px}
+
+.cta{text-align:center;padding:80px 24px 60px}
+.cta h2{margin-bottom:16px}
+.cta p{font-size:16px;color:var(--muted);margin-bottom:8px}
+.cta .contact{font-size:15px;color:var(--teal);font-weight:600}
+
+.footer{text-align:center;padding:24px;font-size:12px;color:#ccc;border-top:1px solid #f0f0f0}
+
+.divider{height:1px;background:var(--light);max-width:120px;margin:0 auto}
+
+/* STRIPE DASHBOARD */
+.stripe-dash{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-lg);max-width:700px}
+.stripe-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f5f5f5;opacity:0;transform:translateX(-10px);transition:all .4s ease}
+.stripe-row.show{opacity:1;transform:translateX(0)}
+.stripe-row:last-child{border-bottom:none}
+.stripe-customer{font-size:14px;font-weight:600}
+.stripe-product{font-size:13px;color:var(--muted)}
+.stripe-amount{font-size:15px;font-weight:700;color:var(--green)}
+.stripe-status{font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px}
+.stripe-status.paid{background:#dcfce7;color:#16a34a}
+.stripe-status.processing{background:#fef3c7;color:#d97706}
+.stripe-status.recovered{background:#dbeafe;color:#2563eb}
+
+/* INFLUENCER CARDS */
+.influencer-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.inf-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);opacity:0;transform:translateY(15px);transition:all .5s ease}
+.inf-card.show{opacity:1;transform:translateY(0)}
+.inf-name{font-size:16px;font-weight:700;margin-bottom:2px}
+.inf-handle{font-size:13px;color:var(--teal);margin-bottom:6px}
+.inf-stats{font-size:12px;color:var(--muted);margin-bottom:10px}
+.inf-draft{background:#f8fffe;border:1px solid #d1fae5;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;line-height:1.5}
+.inf-draft .label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+
+@media(max-width:768px){
+  section{padding:60px 20px}
+  .phone-wrapper{flex-direction:column;gap:24px}
+  .phone{width:100%}
+  .stats-grid,.results-grid{grid-template-columns:1fr 1fr}
+  .influencer-grid{grid-template-columns:1fr}
+  .hero{min-height:80vh}
+}
+</style>
+</head>
+<body>
+
+<div class="sticky-nav" id="sticky-nav">
+  <span><em>AI Employee</em> — A-lete Vision & Guilford Optical Shoppe</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-brand">AI Employee — A-lete Vision & Guilford Optical Shoppe</div>
+  <h1>Your <span class="gradient">AI employee</span><br>is ready.</h1>
+  <p>One AI employee. Two businesses. See what happens when nothing falls through the cracks — ever again.</p>
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+
+<!-- AFTER HOURS RESPONSE -->
+<section>
+  <div class="eyebrow">01 · Instant Customer Response</div>
+  <h2>Patient texts at 8:47 PM.<br><em>Booked in two minutes.</em></h2>
+  <p class="section-desc">Your shop closed at 5. Your AI employee didn't.</p>
+  <button class="play-btn" id="chat-play" onclick="playChat()"><span>▶</span> Watch it happen</button>
+  <button class="replay-btn" id="chat-replay" onclick="replayChat()"><span>↻</span> Watch again</button>
+
+  <div class="phone-wrapper">
+    <div class="phone">
+      <div class="phone-header">
+        <div class="phone-av">GO</div>
+        <div><div class="phone-name">Guilford Optical</div><div class="phone-online">● Online</div></div>
+      </div>
+      <div class="phone-chat" id="chat"></div>
+    </div>
+    <div class="phone-context">
+      <div class="context-callout" id="ctx1" style="opacity:0;transition:opacity .6s">
+        <div class="cc-label">What just happened</div>
+        <p>A patient needed to book an appointment at <strong>8:47 PM</strong>. Without your AI employee, this goes unanswered until morning — by then they may have called another optician. Instead, they're <strong>booked in under 2 minutes</strong>.</p>
+      </div>
+      <div class="context-callout" id="ctx2" style="opacity:0;transition:opacity .6s">
+        <div class="cc-label">What your competitors did</div>
+        <p>Their phone went to voicemail. <strong>The patient is still waiting.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- REVIEW ENGINE -->
+<section>
+  <div class="eyebrow">02 · Review Generation</div>
+  <h2>28 reviews is good.<br><em>200+ is dominant.</em></h2>
+  <p class="section-desc">After every visit, your AI employee asks for a review — automatically. Your 4.9 stars with 200+ reviews = you own Google search in Guilford.</p>
+
+  <div class="phone-wrapper" style="margin-top:20px">
+    <div class="phone" style="width:300px">
+      <div class="phone-header">
+        <div class="phone-av">GO</div>
+        <div><div class="phone-name">Guilford Optical</div><div class="phone-online">● Online</div></div>
+      </div>
+      <div class="sms show" style="opacity:1;transform:none"><div class="sms-bubble sms-out">Hi David! Thanks for coming in today — glad we found the perfect frames for you. If you have 30 seconds, we'd really appreciate a quick Google review. It helps other families in the Guilford area find us. 🙏<br><br>⭐ Leave a review: g.page/guilfordoptical</div></div>
+      <div class="sms show" style="opacity:1;transform:none;margin-top:12px"><div class="sms-bubble sms-in">Absolutely! You guys have been my optician for 20 years. Leaving one now!</div></div>
+    </div>
+    <div class="phone-context">
+      <div class="context-callout">
+        <div class="cc-label">Why this matters</div>
+        <p>You have <strong>28 reviews at 4.9 stars</strong> — incredible rating, but low volume. Most patients leave happy but nobody asks them to review. Your AI employee asks <strong>every single time</strong>, right after the moment of delight. That's how you go from 28 to 200+ reviews and <strong>dominate local search in Guilford</strong>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- STRIPE ORDER MANAGEMENT -->
+<section>
+  <div class="eyebrow">03 · E-Commerce & Stripe</div>
+  <h2>A-lete orders roll in.<br><em>Every one handled.</em></h2>
+  <p class="section-desc">Your AI employee monitors Stripe in real time. Confirmations, shipping updates, abandoned cart recovery — all autonomous.</p>
+  <button class="play-btn" id="stripe-play" onclick="playStripe()"><span>▶</span> Watch the flow</button>
+  <button class="replay-btn" id="stripe-replay" onclick="replayStripe()"><span>↻</span> Watch again</button>
+
+  <div class="stripe-dash" id="stripe-dash">
+    <div style="font-size:12px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px">📊 A-lete Vision — Live Order Dashboard</div>
+    <div id="stripe-rows"></div>
+  </div>
+
+  <div class="context-callout" id="stripe-ctx" style="margin-top:20px;max-width:700px;opacity:0;transition:opacity .6s">
+    <div class="cc-label">What this means</div>
+    <p>Every order gets white-glove treatment. Confirmations go out instantly. Shipping updates are sent automatically. And that abandoned cart? Your AI employee sent a recovery email — <strong>and brought them back</strong>. No revenue left on the table.</p>
+  </div>
+</section>
+
+
+<!-- INFLUENCER OUTREACH -->
+<section>
+  <div class="eyebrow">04 · Influencer & Athlete Outreach</div>
+  <h2>Your AI employee finds partners.<br><em>You approve and send.</em></h2>
+  <p class="section-desc">Every day, your AI employee researches athletes and influencers, drafts personalized DMs, and builds your partnership pipeline. You spend 15 minutes reviewing.</p>
+
+  <div class="influencer-grid" id="inf-grid">
+    <div class="inf-card" id="inf1">
+      <div class="inf-name">Marcus Rivera</div>
+      <div class="inf-handle">@marcusrivera_fit</div>
+      <div class="inf-stats">24K followers · CrossFit athlete · Based in Miami, FL</div>
+      <div class="inf-draft">
+        <div class="label">Draft DM — Ready for Review</div>
+        Hey Marcus — love what you're building. Your training content is legit. We just launched A-lete Vision — performance sunglasses built for athletes. Would love to send you a pair to try out. No strings. Interested?
+      </div>
+    </div>
+    <div class="inf-card" id="inf2">
+      <div class="inf-name">Coach Taylor Williams</div>
+      <div class="inf-handle">@coachtaylorw</div>
+      <div class="inf-stats">18K followers · D1 Track Coach · Based in Atlanta, GA</div>
+      <div class="inf-draft">
+        <div class="label">Draft DM — Ready for Review</div>
+        Coach Taylor — saw your team's results at regionals, congrats. We make custom performance sunglasses with team logos and numbers. Would your athletes be interested in team-branded eyewear? Happy to send samples.
+      </div>
+    </div>
+    <div class="inf-card" id="inf3">
+      <div class="inf-name">Sarah Chen</div>
+      <div class="inf-handle">@sarahchenfitness</div>
+      <div class="inf-stats">52K followers · Personal Trainer · Based in NYC</div>
+      <div class="inf-draft">
+        <div class="label">Draft DM — Ready for Review</div>
+        Sarah — your outdoor training content is exactly the vibe we built A-lete Vision for. Bold, durable, made for people who push limits. Would love to collab — can I send you a pair?
+      </div>
+    </div>
+    <div class="inf-card" id="inf4">
+      <div class="inf-name">Guilford High School Athletics</div>
+      <div class="inf-handle">Wholesale Prospect</div>
+      <div class="inf-stats">Local school · 12 varsity teams · Custom logo opportunity</div>
+      <div class="inf-draft">
+        <div class="label">Draft Email — Ready for Review</div>
+        Hi — I'm reaching out from A-lete Vision, a performance eyewear brand based right here in Guilford. We offer custom team sunglasses with your school logo and colors. Would love to discuss outfitting your teams. Can I send over some samples?
+      </div>
+    </div>
+  </div>
+
+  <div class="context-callout" style="margin-top:24px">
+    <div class="cc-label">This happens every day</div>
+    <p>Your AI employee finds 5-10 new potential partners daily, researches their audience, and drafts personalized messages. <strong>You spend 15 minutes reviewing and hitting send.</strong> That's how brands go from unknown to everywhere.</p>
+  </div>
+</section>
+
+
+<!-- PATIENT RECALL -->
+<section>
+  <div class="eyebrow">05 · Patient Recall Engine</div>
+  <h2>They're overdue.<br><em>Your AI reaches out.</em></h2>
+  <p class="section-desc">Your AI employee tracks every patient's exam date and contact lens order cycle. When they're due, it reaches out automatically.</p>
+
+  <div class="action-card" style="opacity:1;max-width:620px">
+    <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f0f0">
+      <div style="display:flex;gap:8px;font-size:13px;margin-bottom:3px"><span style="color:var(--muted);width:45px">From:</span><span style="font-weight:600">Guilford Optical Shoppe</span></div>
+      <div style="display:flex;gap:8px;font-size:13px;margin-bottom:3px"><span style="color:var(--muted);width:45px">To:</span><span>jennifer.m@email.com</span></div>
+      <div style="font-size:17px;font-weight:700;margin-top:8px">Time for Your Annual Eye Exam, Jennifer</div>
+    </div>
+    <div style="font-size:14px;color:#555;line-height:1.75">
+      <p>Hi Jennifer,</p>
+      <p style="margin-top:10px">It's been about two years since your last eye exam with us, and we'd love to have you back in the chair. Regular exams are the best way to catch changes early and keep your prescription up to date.</p>
+      <p style="margin-top:10px">We've also got some beautiful new frame collections in — I think you'd love them.</p>
+      <p style="margin-top:10px">Want to book a time? Just reply to this email or text us at (203) 453-6776 and we'll get you scheduled.</p>
+      <p style="margin-top:16px;color:#999;font-size:12px">Guilford Optical Shoppe<br>115 State St, Guilford, CT<br>(203) 453-6776</p>
+    </div>
+  </div>
+
+  <div class="context-callout" style="margin-top:20px;max-width:620px">
+    <div class="cc-label">Why this matters</div>
+    <p>Most optical shops wait for patients to remember. <strong>Your AI employee reaches out first.</strong> Every overdue patient gets a personalized message. Your chair stays full. Your revenue stays consistent. Zero manual effort.</p>
+  </div>
+</section>
+
+
+<!-- RESULTS -->
+<section id="results-section">
+  <div class="eyebrow">06 · 30-Day Projection</div>
+  <h2>What the first month<br><em>looks like.</em></h2>
+  <p class="section-desc">Conservative estimates across both businesses.</p>
+
+  <div class="results-grid">
+    <div class="result-card"><div class="result-num" data-target="200" data-suffix="+">0</div><div class="result-label">Patient recall<br>messages sent</div></div>
+    <div class="result-card"><div class="result-num green" data-target="50" data-suffix="+">0</div><div class="result-label">Review requests<br>sent</div></div>
+    <div class="result-card"><div class="result-num gold" data-target="30" data-suffix="+">0</div><div class="result-label">Influencer &amp; wholesale<br>prospects contacted</div></div>
+    <div class="result-card"><div class="result-num" data-target="100" data-suffix="%">0</div><div class="result-label">After-hours<br>inquiries answered</div></div>
+  </div>
+
+  <div class="bottom-line">
+    <p>Both businesses running tighter than ever. Every patient recalled. Every order handled.<br>Every partnership opportunity pursued. Every after-hours message answered.<br><strong>While your competitors close at 5.</strong></p>
+    <div class="price">$600/month. Both businesses.</div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Ready to get started?</h2>
+  <p>One AI employee. Two businesses. Live in 2 weeks.</p>
+  <div class="contact">Caden Hillier · cadenhillier33@gmail.com · tethron.ai</div>
+</section>
+
+<div class="footer">Powered by Tethron · Built exclusively for A-lete Vision & Guilford Optical Shoppe</div>
+
+<script>
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+const nav=document.getElementById('sticky-nav');
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>400)nav.classList.add('show');
+  else nav.classList.remove('show');
+},{passive:true});
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('[data-target]').forEach(el=>{
+        const t=+el.dataset.target,s=el.dataset.suffix||'';
+        let c=0;const step=Math.ceil(t/30);
+        const iv=setInterval(()=>{c=Math.min(c+step,t);el.textContent=c+(c>=t?s:'');if(c>=t)clearInterval(iv)},40);
+      });
+      // Reveal influencer cards
+      e.target.querySelectorAll('.inf-card').forEach((card,i)=>{
+        setTimeout(()=>card.classList.add('show'),i*300);
+      });
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:.15});
+document.querySelectorAll('section').forEach(s=>obs.observe(s));
+
+/* CHAT */
+async function playChat(){
+  const c=document.getElementById('chat');
+  const btn=c.closest('section').querySelector('.play-btn');
+  btn.disabled=true;c.innerHTML='';
+  const msgs=[
+    {type:'time',text:'8:47 PM — After hours'},
+    {type:'in',text:"Hi! I think I need a new prescription — my glasses feel off lately. Do you have any availability this week?"},
+    {type:'typing'},
+    {type:'time',text:'12 seconds later'},
+    {type:'out',text:"Hi there! I'd be happy to help get you scheduled for an eye exam. We have openings Thursday at 10 AM, 2 PM, or Friday at 11 AM. Which works best for you?"},
+    {type:'in',text:"Thursday at 2 PM would be perfect!"},
+    {type:'typing'},
+    {type:'out',text:"You're all set for Thursday at 2 PM! We'll send you a reminder the day before. And when you come in, we've got some great new frame collections to check out. See you Thursday! 👓"}
+  ];
+  for(const m of msgs){
+    if(m.type==='time'){const d=document.createElement('div');d.className='sms-time';d.textContent=m.text;c.appendChild(d);await sleep(400);continue;}
+    if(m.type==='typing'){const t=document.createElement('div');t.className='sms show';t.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';c.appendChild(t);await sleep(1800);c.removeChild(t);continue;}
+    const el=document.createElement('div');el.className='sms';
+    el.innerHTML=`<div class="sms-bubble ${m.type==='in'?'sms-in':'sms-out'}">${m.text}</div>`;
+    c.appendChild(el);await sleep(50);el.classList.add('show');await sleep(m.type==='in'?1000:600);
+  }
+  document.getElementById('ctx1').style.opacity='1';
+  await sleep(600);
+  document.getElementById('ctx2').style.opacity='1';
+  document.getElementById('chat-replay').classList.add('show');
+}
+function replayChat(){
+  document.getElementById('chat-replay').classList.remove('show');
+  document.getElementById('chat-play').disabled=false;
+  document.getElementById('chat').innerHTML='';
+  document.getElementById('ctx1').style.opacity='0';
+  document.getElementById('ctx2').style.opacity='0';
+  playChat();
+}
+
+/* STRIPE */
+async function playStripe(){
+  const c=document.getElementById('stripe-rows');
+  const btn=c.closest('section').querySelector('.play-btn');
+  btn.disabled=true;c.innerHTML='';
+  const rows=[
+    {customer:'Jake Morrison',product:'E² Polarized — Crystal Smoke',amount:'$189.00',status:'paid',statusText:'Confirmed & Shipped'},
+    {customer:'Amanda Torres',product:'E² Non-Polarized + Custom Logo',amount:'$210.00',status:'paid',statusText:'Custom Order Processed'},
+    {customer:'Mike Chen',product:'E² Polarized',amount:'$189.00',status:'recovered',statusText:'Abandoned Cart → Recovered'},
+    {customer:'Guilford HS Athletics',product:'25x Custom Team E² — School Logo',amount:'$3,750.00',status:'processing',statusText:'Wholesale Quote Sent'},
+  ];
+  for(const r of rows){
+    const el=document.createElement('div');el.className='stripe-row';
+    el.innerHTML=`<div><div class="stripe-customer">${r.customer}</div><div class="stripe-product">${r.product}</div></div><div style="text-align:right"><div class="stripe-amount">${r.amount}</div><div class="stripe-status ${r.status}">${r.statusText}</div></div>`;
+    c.appendChild(el);await sleep(50);el.classList.add('show');await sleep(700);
+  }
+  await sleep(400);
+  document.getElementById('stripe-ctx').style.opacity='1';
+  document.getElementById('stripe-replay').classList.add('show');
+}
+function replayStripe(){
+  document.getElementById('stripe-replay').classList.remove('show');
+  document.getElementById('stripe-play').disabled=false;
+  document.getElementById('stripe-rows').innerHTML='';
+  document.getElementById('stripe-ctx').style.opacity='0';
+  playStripe();
+}
+</script>
+</body>
+</html>
