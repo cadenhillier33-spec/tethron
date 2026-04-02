@@ -7,47 +7,58 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#fafafa;--text:#1a1a1a;--muted:#6b7280;--light:#e5e7eb;
-  --teal:#0d9488;--teal-light:#f0fdfa;--teal-dark:#0f766e;
-  --gold:#b8860b;--red:#dc2626;--green:#16a34a;
-  --radius:16px;--shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.04);
-  --shadow-lg:0 4px 12px rgba(0,0,0,.06),0 20px 48px rgba(0,0,0,.08);
-}
+:root{--bg:#fafafa;--text:#1a1a1a;--muted:#6b7280;--light:#e5e7eb;--teal:#0d9488;--teal-light:#f0fdfa;--teal-dark:#0f766e;--gold:#b8860b;--red:#dc2626;--green:#16a34a;--radius:16px;--shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.04);--shadow-lg:0 4px 12px rgba(0,0,0,.06),0 20px 48px rgba(0,0,0,.08)}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',system-ui,sans-serif;background:#fff;color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-.sticky-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.06);padding:12px 24px;display:flex;justify-content:center;align-items:center;opacity:0;transform:translateY(-100%);transition:all .4s ease}
+.sticky-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.06);padding:12px 24px;display:flex;justify-content:center;opacity:0;transform:translateY(-100%);transition:all .4s ease}
 .sticky-nav.show{opacity:1;transform:translateY(0)}
-.sticky-nav span{font-size:14px;font-weight:600;color:var(--text)}
-.sticky-nav span em{color:var(--teal);font-style:normal}
+.sticky-nav span{font-size:14px;font-weight:600}
+.sticky-nav em{color:var(--teal);font-style:normal}
 
-section{padding:100px 24px;max-width:900px;margin:0 auto;opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94)}
+section{padding:100px 24px;max-width:900px;margin:0 auto;opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
 section.visible{opacity:1;transform:translateY(0)}
+.section-wrap:nth-child(odd){background:#fff}
+.section-wrap:nth-child(even){background:#f9fafb}
 
 .eyebrow{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
-h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(40px,7vw,72px);font-weight:400;line-height:1.08;letter-spacing:-1.5px;color:var(--text)}
-h2{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(32px,5vw,52px);font-weight:400;line-height:1.12;letter-spacing:-1px;color:var(--text);margin-bottom:12px}
+h1{font-family:'Instrument Serif',serif;font-size:clamp(40px,7vw,72px);font-weight:400;line-height:1.08;letter-spacing:-1.5px}
+h2{font-family:'Instrument Serif',serif;font-size:clamp(30px,5vw,50px);font-weight:400;line-height:1.12;letter-spacing:-1px;margin-bottom:12px}
 h2 em{font-style:italic;color:var(--teal)}
 .section-desc{font-size:18px;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:40px}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:60px;background:#fff}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:60px}
 .hero-brand{font-size:13px;font-weight:500;color:var(--muted);letter-spacing:1.5px;margin-bottom:48px;padding:10px 24px;border:1px solid var(--light);border-radius:100px;text-transform:uppercase}
 .hero h1{margin-bottom:28px}
-.hero h1 .gradient{background:linear-gradient(135deg,var(--teal),#0891b2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{font-size:21px;color:var(--muted);max-width:500px;line-height:1.7;margin-bottom:72px}
+.hero .gradient{background:linear-gradient(135deg,var(--teal),#0891b2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:21px;color:var(--muted);max-width:520px;line-height:1.7;margin-bottom:72px}
 .scroll-hint{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;color:var(--muted);opacity:.6}
 .scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--muted),transparent);animation:sa 2s infinite}
 @keyframes sa{0%{opacity:.3}50%{opacity:1}100%{opacity:.3}}
 
 .play-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--teal);color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:32px;transition:all .2s}
-.play-btn:hover{background:var(--teal-dark);transform:translateY(-1px);box-shadow:var(--shadow)}
-.play-btn:disabled{opacity:.5;cursor:default;transform:none}
-.replay-btn{display:none;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--teal);border:1px solid var(--teal);border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:32px;margin-left:8px;transition:all .2s}
+.play-btn:hover{background:var(--teal-dark)}
+.play-btn:disabled{opacity:.5;cursor:default}
+.replay-btn{display:none;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--teal);border:1px solid var(--teal);border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:32px;margin-left:8px}
 .replay-btn.show{display:inline-flex}
 
+/* COMPARISON CARDS */
+.compare-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}
+.compare-card{border-radius:var(--radius);padding:24px;border:1px solid var(--light)}
+.compare-card.before{background:#fef2f2;border-color:#fecaca}
+.compare-card.after{background:#f0fdfa;border-color:#99f6e4}
+.compare-card h4{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.compare-card.before h4{color:var(--red)}
+.compare-card.after h4{color:var(--teal)}
+.compare-card p{font-size:14px;color:#555;line-height:1.65}
+.compare-card .big-num{font-family:'Instrument Serif',serif;font-size:48px;font-weight:400;line-height:1;margin-bottom:4px}
+.compare-card.before .big-num{color:var(--red)}
+.compare-card.after .big-num{color:var(--teal)}
+.compare-card .label{font-size:13px;color:var(--muted)}
+
+/* PHONE */
 .phone-wrapper{display:flex;gap:32px;align-items:flex-start;margin-top:20px}
-.phone{width:320px;min-height:400px;background:#fff;border-radius:24px;border:2px solid #e5e7eb;padding:16px;box-shadow:var(--shadow-lg);flex-shrink:0}
+.phone{width:320px;min-height:380px;background:#fff;border-radius:24px;border:2px solid #e5e7eb;padding:16px;box-shadow:var(--shadow-lg);flex-shrink:0}
 .phone-header{display:flex;align-items:center;gap:10px;padding:8px 0 16px;border-bottom:1px solid #f0f0f0;margin-bottom:12px}
 .phone-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#0891b2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
 .phone-name{font-size:14px;font-weight:600}
@@ -56,7 +67,7 @@ h2 em{font-style:italic;color:var(--teal)}
 .sms{opacity:0;transform:translateY(10px);transition:all .4s ease}
 .sms.show{opacity:1;transform:translateY(0)}
 .sms-bubble{padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.55;max-width:85%;margin-bottom:8px}
-.sms-in{background:#f3f4f6;border-bottom-left-radius:4px;color:var(--text)}
+.sms-in{background:#f3f4f6;border-bottom-left-radius:4px}
 .sms-out{background:var(--teal);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
 .sms-time{text-align:center;font-size:11px;color:#999;margin:12px 0 8px}
 
@@ -64,6 +75,7 @@ h2 em{font-style:italic;color:var(--teal)}
 .cc-label{font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
 .context-callout p{font-size:14px;color:var(--muted);line-height:1.65}
 .context-callout strong{color:var(--text)}
+.context-callout .money{color:var(--green);font-weight:700}
 
 .typing{display:flex;gap:5px;padding:12px 16px;background:#f0f0f0;border-radius:20px;border-bottom-left-radius:6px;width:fit-content}
 .typing span{width:7px;height:7px;background:#aaa;border-radius:50%;animation:tb 1.4s infinite}
@@ -71,6 +83,19 @@ h2 em{font-style:italic;color:var(--teal)}
 .typing span:nth-child(3){animation-delay:.4s}
 @keyframes tb{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
 
+/* ACTION CARDS */
+.action-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-lg);max-width:700px}
+.action-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5;opacity:0;transform:translateX(-10px);transition:all .4s ease}
+.action-item.show{opacity:1;transform:translateX(0)}
+.action-check{width:24px;height:24px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.action-check.red{background:var(--red)}
+.action-text{font-size:14px;color:var(--text);line-height:1.5}
+.action-time{font-size:12px;color:var(--muted);margin-left:auto;flex-shrink:0}
+.action-total{display:flex;justify-content:space-between;padding:16px 0 0;margin-top:8px;border-top:2px solid var(--teal)}
+.action-total .label{font-size:14px;font-weight:600;color:var(--muted)}
+.action-total .value{font-size:20px;font-weight:700;color:var(--teal)}
+
+/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
 .stat-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:24px 16px;text-align:center;box-shadow:var(--shadow)}
 .stat-num{font-family:'Instrument Serif',serif;font-size:48px;font-weight:400;color:var(--teal);line-height:1}
@@ -79,17 +104,8 @@ h2 em{font-style:italic;color:var(--teal)}
 .stat-num.red{color:var(--red)}
 .stat-label{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.3}
 
-.action-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-lg);max-width:700px}
-.action-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5;opacity:0;transform:translateX(-10px);transition:all .4s ease}
-.action-item.show{opacity:1;transform:translateX(0)}
-.action-check{width:24px;height:24px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-.action-text{font-size:14px;color:var(--text);line-height:1.5}
-.action-time{font-size:12px;color:var(--muted);margin-left:auto;flex-shrink:0}
-.action-total{display:flex;justify-content:space-between;padding:16px 0 0;margin-top:8px;border-top:2px solid var(--teal)}
-.action-total .label{font-size:14px;font-weight:600;color:var(--muted)}
-.action-total .value{font-size:20px;font-weight:700;color:var(--teal)}
-
-.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+/* RESULTS */
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
 .result-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:32px 16px;text-align:center;box-shadow:var(--shadow)}
 .result-num{font-family:'Instrument Serif',serif;font-size:52px;font-weight:400;color:var(--teal);line-height:1}
 .result-num.gold{color:var(--gold)}
@@ -101,29 +117,7 @@ h2 em{font-style:italic;color:var(--teal)}
 .bottom-line strong{color:var(--text)}
 .bottom-line .price{font-family:'Instrument Serif',serif;font-size:42px;color:var(--teal);margin-top:16px}
 
-.cta{text-align:center;padding:80px 24px 60px}
-.cta h2{margin-bottom:16px}
-.cta p{font-size:16px;color:var(--muted);margin-bottom:8px}
-.cta .contact{font-size:15px;color:var(--teal);font-weight:600}
-
-.footer{text-align:center;padding:24px;font-size:12px;color:#ccc;border-top:1px solid #f0f0f0}
-
-.divider{height:1px;background:var(--light);max-width:120px;margin:0 auto}
-
-/* STRIPE DASHBOARD */
-.stripe-dash{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-lg);max-width:700px}
-.stripe-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f5f5f5;opacity:0;transform:translateX(-10px);transition:all .4s ease}
-.stripe-row.show{opacity:1;transform:translateX(0)}
-.stripe-row:last-child{border-bottom:none}
-.stripe-customer{font-size:14px;font-weight:600}
-.stripe-product{font-size:13px;color:var(--muted)}
-.stripe-amount{font-size:15px;font-weight:700;color:var(--green)}
-.stripe-status{font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px}
-.stripe-status.paid{background:#dcfce7;color:#16a34a}
-.stripe-status.processing{background:#fef3c7;color:#d97706}
-.stripe-status.recovered{background:#dbeafe;color:#2563eb}
-
-/* INFLUENCER CARDS */
+/* INFLUENCER */
 .influencer-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
 .inf-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);opacity:0;transform:translateY(15px);transition:all .5s ease}
 .inf-card.show{opacity:1;transform:translateY(0)}
@@ -133,39 +127,158 @@ h2 em{font-style:italic;color:var(--teal)}
 .inf-draft{background:#f8fffe;border:1px solid #d1fae5;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;line-height:1.5}
 .inf-draft .label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
 
+/* EMAIL */
+.email-card{background:#fff;border:1px solid var(--light);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-lg);max-width:620px}
+.email-dots{display:flex;gap:6px;margin-bottom:14px}
+.email-dots span{width:10px;height:10px;border-radius:50%}
+
+.cta{text-align:center;padding:80px 24px 60px}
+.cta h2{margin-bottom:16px}
+.cta .contact{font-size:15px;color:var(--teal);font-weight:600}
+
+.footer{text-align:center;padding:24px;font-size:12px;color:#ccc;border-top:1px solid #f0f0f0}
+
 @media(max-width:768px){
   section{padding:60px 20px}
-  .phone-wrapper{flex-direction:column;gap:24px}
+  .phone-wrapper{flex-direction:column}
   .phone{width:100%}
   .stats-grid,.results-grid{grid-template-columns:1fr 1fr}
-  .influencer-grid{grid-template-columns:1fr}
+  .compare-wrap,.influencer-grid{grid-template-columns:1fr}
   .hero{min-height:80vh}
 }
 </style>
 </head>
 <body>
 
-<div class="sticky-nav" id="sticky-nav">
-  <span><em>AI Employee</em> — A-lete Vision & Guilford Optical Shoppe</span>
-</div>
+<div class="sticky-nav" id="sticky-nav"><span><em>AI Employee</em> — A-lete Vision & Guilford Optical</span></div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-brand">AI Employee — A-lete Vision & Guilford Optical Shoppe</div>
   <h1>Your <span class="gradient">AI employee</span><br>is ready.</h1>
-  <p>One AI employee. Two businesses. See what happens when nothing falls through the cracks — ever again.</p>
-  <div class="scroll-hint">
-    <span>Scroll to explore</span>
-    <div class="scroll-arrow"></div>
-  </div>
+  <p>One AI employee. Two businesses. See what happens when the busywork disappears and you get back to doing what you actually do best.</p>
+  <div class="scroll-hint"><span>Scroll to explore</span><div class="scroll-arrow"></div></div>
 </section>
 
-
-<!-- AFTER HOURS RESPONSE -->
+<!-- 01: INSURANCE VERIFICATION -->
+<div class="section-wrap">
 <section>
-  <div class="eyebrow">01 · Instant Customer Response</div>
+  <div class="eyebrow">01 · Insurance Verification</div>
+  <h2>20 minutes on hold with VSP.<br><em>Or zero.</em></h2>
+  <p class="section-desc">Your front desk spends 20 minutes per patient calling insurance to verify benefits. With a full schedule, that's 2+ hours a day — just sitting on hold.</p>
+
+  <div class="compare-wrap">
+    <div class="compare-card before">
+      <h4>Today</h4>
+      <div class="big-num">20 min</div>
+      <div class="label">per patient on the phone with VSP</div>
+      <p style="margin-top:12px">Staff calls in, waits on hold, navigates 7 screens, writes down benefits, explains to patient at check-in. Repeated for every single appointment.</p>
+    </div>
+    <div class="compare-card after">
+      <h4>With Your AI Employee</h4>
+      <div class="big-num">0 min</div>
+      <div class="label">benefits pulled overnight, automatically</div>
+      <p style="margin-top:12px">AI verifies insurance for every next-day appointment the night before. When the patient walks in, benefits are already on screen. Front desk just checks them in.</p>
+    </div>
+  </div>
+
+  <div class="context-callout">
+    <div class="cc-label">The math</div>
+    <p>10 patients/day × 20 min each = <strong>3+ hours daily</strong> on insurance calls. That's <strong class="money">19 hours per week</strong> your front desk gets back. They stop being a call center and start being the face of your shop.</p>
+  </div>
+</section>
+</div>
+
+<!-- 02: WHERE ARE MY GLASSES -->
+<div class="section-wrap">
+<section>
+  <div class="eyebrow">02 · Order Status Updates</div>
+  <h2>"Where are my glasses?"<br><em>They'll never ask again.</em></h2>
+  <p class="section-desc">The #1 phone call your shop gets. Every day. Multiple times. Your staff checks the lab portal, calls the patient back. Rinse and repeat.</p>
+
+  <button class="play-btn" id="status-play" onclick="playStatus()"><span>▶</span> Watch it happen</button>
+  <button class="replay-btn" id="status-replay" onclick="replayStatus()"><span>↻</span> Watch again</button>
+
+  <div class="phone-wrapper">
+    <div class="phone">
+      <div class="phone-header">
+        <div class="phone-av">GO</div>
+        <div><div class="phone-name">Guilford Optical</div><div class="phone-online">● Online</div></div>
+      </div>
+      <div id="status-chat"></div>
+    </div>
+    <div class="phone-context">
+      <div class="context-callout" id="status-ctx1" style="opacity:0;transition:opacity .6s">
+        <div class="cc-label">What just happened</div>
+        <p>The patient didn't have to call. Your AI employee <strong>proactively</strong> texted them with a status update before they even thought to ask. When the glasses arrive, another automatic text goes out. <strong>Zero phone calls. Zero staff time.</strong></p>
+      </div>
+      <div class="context-callout" id="status-ctx2" style="opacity:0;transition:opacity .6s">
+        <div class="cc-label">What this replaces</div>
+        <p>Your staff manually checking the lab portal, calling the patient back, leaving voicemails, playing phone tag. <strong>Multiply this by every order, every day.</strong> Now it's all automatic.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- 03: CLAIMS DENIAL -->
+<div class="section-wrap">
+<section>
+  <div class="eyebrow">03 · Claims Intelligence</div>
+  <h2>Every denied claim costs $25.<br><em>Your AI catches them first.</em></h2>
+  <p class="section-desc">Missing insurance IDs, wrong plan codes, frequency limits not checked. These errors cost your shop $1,000+ per month in rework.</p>
+
+  <button class="play-btn" id="claims-play" onclick="playClaims()"><span>▶</span> Watch the scan</button>
+  <button class="replay-btn" id="claims-replay" onclick="replayClaims()"><span>↻</span> Watch again</button>
+
+  <div class="action-card" id="claims-card" style="opacity:0;transition:opacity .5s">
+    <div style="font-size:12px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px">🔍 Pre-Submission Claims Review — Today's Batch</div>
+    <div id="claims-actions"></div>
+    <div class="action-total" id="claims-total" style="opacity:0;transition:opacity .5s">
+      <span class="label">Denials prevented this week</span>
+      <span class="value" style="color:var(--green)">$175 saved</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- 04: PATIENT RECALL -->
+<div class="section-wrap">
+<section>
+  <div class="eyebrow">04 · Patient Recall Engine</div>
+  <h2>They're overdue. They forgot.<br><em>Your AI didn't.</em></h2>
+  <p class="section-desc">Every patient who doesn't come back is $285+ in lost revenue. Most optical shops lose 30-40% of patients who simply forget. Your AI employee makes sure they remember.</p>
+
+  <div class="email-card">
+    <div class="email-dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+    <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f0f0">
+      <div style="display:flex;gap:8px;font-size:13px;margin-bottom:3px"><span style="color:var(--muted);width:45px">From:</span><span style="font-weight:600">Guilford Optical Shoppe</span></div>
+      <div style="display:flex;gap:8px;font-size:13px;margin-bottom:3px"><span style="color:var(--muted);width:45px">To:</span><span>jennifer.m@email.com</span></div>
+      <div style="font-size:17px;font-weight:700;margin-top:8px">Jennifer, It's Been a While</div>
+    </div>
+    <div style="font-size:14px;color:#555;line-height:1.75">
+      <p>Hi Jennifer,</p>
+      <p style="margin-top:10px">It's been about two years since your last eye exam with us. If your vision's felt even slightly off — or if you've been getting headaches — it might be time for an updated prescription.</p>
+      <p style="margin-top:10px">We also just got some stunning new frame collections in. I think you'd love them.</p>
+      <p style="margin-top:10px">Want to book a time? Just reply to this email or text us at (203) 453-6776.</p>
+      <p style="margin-top:16px;color:#999;font-size:12px">Guilford Optical Shoppe · 115 State St, Guilford · (203) 453-6776</p>
+    </div>
+  </div>
+
+  <div class="context-callout" style="margin-top:20px;max-width:620px">
+    <div class="cc-label">The math</div>
+    <p>If just <strong>10 overdue patients</strong> come back per month from these reminders, that's <strong class="money">$2,850+ in recovered revenue</strong>. Every month. The AI employee pays for itself <strong>nearly 5x over</strong> on recall alone.</p>
+  </div>
+</section>
+</div>
+
+<!-- 05: AFTER HOURS -->
+<div class="section-wrap">
+<section>
+  <div class="eyebrow">05 · After-Hours Service</div>
   <h2>Patient texts at 8:47 PM.<br><em>Booked in two minutes.</em></h2>
-  <p class="section-desc">Your shop closed at 5. Your AI employee didn't.</p>
+  <p class="section-desc">Your shop closed at 5. Your competitor's voicemail picked up. Your AI employee didn't miss a beat.</p>
+
   <button class="play-btn" id="chat-play" onclick="playChat()"><span>▶</span> Watch it happen</button>
   <button class="replay-btn" id="chat-replay" onclick="replayChat()"><span>↻</span> Watch again</button>
 
@@ -175,27 +288,28 @@ h2 em{font-style:italic;color:var(--teal)}
         <div class="phone-av">GO</div>
         <div><div class="phone-name">Guilford Optical</div><div class="phone-online">● Online</div></div>
       </div>
-      <div class="phone-chat" id="chat"></div>
+      <div id="chat"></div>
     </div>
     <div class="phone-context">
-      <div class="context-callout" id="ctx1" style="opacity:0;transition:opacity .6s">
+      <div class="context-callout" id="chat-ctx1" style="opacity:0;transition:opacity .6s">
         <div class="cc-label">What just happened</div>
-        <p>A patient needed to book an appointment at <strong>8:47 PM</strong>. Without your AI employee, this goes unanswered until morning — by then they may have called another optician. Instead, they're <strong>booked in under 2 minutes</strong>.</p>
+        <p>A patient needed to book at <strong>8:47 PM</strong>. Without the AI employee, this goes to voicemail — and by morning, they may have called the optician down the street. Instead, they're <strong>booked in under 2 minutes</strong>.</p>
       </div>
-      <div class="context-callout" id="ctx2" style="opacity:0;transition:opacity .6s">
-        <div class="cc-label">What your competitors did</div>
-        <p>Their phone went to voicemail. <strong>The patient is still waiting.</strong></p>
+      <div class="context-callout" id="chat-ctx2" style="opacity:0;transition:opacity .6s">
+        <div class="cc-label">Revenue impact</div>
+        <p>Each booked patient visit = <strong class="money">$285+ average revenue</strong>. One after-hours booking per week = <strong class="money">$14,820/year</strong> you'd otherwise lose to voicemail.</p>
       </div>
     </div>
   </div>
 </section>
+</div>
 
-
-<!-- REVIEW ENGINE -->
+<!-- 06: REVIEW ENGINE -->
+<div class="section-wrap">
 <section>
-  <div class="eyebrow">02 · Review Generation</div>
+  <div class="eyebrow">06 · Review Generation</div>
   <h2>28 reviews is good.<br><em>200+ is dominant.</em></h2>
-  <p class="section-desc">After every visit, your AI employee asks for a review — automatically. Your 4.9 stars with 200+ reviews = you own Google search in Guilford.</p>
+  <p class="section-desc">You have a 4.9 star rating — incredible. But 28 reviews means you're invisible in local search. Your AI employee asks every single patient, right after the moment of delight.</p>
 
   <div class="phone-wrapper" style="margin-top:20px">
     <div class="phone" style="width:300px">
@@ -203,138 +317,80 @@ h2 em{font-style:italic;color:var(--teal)}
         <div class="phone-av">GO</div>
         <div><div class="phone-name">Guilford Optical</div><div class="phone-online">● Online</div></div>
       </div>
-      <div class="sms show" style="opacity:1;transform:none"><div class="sms-bubble sms-out">Hi David! Thanks for coming in today — glad we found the perfect frames for you. If you have 30 seconds, we'd really appreciate a quick Google review. It helps other families in the Guilford area find us. 🙏<br><br>⭐ Leave a review: g.page/guilfordoptical</div></div>
-      <div class="sms show" style="opacity:1;transform:none;margin-top:12px"><div class="sms-bubble sms-in">Absolutely! You guys have been my optician for 20 years. Leaving one now!</div></div>
+      <div class="sms show" style="opacity:1;transform:none"><div class="sms-bubble sms-out">Hi David! Thanks for coming in today — glad we found the perfect frames. If you have 30 seconds, a quick Google review really helps families in Guilford find us. 🙏<br><br>⭐ g.page/guilfordoptical</div></div>
+      <div class="sms show" style="opacity:1;transform:none;margin-top:12px"><div class="sms-bubble sms-in">Absolutely! Been coming here for 20 years. Leaving one now!</div></div>
     </div>
     <div class="phone-context">
       <div class="context-callout">
-        <div class="cc-label">Why this matters</div>
-        <p>You have <strong>28 reviews at 4.9 stars</strong> — incredible rating, but low volume. Most patients leave happy but nobody asks them to review. Your AI employee asks <strong>every single time</strong>, right after the moment of delight. That's how you go from 28 to 200+ reviews and <strong>dominate local search in Guilford</strong>.</p>
+        <div class="cc-label">Why this changes everything</div>
+        <p>When someone in Guilford searches "optician near me," Google ranks shops by <strong>review count AND rating</strong>. Your 4.9 stars are unbeatable — but 28 reviews gets buried under competitors with 100+. At 200+ reviews with a 4.9 rating, you <strong>own local search in Guilford</strong>. That's free patients walking through your door every week.</p>
       </div>
     </div>
   </div>
 </section>
+</div>
 
-
-<!-- STRIPE ORDER MANAGEMENT -->
+<!-- 07: A-LETE VISION -->
+<div class="section-wrap">
 <section>
-  <div class="eyebrow">03 · E-Commerce & Stripe</div>
-  <h2>A-lete orders roll in.<br><em>Every one handled.</em></h2>
-  <p class="section-desc">Your AI employee monitors Stripe in real time. Confirmations, shipping updates, abandoned cart recovery — all autonomous.</p>
-  <button class="play-btn" id="stripe-play" onclick="playStripe()"><span>▶</span> Watch the flow</button>
-  <button class="replay-btn" id="stripe-replay" onclick="replayStripe()"><span>↻</span> Watch again</button>
+  <div class="eyebrow">07 · A-lete Vision Growth Engine</div>
+  <h2>While the shop runs itself,<br><em>your brand scales.</em></h2>
+  <p class="section-desc">Everything above handles Guilford Optical. But your AI employee works for A-lete Vision simultaneously — managing orders, finding partners, building the brand.</p>
 
-  <div class="stripe-dash" id="stripe-dash">
-    <div style="font-size:12px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px">📊 A-lete Vision — Live Order Dashboard</div>
-    <div id="stripe-rows"></div>
+  <div class="stats-grid" style="margin-top:0">
+    <div class="stat-card"><div class="stat-num" data-target="100" data-suffix="%">0</div><div class="stat-label">Stripe orders<br>handled automatically</div></div>
+    <div class="stat-card"><div class="stat-num green" data-target="10">0</div><div class="stat-label">Influencer prospects<br>researched daily</div></div>
+    <div class="stat-card"><div class="stat-num gold" data-target="5">0</div><div class="stat-label">Wholesale leads<br>contacted per week</div></div>
+    <div class="stat-card"><div class="stat-num" data-target="30">0</div><div class="stat-label">Social posts<br>drafted per month</div></div>
   </div>
 
-  <div class="context-callout" id="stripe-ctx" style="margin-top:20px;max-width:700px;opacity:0;transition:opacity .6s">
-    <div class="cc-label">What this means</div>
-    <p>Every order gets white-glove treatment. Confirmations go out instantly. Shipping updates are sent automatically. And that abandoned cart? Your AI employee sent a recovery email — <strong>and brought them back</strong>. No revenue left on the table.</p>
-  </div>
-</section>
-
-
-<!-- INFLUENCER OUTREACH -->
-<section>
-  <div class="eyebrow">04 · Influencer & Athlete Outreach</div>
-  <h2>Your AI employee finds partners.<br><em>You approve and send.</em></h2>
-  <p class="section-desc">Every day, your AI employee researches athletes and influencers, drafts personalized DMs, and builds your partnership pipeline. You spend 15 minutes reviewing.</p>
-
-  <div class="influencer-grid" id="inf-grid">
+  <div class="influencer-grid">
     <div class="inf-card" id="inf1">
       <div class="inf-name">Marcus Rivera</div>
-      <div class="inf-handle">@marcusrivera_fit</div>
-      <div class="inf-stats">24K followers · CrossFit athlete · Based in Miami, FL</div>
+      <div class="inf-handle">@marcusrivera_fit · 24K followers</div>
+      <div class="inf-stats">CrossFit athlete · Based in Miami, FL</div>
       <div class="inf-draft">
-        <div class="label">Draft DM — Ready for Review</div>
-        Hey Marcus — love what you're building. Your training content is legit. We just launched A-lete Vision — performance sunglasses built for athletes. Would love to send you a pair to try out. No strings. Interested?
+        <div class="label">Draft DM — Ready for Your Review</div>
+        Hey Marcus — love what you're building. We just launched A-lete Vision — performance sunglasses built for athletes. Would love to send you a pair. No strings. Interested?
       </div>
     </div>
     <div class="inf-card" id="inf2">
-      <div class="inf-name">Coach Taylor Williams</div>
-      <div class="inf-handle">@coachtaylorw</div>
-      <div class="inf-stats">18K followers · D1 Track Coach · Based in Atlanta, GA</div>
+      <div class="inf-name">Guilford HS Athletics</div>
+      <div class="inf-handle">Wholesale Prospect · Local</div>
+      <div class="inf-stats">12 varsity teams · Custom logo opportunity</div>
       <div class="inf-draft">
-        <div class="label">Draft DM — Ready for Review</div>
-        Coach Taylor — saw your team's results at regionals, congrats. We make custom performance sunglasses with team logos and numbers. Would your athletes be interested in team-branded eyewear? Happy to send samples.
-      </div>
-    </div>
-    <div class="inf-card" id="inf3">
-      <div class="inf-name">Sarah Chen</div>
-      <div class="inf-handle">@sarahchenfitness</div>
-      <div class="inf-stats">52K followers · Personal Trainer · Based in NYC</div>
-      <div class="inf-draft">
-        <div class="label">Draft DM — Ready for Review</div>
-        Sarah — your outdoor training content is exactly the vibe we built A-lete Vision for. Bold, durable, made for people who push limits. Would love to collab — can I send you a pair?
-      </div>
-    </div>
-    <div class="inf-card" id="inf4">
-      <div class="inf-name">Guilford High School Athletics</div>
-      <div class="inf-handle">Wholesale Prospect</div>
-      <div class="inf-stats">Local school · 12 varsity teams · Custom logo opportunity</div>
-      <div class="inf-draft">
-        <div class="label">Draft Email — Ready for Review</div>
-        Hi — I'm reaching out from A-lete Vision, a performance eyewear brand based right here in Guilford. We offer custom team sunglasses with your school logo and colors. Would love to discuss outfitting your teams. Can I send over some samples?
+        <div class="label">Draft Email — Ready for Your Review</div>
+        Hi — I'm reaching out from A-lete Vision, right here in Guilford. We make custom team sunglasses with your school logo and colors. Can I send over samples for your coaches?
       </div>
     </div>
   </div>
 
   <div class="context-callout" style="margin-top:24px">
-    <div class="cc-label">This happens every day</div>
-    <p>Your AI employee finds 5-10 new potential partners daily, researches their audience, and drafts personalized messages. <strong>You spend 15 minutes reviewing and hitting send.</strong> That's how brands go from unknown to everywhere.</p>
+    <div class="cc-label">One AI employee, two businesses</div>
+    <p>The same AI that's managing your optical shop patients, verifying insurance, and generating reviews is <strong>simultaneously</strong> finding influencer partnerships, managing A-lete's Stripe orders, prospecting wholesale deals, and creating content. <strong>Two businesses. One employee. $600/month.</strong></p>
   </div>
 </section>
+</div>
 
-
-<!-- PATIENT RECALL -->
+<!-- 08: THE MATH -->
+<div class="section-wrap">
 <section>
-  <div class="eyebrow">05 · Patient Recall Engine</div>
-  <h2>They're overdue.<br><em>Your AI reaches out.</em></h2>
-  <p class="section-desc">Your AI employee tracks every patient's exam date and contact lens order cycle. When they're due, it reaches out automatically.</p>
-
-  <div class="action-card" style="opacity:1;max-width:620px">
-    <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f0f0">
-      <div style="display:flex;gap:8px;font-size:13px;margin-bottom:3px"><span style="color:var(--muted);width:45px">From:</span><span style="font-weight:600">Guilford Optical Shoppe</span></div>
-      <div style="display:flex;gap:8px;font-size:13px;margin-bottom:3px"><span style="color:var(--muted);width:45px">To:</span><span>jennifer.m@email.com</span></div>
-      <div style="font-size:17px;font-weight:700;margin-top:8px">Time for Your Annual Eye Exam, Jennifer</div>
-    </div>
-    <div style="font-size:14px;color:#555;line-height:1.75">
-      <p>Hi Jennifer,</p>
-      <p style="margin-top:10px">It's been about two years since your last eye exam with us, and we'd love to have you back in the chair. Regular exams are the best way to catch changes early and keep your prescription up to date.</p>
-      <p style="margin-top:10px">We've also got some beautiful new frame collections in — I think you'd love them.</p>
-      <p style="margin-top:10px">Want to book a time? Just reply to this email or text us at (203) 453-6776 and we'll get you scheduled.</p>
-      <p style="margin-top:16px;color:#999;font-size:12px">Guilford Optical Shoppe<br>115 State St, Guilford, CT<br>(203) 453-6776</p>
-    </div>
-  </div>
-
-  <div class="context-callout" style="margin-top:20px;max-width:620px">
-    <div class="cc-label">Why this matters</div>
-    <p>Most optical shops wait for patients to remember. <strong>Your AI employee reaches out first.</strong> Every overdue patient gets a personalized message. Your chair stays full. Your revenue stays consistent. Zero manual effort.</p>
-  </div>
-</section>
-
-
-<!-- RESULTS -->
-<section id="results-section">
-  <div class="eyebrow">06 · 30-Day Projection</div>
-  <h2>What the first month<br><em>looks like.</em></h2>
-  <p class="section-desc">Conservative estimates across both businesses.</p>
+  <div class="eyebrow">08 · The Bottom Line</div>
+  <h2>What this actually<br><em>saves you.</em></h2>
+  <p class="section-desc">Real numbers. Real impact. Every month.</p>
 
   <div class="results-grid">
-    <div class="result-card"><div class="result-num" data-target="200" data-suffix="+">0</div><div class="result-label">Patient recall<br>messages sent</div></div>
-    <div class="result-card"><div class="result-num green" data-target="50" data-suffix="+">0</div><div class="result-label">Review requests<br>sent</div></div>
-    <div class="result-card"><div class="result-num gold" data-target="30" data-suffix="+">0</div><div class="result-label">Influencer &amp; wholesale<br>prospects contacted</div></div>
-    <div class="result-card"><div class="result-num" data-target="100" data-suffix="%">0</div><div class="result-label">After-hours<br>inquiries answered</div></div>
+    <div class="result-card"><div class="result-num" data-target="19" data-suffix="hrs">0</div><div class="result-label">Saved weekly on<br>insurance verification</div></div>
+    <div class="result-card"><div class="result-num green" data-target="2850" data-prefix="$">0</div><div class="result-label">Recovered monthly<br>from patient recall</div></div>
+    <div class="result-card"><div class="result-num gold" data-target="1000" data-prefix="$">0</div><div class="result-label">Saved monthly on<br>claim denial rework</div></div>
   </div>
 
   <div class="bottom-line">
-    <p>Both businesses running tighter than ever. Every patient recalled. Every order handled.<br>Every partnership opportunity pursued. Every after-hours message answered.<br><strong>While your competitors close at 5.</strong></p>
+    <p>Your front desk stops being a call center. Your patients come back. Your claims go through.<br>Your brand grows. Both businesses, running tighter than ever.<br><strong>Compare this to hiring: a part-time employee costs $2,500/month,<br>works 20 hours, and can't do half of this.</strong></p>
     <div class="price">$600/month. Both businesses.</div>
   </div>
 </section>
-
+</div>
 
 <!-- CTA -->
 <section class="cta">
@@ -349,44 +405,89 @@ h2 em{font-style:italic;color:var(--teal)}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
 const nav=document.getElementById('sticky-nav');
-window.addEventListener('scroll',()=>{
-  if(window.scrollY>400)nav.classList.add('show');
-  else nav.classList.remove('show');
-},{passive:true});
+window.addEventListener('scroll',()=>{nav.classList.toggle('show',window.scrollY>400)},{passive:true});
 
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       e.target.classList.add('visible');
       e.target.querySelectorAll('[data-target]').forEach(el=>{
-        const t=+el.dataset.target,s=el.dataset.suffix||'';
+        const t=+el.dataset.target,s=el.dataset.suffix||'',p=el.dataset.prefix||'';
         let c=0;const step=Math.ceil(t/30);
-        const iv=setInterval(()=>{c=Math.min(c+step,t);el.textContent=c+(c>=t?s:'');if(c>=t)clearInterval(iv)},40);
+        const iv=setInterval(()=>{c=Math.min(c+step,t);el.textContent=p+c+(c>=t?s:'');if(c>=t)clearInterval(iv)},40);
       });
-      // Reveal influencer cards
-      e.target.querySelectorAll('.inf-card').forEach((card,i)=>{
-        setTimeout(()=>card.classList.add('show'),i*300);
-      });
+      e.target.querySelectorAll('.inf-card').forEach((card,i)=>{setTimeout(()=>card.classList.add('show'),i*300)});
       obs.unobserve(e.target);
     }
   });
 },{threshold:.15});
 document.querySelectorAll('section').forEach(s=>obs.observe(s));
 
-/* CHAT */
+/* STATUS CHAT */
+async function playStatus(){
+  const c=document.getElementById('status-chat');
+  const btn=c.closest('section').querySelector('.play-btn');
+  btn.disabled=true;c.innerHTML='';
+  const msgs=[
+    {type:'time',text:'Tuesday 2:15 PM — Proactive Update'},
+    {type:'out',text:"Hi Karen! Quick update on your new progressives — your lenses are in production at the lab right now. Estimated ready date is Thursday. We'll text you the moment they arrive so you can come pick them up! 👓"},
+    {type:'time',text:'Thursday 10:30 AM'},
+    {type:'out',text:"Great news Karen — your new glasses are ready! We're here today until 5 PM, or any time this week. Just walk in whenever it's convenient."},
+    {type:'in',text:"Oh wow, I was literally about to call and ask! I'll swing by this afternoon. Thank you!"},
+    {type:'typing'},
+    {type:'out',text:"Perfect, see you this afternoon! We'll have everything ready for your fitting when you walk in."},
+  ];
+  for(const m of msgs){
+    if(m.type==='time'){const d=document.createElement('div');d.className='sms-time';d.textContent=m.text;c.appendChild(d);await sleep(400);continue;}
+    if(m.type==='typing'){const t=document.createElement('div');t.className='sms show';t.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';c.appendChild(t);await sleep(1500);c.removeChild(t);continue;}
+    const el=document.createElement('div');el.className='sms';
+    el.innerHTML=`<div class="sms-bubble ${m.type==='in'?'sms-in':'sms-out'}">${m.text}</div>`;
+    c.appendChild(el);await sleep(50);el.classList.add('show');await sleep(m.type==='in'?1000:600);
+  }
+  document.getElementById('status-ctx1').style.opacity='1';
+  await sleep(600);document.getElementById('status-ctx2').style.opacity='1';
+  document.getElementById('status-replay').classList.add('show');
+}
+function replayStatus(){document.getElementById('status-replay').classList.remove('show');document.getElementById('status-play').disabled=false;document.getElementById('status-chat').innerHTML='';document.getElementById('status-ctx1').style.opacity='0';document.getElementById('status-ctx2').style.opacity='0';playStatus();}
+
+/* CLAIMS */
+async function playClaims(){
+  const c=document.getElementById('claims-actions');
+  const btn=c.closest('section').querySelector('.play-btn');
+  btn.disabled=true;c.innerHTML='';
+  document.getElementById('claims-card').style.opacity='1';await sleep(400);
+  const actions=[
+    {text:'<strong>Johnson, Robert</strong> — Missing subscriber ID on VSP claim. <span style="color:var(--teal)">Auto-corrected from patient file.</span>',icon:'✓'},
+    {text:'<strong>Chen, Lisa</strong> — Frequency limitation: last exam 11 months ago, plan requires 12. <span style="color:var(--red)">Flagged — reschedule to next month.</span>',icon:'⚠'},
+    {text:'<strong>Martinez, David</strong> — Wrong plan code (W34 → W37). <span style="color:var(--teal)">Auto-corrected.</span>',icon:'✓'},
+    {text:'<strong>O\'Brien, Sean</strong> — Claim clean, all fields verified. <span style="color:var(--teal)">Ready to submit.</span>',icon:'✓'},
+    {text:'<strong>Parker, Tom</strong> — Prior auth required for progressive lenses. <span style="color:var(--teal)">Pre-auth submitted automatically.</span>',icon:'✓'},
+    {text:'<strong>Williams, Amy</strong> — Timely filing deadline in 5 days. <span style="color:var(--red)">Priority flagged for immediate submission.</span>',icon:'⚠'},
+  ];
+  for(const a of actions){
+    const el=document.createElement('div');el.className='action-item';
+    el.innerHTML=`<div class="action-check ${a.icon==='⚠'?'red':''}">${a.icon}</div><span class="action-text">${a.text}</span>`;
+    c.appendChild(el);await sleep(50);el.classList.add('show');await sleep(500);
+  }
+  await sleep(300);document.getElementById('claims-total').style.opacity='1';
+  document.getElementById('claims-replay').classList.add('show');
+}
+function replayClaims(){document.getElementById('claims-replay').classList.remove('show');document.getElementById('claims-play').disabled=false;document.getElementById('claims-actions').innerHTML='';document.getElementById('claims-total').style.opacity='0';playClaims();}
+
+/* AFTER HOURS CHAT */
 async function playChat(){
   const c=document.getElementById('chat');
   const btn=c.closest('section').querySelector('.play-btn');
   btn.disabled=true;c.innerHTML='';
   const msgs=[
     {type:'time',text:'8:47 PM — After hours'},
-    {type:'in',text:"Hi! I think I need a new prescription — my glasses feel off lately. Do you have any availability this week?"},
+    {type:'in',text:"Hi! I think I need a new prescription — my glasses have been giving me headaches lately. Do you have any availability this week?"},
     {type:'typing'},
     {type:'time',text:'12 seconds later'},
-    {type:'out',text:"Hi there! I'd be happy to help get you scheduled for an eye exam. We have openings Thursday at 10 AM, 2 PM, or Friday at 11 AM. Which works best for you?"},
-    {type:'in',text:"Thursday at 2 PM would be perfect!"},
+    {type:'out',text:"Hi there! Sorry to hear about the headaches — that's often a sign your prescription has changed. We have openings Thursday at 10 AM or 2 PM, and Friday at 11 AM. Which works best?"},
+    {type:'in',text:"Thursday at 2 would be perfect!"},
     {type:'typing'},
-    {type:'out',text:"You're all set for Thursday at 2 PM! We'll send you a reminder the day before. And when you come in, we've got some great new frame collections to check out. See you Thursday! 👓"}
+    {type:'out',text:"You're booked for Thursday at 2 PM! I'll send a reminder the day before. And I checked — your VSP benefits are active with a $25 copay for the exam. See you Thursday! 👓"},
   ];
   for(const m of msgs){
     if(m.type==='time'){const d=document.createElement('div');d.className='sms-time';d.textContent=m.text;c.appendChild(d);await sleep(400);continue;}
@@ -395,47 +496,11 @@ async function playChat(){
     el.innerHTML=`<div class="sms-bubble ${m.type==='in'?'sms-in':'sms-out'}">${m.text}</div>`;
     c.appendChild(el);await sleep(50);el.classList.add('show');await sleep(m.type==='in'?1000:600);
   }
-  document.getElementById('ctx1').style.opacity='1';
-  await sleep(600);
-  document.getElementById('ctx2').style.opacity='1';
+  document.getElementById('chat-ctx1').style.opacity='1';
+  await sleep(600);document.getElementById('chat-ctx2').style.opacity='1';
   document.getElementById('chat-replay').classList.add('show');
 }
-function replayChat(){
-  document.getElementById('chat-replay').classList.remove('show');
-  document.getElementById('chat-play').disabled=false;
-  document.getElementById('chat').innerHTML='';
-  document.getElementById('ctx1').style.opacity='0';
-  document.getElementById('ctx2').style.opacity='0';
-  playChat();
-}
-
-/* STRIPE */
-async function playStripe(){
-  const c=document.getElementById('stripe-rows');
-  const btn=c.closest('section').querySelector('.play-btn');
-  btn.disabled=true;c.innerHTML='';
-  const rows=[
-    {customer:'Jake Morrison',product:'E² Polarized — Crystal Smoke',amount:'$189.00',status:'paid',statusText:'Confirmed & Shipped'},
-    {customer:'Amanda Torres',product:'E² Non-Polarized + Custom Logo',amount:'$210.00',status:'paid',statusText:'Custom Order Processed'},
-    {customer:'Mike Chen',product:'E² Polarized',amount:'$189.00',status:'recovered',statusText:'Abandoned Cart → Recovered'},
-    {customer:'Guilford HS Athletics',product:'25x Custom Team E² — School Logo',amount:'$3,750.00',status:'processing',statusText:'Wholesale Quote Sent'},
-  ];
-  for(const r of rows){
-    const el=document.createElement('div');el.className='stripe-row';
-    el.innerHTML=`<div><div class="stripe-customer">${r.customer}</div><div class="stripe-product">${r.product}</div></div><div style="text-align:right"><div class="stripe-amount">${r.amount}</div><div class="stripe-status ${r.status}">${r.statusText}</div></div>`;
-    c.appendChild(el);await sleep(50);el.classList.add('show');await sleep(700);
-  }
-  await sleep(400);
-  document.getElementById('stripe-ctx').style.opacity='1';
-  document.getElementById('stripe-replay').classList.add('show');
-}
-function replayStripe(){
-  document.getElementById('stripe-replay').classList.remove('show');
-  document.getElementById('stripe-play').disabled=false;
-  document.getElementById('stripe-rows').innerHTML='';
-  document.getElementById('stripe-ctx').style.opacity='0';
-  playStripe();
-}
+function replayChat(){document.getElementById('chat-replay').classList.remove('show');document.getElementById('chat-play').disabled=false;document.getElementById('chat').innerHTML='';document.getElementById('chat-ctx1').style.opacity='0';document.getElementById('chat-ctx2').style.opacity='0';playChat();}
 </script>
 </body>
 </html>
