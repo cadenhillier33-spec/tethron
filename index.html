@@ -951,7 +951,59 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
 .demo-stat-val.ds-blue { color: #3b82f6; }
 .demo-stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 4px; }
 
-/* iPhone 15 Frame */
+/* ===== DASHBOARD MOCKUP ===== */
+.dash-wrap { width: 100%; max-width: 620px; perspective: 1000px; }
+.dash-window { background: #0c0d18; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; box-shadow: 0 0 80px rgba(0,212,170,0.08), 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04); display: flex; flex-direction: column; transform: rotateY(-1deg) rotateX(1deg); transition: transform 0.4s ease; }
+.dash-window:hover { transform: rotateY(0) rotateX(0); }
+.dash-titlebar { display: flex; align-items: center; padding: 12px 16px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.06); gap: 10px; flex-shrink: 0; }
+.dash-dots { display: flex; gap: 6px; flex-shrink: 0; }
+.dash-dot { width: 10px; height: 10px; border-radius: 50%; }
+.dash-dot--red { background: #ff5f57; }
+.dash-dot--yellow { background: #febc2e; }
+.dash-dot--green { background: #28c840; }
+.dash-titlebar-text { flex: 1; text-align: center; font-size: 12px; color: rgba(255,255,255,0.35); font-weight: 500; letter-spacing: 0.3px; }
+.dash-live-badge { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: #22c55e; letter-spacing: 0.5px; text-transform: uppercase; flex-shrink: 0; }
+.dash-live-dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; animation: dashPulse 2s ease-in-out infinite; }
+@keyframes dashPulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.5); } 50% { opacity: 0.7; box-shadow: 0 0 0 5px rgba(34,197,94,0); } }
+.dash-body { display: flex; min-height: 460px; max-height: 460px; }
+.dash-sidebar { width: 160px; flex-shrink: 0; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.06); padding: 16px 0; display: flex; flex-direction: column; gap: 2px; }
+.dash-sidebar-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 1px; padding: 0 16px; margin-bottom: 8px; }
+.dash-nav-item { display: flex; align-items: center; gap: 8px; padding: 8px 16px; font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.4); cursor: default; transition: all 0.2s ease; position: relative; }
+.dash-nav-item:hover { color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.03); }
+.dash-nav-item--active { color: #00d4aa; background: rgba(0,212,170,0.08); }
+.dash-nav-item--active::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px; background: #00d4aa; border-radius: 0 2px 2px 0; }
+.dash-nav-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+.dash-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+.dash-stats { display: flex; padding: 12px 16px; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+.dash-stat { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.dash-stat-value { font-size: 15px; font-weight: 700; color: #fff; white-space: nowrap; }
+.dash-stat-value--teal { color: #00d4aa; }
+.dash-stat-label { font-size: 10px; color: rgba(255,255,255,0.3); font-weight: 500; white-space: nowrap; }
+.dash-feed { flex: 1; overflow-y: auto; padding: 8px 0; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent; }
+.dash-feed::-webkit-scrollbar { width: 4px; }
+.dash-feed::-webkit-scrollbar-track { background: transparent; }
+.dash-feed::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+.dash-activity { display: flex; gap: 10px; padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; align-items: flex-start; }
+.dash-activity--visible { opacity: 1; transform: translateY(0); }
+.dash-activity:last-child { border-bottom: none; }
+.dash-activity-time { font-size: 10px; color: rgba(255,255,255,0.25); font-weight: 500; width: 48px; flex-shrink: 0; padding-top: 2px; white-space: nowrap; }
+.dash-activity-body { flex: 1; min-width: 0; }
+.dash-activity-header { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; flex-wrap: wrap; }
+.dash-badge { font-size: 9.5px; font-weight: 600; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0; }
+.dash-badge--internal { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
+.dash-badge--social { background: rgba(168,85,247,0.15); color: #a855f7; }
+.dash-badge--google { background: rgba(59,130,246,0.15); color: #3b82f6; }
+.dash-badge--email { background: rgba(0,212,170,0.15); color: #00d4aa; }
+.dash-badge--crm { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.dash-badge--sms { background: rgba(34,197,94,0.15); color: #22c55e; }
+.dash-badge--ops { background: rgba(236,72,153,0.15); color: #ec4899; }
+.dash-badge--website { background: rgba(6,182,212,0.15); color: #06b6d4; }
+.dash-activity-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); }
+.dash-activity-desc { font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.45; margin-top: 1px; }
+.dash-activity-result { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; color: #00d4aa; margin-top: 4px; }
+.dash-activity--highlight .dash-activity-result { color: #a855f7; }
+
+/* iPhone 15 Frame (legacy) */
 .iphone-wrap { position: relative; perspective: 1200px; }
 .iphone-glow { position: absolute; width: 450px; height: 450px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,170,0.1), rgba(0,212,170,0.03) 40%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; z-index: -1; filter: blur(50px); animation: iphoneGlow 4s ease-in-out infinite; }
 @keyframes iphoneGlow { 0%,100% { filter: blur(50px); opacity: 0.6; transform: translate(-50%,-50%) scale(1); } 50% { filter: blur(60px); opacity: 1; transform: translate(-50%,-50%) scale(1.1); } }
@@ -1660,6 +1712,11 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
   .iphone::before { width: 86px; height: 24px; border-radius: 0 0 16px 16px; }
   .iphone::after { width: 44px; height: 4px; top: 7px; }
   .iphone-screen { border-radius: 38px; }
+  .dash-wrap { max-width: 100%; }
+  .dash-window { transform: none; }
+  .dash-window:hover { transform: none; }
+  .dash-sidebar { display: none; }
+  .dash-body { min-height: 400px; max-height: 400px; }
   .hw-aside { flex-direction: column; text-align: center; }
   .waterfall-grid { grid-template-columns: 1fr; gap: 40px; }
   .waterfall-statement { font-size: 28px; text-align: center; }
@@ -2027,7 +2084,110 @@ section, .trust-bar, .nav-wrap, footer, .section, .closing-cta {
       </div>
       <a href="/contact" class="btn btn-orange">See What They'd Do For Your Business &rarr;</a>
     </div>
-    <div class="iphone-wrap">
+    <!-- Old iPhone demo hidden, replaced by dashboard -->
+    <div class="dash-wrap" id="dash-mockup">
+      <div class="dash-window">
+        <div class="dash-titlebar">
+          <div class="dash-dots"><div class="dash-dot dash-dot--red"></div><div class="dash-dot dash-dot--yellow"></div><div class="dash-dot dash-dot--green"></div></div>
+          <div class="dash-titlebar-text">Tethron &mdash; AI Employee Dashboard</div>
+          <div class="dash-live-badge"><div class="dash-live-dot"></div> Live</div>
+        </div>
+        <div class="dash-body">
+          <div class="dash-sidebar">
+            <div class="dash-sidebar-label">Workspace</div>
+            <div class="dash-nav-item dash-nav-item--active"><span class="dash-nav-icon">&#9673;</span> Overview</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">&#8853;</span> Leads</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">&#9993;</span> Communications</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">&#9672;</span> Marketing</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">&#9881;</span> Operations</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">&#9636;</span> Reports</div>
+          </div>
+          <div class="dash-main">
+            <div class="dash-stats">
+              <div class="dash-stat"><div class="dash-stat-value">23</div><div class="dash-stat-label">Tasks today</div></div>
+              <div class="dash-stat"><div class="dash-stat-value">38s</div><div class="dash-stat-label">Avg response</div></div>
+              <div class="dash-stat"><div class="dash-stat-value dash-stat-value--teal">$4,200</div><div class="dash-stat-label">Revenue captured</div></div>
+            </div>
+            <div class="dash-feed" id="dash-feed">
+              <div class="dash-activity" data-dash-item>
+                <div class="dash-activity-time">6:00 AM</div>
+                <div class="dash-activity-body">
+                  <div class="dash-activity-header"><span class="dash-badge dash-badge--internal">Internal</span><span class="dash-activity-title">Morning briefing compiled</span></div>
+                  <div class="dash-activity-desc">Revenue, pipeline, social metrics analyzed. 3 action items flagged.</div>
+                  <div class="dash-activity-result"><span class="dash-check">&#10003;</span> Brief delivered</div>
+                </div>
+              </div>
+              <div class="dash-activity" data-dash-item>
+                <div class="dash-activity-time">7:30 AM</div>
+                <div class="dash-activity-body">
+                  <div class="dash-activity-header"><span class="dash-badge dash-badge--social">Social</span><span class="dash-activity-title">Instagram post published</span></div>
+                  <div class="dash-activity-desc">Weekly tip drafted in your voice. 3 comments auto-replied.</div>
+                  <div class="dash-activity-result"><span class="dash-check">&#10003;</span> Engagement +23%</div>
+                </div>
+              </div>
+              <div class="dash-activity" data-dash-item>
+                <div class="dash-activity-time">8:15 AM</div>
+                <div class="dash-activity-body">
+                  <div class="dash-activity-header"><span class="dash-badge dash-badge--google">Google</span><span class="dash-activity-title">Review response sent</span></div>
+                  <div class="dash-activity-desc">5-star thank you + 3-star professional reply. Brand voice.</div>
+                  <div class="dash-activity-result"><span class="dash-check">&#10003;</span> 12s response time</div>
+                </div>
+              </div>
+              <div class="dash-activity" data-dash-item>
+                <div class="dash-activity-time">9:00 AM</div>
+                <div class="dash-activity-body">
+                  <div class="dash-activity-header"><span class="dash-badge dash-badge--email">Email</span><span class="dash-activity-title">4 overnight leads responded</span></div>
+                  <div class="dash-activity-desc">Personalized pricing sent. 2 consultations booked.</div>
+                  <div class="dash-activity-result"><span class="dash-check">&#10003;</span> $8,400 pipeline</div>
+                </div>
+              </div>
+              <div class="dash-activity" data-dash-item>
+                <div class="dash-activity-time">10:30 AM</div>
+                <div class="dash-activity-body">
+                  <div class="dash-activity-header"><span class="dash-badge dash-badge--crm">CRM</span><span class="dash-activity-title">Pipeline updated</span></div>
+                  <div class="dash-activity-desc">6 contacts added, 3 qualified, 1 closed ($4,200).</div>
+                  <div class="dash-activity-result"><span class="dash-check">&#10003;</span> $4,200 closed</div>
+                </div>
+              </div>
+              <div class="dash-activity" data-dash-item>
+                <div class="dash-activity-time">11:00 AM</div>
+                <div class="dash-activity-body">
+                  <div class="dash-activity-header"><span class="dash-badge dash-badge--sms">SMS</span><span class="dash-activity-title">Cold lead re-engaged</span></div>
+                  <div class="dash-activity-desc">Follow-up sequence triggered. Sarah booked at 11:42 AM.</div>
+                  <div class="dash-activity-result"><span class="dash-check">&#10003;</span> Appointment booked</div>
+                </div>
+              </div>
+              <div class="dash-activity" data-dash-item>
+                <div class="dash-activity-time">2:00 PM</div>
+                <div class="dash-activity-body">
+                  <div class="dash-activity-header"><span class="dash-badge dash-badge--ops">Operations</span><span class="dash-activity-title">Cancellation recovered</span></div>
+                  <div class="dash-activity-desc">3pm slot cancelled. Waitlist activated. Filled in 8 min.</div>
+                  <div class="dash-activity-result"><span class="dash-check">&#10003;</span> $0 revenue lost</div>
+                </div>
+              </div>
+              <div class="dash-activity" data-dash-item>
+                <div class="dash-activity-time">6:00 PM</div>
+                <div class="dash-activity-body">
+                  <div class="dash-activity-header"><span class="dash-badge dash-badge--internal">Internal</span><span class="dash-activity-title">Daily report delivered</span></div>
+                  <div class="dash-activity-desc">Full day summary: 23 tasks, 7 leads, $4,200 revenue.</div>
+                  <div class="dash-activity-result"><span class="dash-check">&#10003;</span> 2-min read</div>
+                </div>
+              </div>
+              <div class="dash-activity dash-activity--highlight" data-dash-item>
+                <div class="dash-activity-time">11:47 PM</div>
+                <div class="dash-activity-body">
+                  <div class="dash-activity-header"><span class="dash-badge dash-badge--website">Website</span><span class="dash-activity-title">Late-night lead captured</span></div>
+                  <div class="dash-activity-desc">Responded in 38s. Booked for Friday. CRM updated.</div>
+                  <div class="dash-activity-result"><span class="dash-check">&#10003;</span> You were asleep</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Old iPhone demo below (hidden by replacement) -->
+    <div class="iphone-wrap" style="display:none;">
       <div class="iphone-glow"></div>
       <div class="iphone-pulse-wrapper">
         <div class="iphone-pulse-ring"></div>
@@ -3288,6 +3448,31 @@ resetSpotInterval();
     requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
+})();
+
+/* Dashboard Mockup — Stagger Animation */
+(function() {
+  var dashMockup = document.getElementById('dash-mockup');
+  if (!dashMockup) return;
+  var items = dashMockup.querySelectorAll('[data-dash-item]');
+  var animated = false;
+  function animateItems() {
+    if (animated) return;
+    animated = true;
+    items.forEach(function(item, i) {
+      setTimeout(function() { item.classList.add('dash-activity--visible'); }, i * 180);
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) { animateItems(); observer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.2 });
+    observer.observe(dashMockup);
+  } else {
+    items.forEach(function(item) { item.classList.add('dash-activity--visible'); });
+  }
 })();
 </script>
 </body>
