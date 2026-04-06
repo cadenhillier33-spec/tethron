@@ -166,11 +166,72 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
 .lead-checkbox:checked::after { content: '\2713'; color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; height: 100%; }
 .delete-active .lead-checkbox { display: block; }
 
+/* Follow-Up Tab Styles */
+.fu-filters { display: flex; gap: 4px; margin-bottom: 16px; background: rgba(255,255,255,0.03); border-radius: 10px; padding: 3px; flex-wrap: wrap; }
+.fu-filter { flex: 1; padding: 8px 10px; background: none; border: none; color: rgba(255,255,255,0.35); font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: all 0.2s; text-align: center; min-width: 55px; }
+.fu-filter.active { background: rgba(0,212,170,0.1); color: #00d4aa; }
+.fu-filter:hover:not(.active) { color: rgba(255,255,255,0.6); }
+
+.fu-card { background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 16px 18px; margin-bottom: 8px; transition: all 0.25s; }
+.fu-card:hover { border-color: rgba(0,212,170,0.15); background: rgba(255,255,255,0.025); }
+.fu-card.fu-overdue { border-left: 3px solid #ef4444; }
+.fu-card.fu-due-today { border-left: 3px solid #f59e0b; }
+.fu-card.fu-upcoming { border-left: 3px solid #00d4aa; }
+.fu-card.fu-done { border-left: 3px solid rgba(255,255,255,0.1); opacity: 0.5; }
+
+.fu-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+.fu-name { font-size: 14px; font-weight: 700; }
+.fu-company { font-size: 11.5px; color: rgba(0,212,170,0.7); font-weight: 500; margin-top: 2px; }
+.fu-badge { padding: 3px 8px; border-radius: 5px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; flex-shrink: 0; }
+.fu-badge.fu-overdue { background: rgba(239,68,68,0.15); color: #ef4444; }
+.fu-badge.fu-due-today { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.fu-badge.fu-upcoming { background: rgba(0,212,170,0.1); color: #00d4aa; }
+.fu-badge.fu-done { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); }
+
+.fu-details { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 8px; font-size: 11px; color: rgba(255,255,255,0.4); }
+.fu-details strong { color: rgba(255,255,255,0.6); }
+.fu-action { font-size: 12px; color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.03); border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; }
+.fu-action::before { content: '\2192 '; color: #00d4aa; font-weight: 700; }
+.fu-notes { font-size: 11px; color: rgba(255,255,255,0.28); line-height: 1.4; margin-bottom: 10px; font-style: italic; }
+.fu-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.fu-btn { padding: 6px 14px; border-radius: 7px; font-size: 10px; font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.08); transition: all 0.2s; }
+.fu-btn-primary { background: rgba(0,212,170,0.12); color: #00d4aa; border-color: rgba(0,212,170,0.25); }
+.fu-btn-primary:hover { background: rgba(0,212,170,0.2); }
+.fu-btn-snooze { background: rgba(245,158,11,0.1); color: #f59e0b; border-color: rgba(245,158,11,0.2); }
+.fu-btn-done { background: rgba(0,212,170,0.15); color: #00d4aa; border-color: rgba(0,212,170,0.3); }
+.fu-btn-secondary { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); }
+.fu-btn-secondary:hover { background: rgba(255,255,255,0.08); }
+
+.fu-add-btn { padding: 8px 18px; background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(0,184,148,0.15)); border: 1px solid rgba(0,212,170,0.2); color: #00d4aa; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; margin-bottom: 16px; transition: all 0.2s; }
+.fu-add-btn:hover { background: linear-gradient(135deg, rgba(0,212,170,0.25), rgba(0,184,148,0.25)); }
+.fu-form { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px; margin-bottom: 16px; display: none; }
+.fu-form.show { display: block; }
+.fu-form h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; color: #00d4aa; }
+.fu-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.fu-row input, .fu-row select, .fu-row textarea { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; padding: 9px 12px; color: #fff; font-family: inherit; font-size: 12px; outline: none; }
+.fu-row input::placeholder, .fu-row textarea::placeholder { color: rgba(255,255,255,0.25); }
+.fu-row input:focus, .fu-row select:focus, .fu-row textarea:focus { border-color: rgba(0,212,170,0.3); }
+.fu-row select { appearance: none; cursor: pointer; }
+.fu-row select option { background: #1a1a2e; color: #fff; }
+.fu-row textarea { min-height: 50px; resize: vertical; }
+.fu-form-btns { display: flex; gap: 8px; justify-content: flex-end; }
+
+.fu-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+.fu-metric { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 12px; text-align: center; }
+.fu-metric-val { font-size: 24px; font-weight: 800; letter-spacing: -1px; }
+.fu-metric-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.3); margin-top: 3px; }
+
+.fu-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: rgba(0,212,170,0.2); border: 1px solid rgba(0,212,170,0.3); color: #00d4aa; padding: 10px 20px; border-radius: 8px; font-size: 12px; font-weight: 600; z-index: 999; transition: transform 0.3s ease; backdrop-filter: blur(12px); }
+.fu-toast.show { transform: translateX(-50%) translateY(0); }
+
 /* Responsive */
 @media (max-width: 600px) {
   .metrics { grid-template-columns: repeat(2, 1fr); }
+  .fu-metrics { grid-template-columns: repeat(2, 1fr); }
   .lead-title { display: none; }
   .container { padding: 24px 16px; }
+  .fu-row { flex-direction: column; }
+  .fu-details { flex-direction: column; gap: 4px; }
 }
 </style>
 </head>
@@ -218,6 +279,7 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
   <div class="tabs">
     <button class="tab active" id="tab-queue" onclick="switchTab('queue')">Ready to Send <span class="tab-count" id="tc-queue">0</span></button>
     <button class="tab" id="tab-contacted" onclick="switchTab('contacted')">Contacted <span class="tab-count" id="tc-contacted">0</span></button>
+    <button class="tab" id="tab-followup" onclick="switchTab('followup')">Follow-Up <span class="tab-count" id="tc-followup">0</span></button>
   </div>
 
   <div id="queue-view">
@@ -228,6 +290,37 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
     <div id="contacted-leads"></div>
     <div class="empty-state" id="empty-contacted" style="display:none;">No contacted leads yet. Start sending!</div>
   </div>
+
+  <div id="followup-view" style="display:none;">
+    <div class="fu-metrics">
+      <div class="fu-metric"><div class="fu-metric-val" style="color:#ef4444" id="fu-overdue">-</div><div class="fu-metric-label">Overdue</div></div>
+      <div class="fu-metric"><div class="fu-metric-val" style="color:#f59e0b" id="fu-today">-</div><div class="fu-metric-label">Today</div></div>
+      <div class="fu-metric"><div class="fu-metric-val" style="color:#00d4aa" id="fu-upcoming">-</div><div class="fu-metric-label">Upcoming</div></div>
+      <div class="fu-metric"><div class="fu-metric-val" style="color:#fff" id="fu-total">-</div><div class="fu-metric-label">Active</div></div>
+    </div>
+    <div class="fu-filters" id="fu-filters">
+      <button class="fu-filter active" data-fu="all">All</button>
+      <button class="fu-filter" data-fu="fu-overdue">Overdue</button>
+      <button class="fu-filter" data-fu="fu-due-today">Today</button>
+      <button class="fu-filter" data-fu="fu-upcoming">Upcoming</button>
+      <button class="fu-filter" data-fu="fu-done">Done</button>
+    </div>
+    <button class="fu-add-btn" onclick="fuToggleForm()">+ Add Follow-Up</button>
+    <div class="fu-form" id="fuForm">
+      <h3>New Follow-Up</h3>
+      <div class="fu-row"><input type="text" id="fu-f-name" placeholder="Name *"><input type="text" id="fu-f-company" placeholder="Company"></div>
+      <div class="fu-row">
+        <select id="fu-f-method"><option value="email">Email</option><option value="linkedin">LinkedIn</option><option value="phone">Phone</option><option value="imessage">iMessage</option><option value="in-person">In Person</option></select>
+        <input type="date" id="fu-f-date">
+      </div>
+      <div class="fu-row"><input type="text" id="fu-f-action" placeholder="Next action"></div>
+      <div class="fu-row"><input type="email" id="fu-f-email" placeholder="Email"><input type="tel" id="fu-f-phone" placeholder="Phone"></div>
+      <div class="fu-row"><textarea id="fu-f-notes" placeholder="Notes"></textarea></div>
+      <div class="fu-form-btns"><button class="fu-btn fu-btn-secondary" onclick="fuToggleForm()">Cancel</button><button class="fu-btn fu-btn-primary" onclick="fuAdd()">Add</button></div>
+    </div>
+    <div id="fu-cards"></div>
+  </div>
+  <div class="fu-toast" id="fu-toast"></div>
 
   <div class="delete-bar">
     <button class="btn-delete-mode" id="btn-dm" onclick="toggleDeleteMode()">Delete</button>
@@ -385,9 +478,12 @@ function switchTab(tab) {
   currentTab = tab;
   document.getElementById('tab-queue').classList.toggle('active', tab === 'queue');
   document.getElementById('tab-contacted').classList.toggle('active', tab === 'contacted');
+  document.getElementById('tab-followup').classList.toggle('active', tab === 'followup');
   document.getElementById('queue-view').style.display = tab === 'queue' ? 'block' : 'none';
   document.getElementById('contacted-view').style.display = tab === 'contacted' ? 'block' : 'none';
-  render();
+  document.getElementById('followup-view').style.display = tab === 'followup' ? 'block' : 'none';
+  if (tab === 'followup') fuLoad();
+  else render();
 }
 
 function render() {
@@ -565,6 +661,167 @@ function resetAll() {
 }
 
 render();
+
+// ═══════════════════════════════════════
+// FOLLOW-UP TAB — Supabase-backed
+// ═══════════════════════════════════════
+const SB_URL = 'https://slmdfgunkmvbqbzjfpdz.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsbWRmZ3Vua212YnFiempmcGR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExMDYwNDUsImV4cCI6MjA4NjY4MjA0NX0.kDpUakMhT3-Cq8L0R_JO-3ptNRVIHrEwBKGYKpEL1vk';
+let fuData = [];
+let fuFilter = 'all';
+
+async function fuApi(path, opts = {}) {
+  const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
+    headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': opts.prefer || 'return=representation' },
+    method: opts.method || 'GET',
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  return res.json();
+}
+
+function fuUrgency(item) {
+  if (item.status === 'done') return 'fu-done';
+  if (!item.next_follow_up_date) return 'fu-upcoming';
+  const today = new Date().toISOString().split('T')[0];
+  if (item.next_follow_up_date < today) return 'fu-overdue';
+  if (item.next_follow_up_date === today) return 'fu-due-today';
+  return 'fu-upcoming';
+}
+
+function fuUrgencyOrder(u) { return { 'fu-overdue': 0, 'fu-due-today': 1, 'fu-upcoming': 2, 'fu-done': 3 }[u] ?? 4; }
+
+function fuFormatDate(d) {
+  if (!d) return '\u2014';
+  const dt = new Date(d + 'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.round((dt - today) / 86400000);
+  const label = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  if (diff === 0) return 'Today';
+  if (diff === 1) return 'Tomorrow';
+  if (diff === -1) return 'Yesterday';
+  if (diff < -1) return `${label} (${Math.abs(diff)}d ago)`;
+  return `${label} (in ${diff}d)`;
+}
+
+function fuMethodIcon(m) {
+  return { email: '\u2709', linkedin: '\ud83d\udd17', phone: '\ud83d\udcde', imessage: '\ud83d\udcac', 'in-person': '\ud83e\udd1d' }[m] || '\u2709';
+}
+
+function fuEsc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function fuUpdateMetrics() {
+  const active = fuData.filter(d => d.status !== 'done');
+  document.getElementById('fu-overdue').textContent = active.filter(d => fuUrgency(d) === 'fu-overdue').length;
+  document.getElementById('fu-today').textContent = active.filter(d => fuUrgency(d) === 'fu-due-today').length;
+  document.getElementById('fu-upcoming').textContent = active.filter(d => fuUrgency(d) === 'fu-upcoming').length;
+  document.getElementById('fu-total').textContent = active.length;
+  document.getElementById('tc-followup').textContent = active.length;
+}
+
+function fuRender() {
+  const c = document.getElementById('fu-cards');
+  let items = [...fuData];
+  items.forEach(i => i._u = fuUrgency(i));
+  items.sort((a, b) => fuUrgencyOrder(a._u) - fuUrgencyOrder(b._u) || (a.next_follow_up_date || '').localeCompare(b.next_follow_up_date || ''));
+  if (fuFilter !== 'all') items = items.filter(i => i._u === fuFilter);
+
+  if (items.length === 0) { c.innerHTML = '<div class="empty-state">No follow-ups here.</div>'; return; }
+
+  c.innerHTML = items.map(item => `
+    <div class="fu-card ${item._u}">
+      <div class="fu-top">
+        <div><div class="fu-name">${fuEsc(item.name)}</div>${item.company ? `<div class="fu-company">${fuEsc(item.company)}</div>` : ''}</div>
+        <div class="fu-badge ${item._u}">${item._u === 'fu-due-today' ? 'Today' : item._u.replace('fu-','')}</div>
+      </div>
+      <div class="fu-details">
+        <div><strong>${fuMethodIcon(item.contact_method)} ${item.contact_method || 'email'}</strong></div>
+        <div>Last: <strong>${fuFormatDate(item.last_contact_date)}</strong></div>
+        <div>Next: <strong>${fuFormatDate(item.next_follow_up_date)}</strong></div>
+      </div>
+      ${item.next_action ? `<div class="fu-action">${fuEsc(item.next_action)}</div>` : ''}
+      ${item.notes ? `<div class="fu-notes">${fuEsc(item.notes)}</div>` : ''}
+      <div class="fu-btns">
+        ${item.status !== 'done' ? `
+          <button class="fu-btn fu-btn-primary" onclick="fuContacted('${item.id}')">Contacted Today</button>
+          <button class="fu-btn fu-btn-snooze" onclick="fuSnooze('${item.id}')">Snooze 3d</button>
+          <button class="fu-btn fu-btn-done" onclick="fuMarkDone('${item.id}')">Done</button>
+        ` : `<button class="fu-btn fu-btn-secondary" onclick="fuReopen('${item.id}')">Reopen</button>`}
+      </div>
+    </div>
+  `).join('');
+}
+
+async function fuLoad() {
+  document.getElementById('fu-cards').innerHTML = '<div class="empty-state">Loading...</div>';
+  fuData = await fuApi('follow_ups?order=next_follow_up_date.asc');
+  fuUpdateMetrics();
+  fuRender();
+}
+
+async function fuContacted(id) {
+  const today = new Date().toISOString().split('T')[0];
+  const next = new Date(); next.setDate(next.getDate() + 3);
+  await fuApi(`follow_ups?id=eq.${id}`, { method: 'PATCH', body: { last_contact_date: today, next_follow_up_date: next.toISOString().split('T')[0] } });
+  fuToast('Marked contacted'); fuLoad();
+}
+
+async function fuSnooze(id) {
+  const next = new Date(); next.setDate(next.getDate() + 3);
+  await fuApi(`follow_ups?id=eq.${id}`, { method: 'PATCH', body: { next_follow_up_date: next.toISOString().split('T')[0] } });
+  fuToast('Snoozed 3 days'); fuLoad();
+}
+
+async function fuMarkDone(id) {
+  await fuApi(`follow_ups?id=eq.${id}`, { method: 'PATCH', body: { status: 'done' } });
+  fuToast('Done'); fuLoad();
+}
+
+async function fuReopen(id) {
+  const today = new Date().toISOString().split('T')[0];
+  await fuApi(`follow_ups?id=eq.${id}`, { method: 'PATCH', body: { status: 'pending', next_follow_up_date: today } });
+  fuToast('Reopened'); fuLoad();
+}
+
+async function fuAdd() {
+  const name = document.getElementById('fu-f-name').value.trim();
+  if (!name) { fuToast('Name required'); return; }
+  const today = new Date().toISOString().split('T')[0];
+  await fuApi('follow_ups', { method: 'POST', body: {
+    name, company: document.getElementById('fu-f-company').value.trim() || null,
+    contact_method: document.getElementById('fu-f-method').value,
+    next_follow_up_date: document.getElementById('fu-f-date').value || today,
+    next_action: document.getElementById('fu-f-action').value.trim() || null,
+    email: document.getElementById('fu-f-email').value.trim() || null,
+    phone: document.getElementById('fu-f-phone').value.trim() || null,
+    notes: document.getElementById('fu-f-notes').value.trim() || null,
+    last_contact_date: today, status: 'pending'
+  }});
+  fuToast('Added'); fuToggleForm();
+  document.querySelectorAll('#fuForm input, #fuForm textarea').forEach(el => el.value = '');
+  fuLoad();
+}
+
+function fuToggleForm() { document.getElementById('fuForm').classList.toggle('show'); }
+
+function fuToast(msg) {
+  const t = document.getElementById('fu-toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+document.querySelectorAll('.fu-filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.fu-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    fuFilter = btn.dataset.fu;
+    fuRender();
+  });
+});
+
+// Load follow-up count on page load
+fuApi('follow_ups?status=neq.done&select=id').then(d => {
+  document.getElementById('tc-followup').textContent = Array.isArray(d) ? d.length : 0;
+});
 
 // Register service worker for PWA
 if ('serviceWorker' in navigator) {
