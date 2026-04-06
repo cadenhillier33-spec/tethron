@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tethron Follow-Up">
+<meta name="theme-color" content="#050508">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Tethron — Follow-Up Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #050508; color: #fff; font-family: 'Inter', -apple-system, sans-serif; min-height: 100vh; }
+body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
+
+.container { max-width: 900px; margin: 0 auto; padding: 48px 24px; position: relative; z-index: 1; }
+
+/* Header */
+.header { margin-bottom: 32px; }
+.header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.logo { width: 32px; height: 32px; background: linear-gradient(135deg, #00d4aa, #00b894); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; color: #050508; }
+.header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+.header h1 span { color: rgba(255,255,255,0.3); }
+.header-sub { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+/* Metrics */
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px; }
+.metric-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px 18px; text-align: center; }
+.metric-value { font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+.metric-value.green { color: #00d4aa; }
+.metric-value.red { color: #ef4444; }
+.metric-value.orange { color: #f59e0b; }
+.metric-value.white { color: #fff; }
+.metric-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.3); margin-top: 4px; }
+
+/* Filters */
+.filters { display: flex; gap: 4px; margin-bottom: 20px; background: rgba(255,255,255,0.03); border-radius: 10px; padding: 3px; flex-wrap: wrap; }
+.filter-btn { flex: 1; padding: 10px 12px; background: none; border: none; color: rgba(255,255,255,0.35); font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: all 0.2s; text-align: center; min-width: 70px; }
+.filter-btn.active { background: rgba(0,212,170,0.1); color: #00d4aa; }
+.filter-btn:hover:not(.active) { color: rgba(255,255,255,0.6); }
+
+/* Section Label */
+.section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: rgba(0,212,170,0.5); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.04); }
+
+/* Cards */
+.card {
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+  transition: all 0.25s;
+}
+.card:hover { border-color: rgba(0,212,170,0.15); background: rgba(255,255,255,0.025); }
+.card.overdue { border-left: 3px solid #ef4444; }
+.card.due-today { border-left: 3px solid #f59e0b; }
+.card.upcoming { border-left: 3px solid #00d4aa; }
+.card.done { border-left: 3px solid rgba(255,255,255,0.1); opacity: 0.5; }
+
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.card-name { font-size: 15px; font-weight: 700; }
+.card-company { font-size: 12px; color: rgba(0,212,170,0.7); font-weight: 500; margin-top: 2px; }
+
+.urgency-badge { padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; flex-shrink: 0; }
+.urgency-badge.overdue { background: rgba(239,68,68,0.15); color: #ef4444; }
+.urgency-badge.due-today { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.urgency-badge.upcoming { background: rgba(0,212,170,0.1); color: #00d4aa; }
+.urgency-badge.done { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); }
+
+.card-details { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 12px; }
+.detail { font-size: 11.5px; color: rgba(255,255,255,0.4); }
+.detail strong { color: rgba(255,255,255,0.6); font-weight: 600; }
+
+.card-action { font-size: 12.5px; color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.03); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.card-action::before { content: '\2192'; color: #00d4aa; font-weight: 700; }
+
+.card-notes { font-size: 11.5px; color: rgba(255,255,255,0.3); line-height: 1.5; margin-bottom: 12px; font-style: italic; }
+
+.card-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.btn-primary { background: rgba(0,212,170,0.12); color: #00d4aa; border-color: rgba(0,212,170,0.25); }
+.btn-primary:hover { background: rgba(0,212,170,0.2); }
+.btn-secondary { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); }
+.btn-secondary:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.btn-done { background: rgba(0,212,170,0.15); color: #00d4aa; border-color: rgba(0,212,170,0.3); }
+.btn-snooze { background: rgba(245,158,11,0.1); color: #f59e0b; border-color: rgba(245,158,11,0.2); }
+
+/* Add Form */
+.add-form { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px; margin-bottom: 32px; display: none; }
+.add-form.show { display: block; }
+.add-form h3 { font-size: 14px; font-weight: 700; margin-bottom: 16px; color: #00d4aa; }
+.form-row { display: flex; gap: 12px; margin-bottom: 12px; }
+.form-row input, .form-row select, .form-row textarea { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px; color: #fff; font-family: inherit; font-size: 13px; outline: none; }
+.form-row input::placeholder, .form-row textarea::placeholder { color: rgba(255,255,255,0.25); }
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color: rgba(0,212,170,0.3); }
+.form-row select { appearance: none; cursor: pointer; }
+.form-row select option { background: #1a1a2e; color: #fff; }
+.form-row textarea { min-height: 60px; resize: vertical; }
+.form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+
+.toggle-add { padding: 10px 20px; background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(0,184,148,0.15)); border: 1px solid rgba(0,212,170,0.2); color: #00d4aa; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; margin-bottom: 24px; transition: all 0.2s; }
+.toggle-add:hover { background: linear-gradient(135deg, rgba(0,212,170,0.25), rgba(0,184,148,0.25)); }
+
+.empty-state { text-align: center; padding: 48px 24px; color: rgba(255,255,255,0.25); font-size: 14px; }
+
+.loading { text-align: center; padding: 48px; color: rgba(255,255,255,0.3); font-size: 13px; }
+
+/* Toast */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: rgba(0,212,170,0.2); border: 1px solid rgba(0,212,170,0.3); color: #00d4aa; padding: 12px 24px; border-radius: 10px; font-size: 13px; font-weight: 600; z-index: 999; transition: transform 0.3s ease; backdrop-filter: blur(12px); }
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 600px) {
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  .form-row { flex-direction: column; }
+  .card-details { flex-direction: column; gap: 6px; }
+  .container { padding: 24px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="header-top">
+      <div class="logo">T</div>
+      <h1>Follow-Up <span>Dashboard</span></h1>
+    </div>
+    <div class="header-sub">People who need your attention, sorted by urgency.</div>
+  </div>
+
+  <div class="metrics" id="metrics">
+    <div class="metric-card"><div class="metric-value red" id="m-overdue">-</div><div class="metric-label">Overdue</div></div>
+    <div class="metric-card"><div class="metric-value orange" id="m-today">-</div><div class="metric-label">Due Today</div></div>
+    <div class="metric-card"><div class="metric-value green" id="m-upcoming">-</div><div class="metric-label">Upcoming</div></div>
+    <div class="metric-card"><div class="metric-value white" id="m-total">-</div><div class="metric-label">Total Active</div></div>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="overdue">Overdue</button>
+    <button class="filter-btn" data-filter="due-today">Today</button>
+    <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+    <button class="filter-btn" data-filter="done">Done</button>
+  </div>
+
+  <button class="toggle-add" onclick="toggleForm()">+ Add Follow-Up</button>
+
+  <div class="add-form" id="addForm">
+    <h3>New Follow-Up</h3>
+    <div class="form-row">
+      <input type="text" id="f-name" placeholder="Name *">
+      <input type="text" id="f-company" placeholder="Company">
+    </div>
+    <div class="form-row">
+      <select id="f-method">
+        <option value="email">Email</option>
+        <option value="linkedin">LinkedIn</option>
+        <option value="phone">Phone</option>
+        <option value="imessage">iMessage</option>
+        <option value="in-person">In Person</option>
+      </select>
+      <input type="date" id="f-followup" placeholder="Next follow-up date">
+    </div>
+    <div class="form-row">
+      <input type="text" id="f-action" placeholder="Next action (e.g. Send follow-up email)">
+    </div>
+    <div class="form-row">
+      <input type="email" id="f-email" placeholder="Email">
+      <input type="tel" id="f-phone" placeholder="Phone">
+    </div>
+    <div class="form-row">
+      <textarea id="f-notes" placeholder="Notes"></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" onclick="toggleForm()">Cancel</button>
+      <button class="btn btn-primary" onclick="addFollowUp()">Add</button>
+    </div>
+  </div>
+
+  <div id="cards-container">
+    <div class="loading">Loading follow-ups...</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://slmdfgunkmvbqbzjfpdz.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsbWRmZ3Vua212YnFiempmcGR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExMDYwNDUsImV4cCI6MjA4NjY4MjA0NX0.kDpUakMhT3-Cq8L0R_JO-3ptNRVIHrEwBKGYKpEL1vk';
+
+let allData = [];
+let currentFilter = 'all';
+
+async function api(path, opts = {}) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': opts.prefer || 'return=representation'
+    },
+    method: opts.method || 'GET',
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  return res.json();
+}
+
+function getUrgency(item) {
+  if (item.status === 'done') return 'done';
+  if (!item.next_follow_up_date) return 'upcoming';
+  const today = new Date().toISOString().split('T')[0];
+  if (item.next_follow_up_date < today) return 'overdue';
+  if (item.next_follow_up_date === today) return 'due-today';
+  return 'upcoming';
+}
+
+function urgencyOrder(u) {
+  return { 'overdue': 0, 'due-today': 1, 'upcoming': 2, 'done': 3 }[u] ?? 4;
+}
+
+function formatDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const diff = Math.round((dt - today) / 86400000);
+  const label = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  if (diff === 0) return `Today`;
+  if (diff === 1) return `Tomorrow`;
+  if (diff === -1) return `Yesterday`;
+  if (diff < -1) return `${label} (${Math.abs(diff)}d ago)`;
+  return `${label} (in ${diff}d)`;
+}
+
+function methodIcon(m) {
+  const icons = { email: '\u2709', linkedin: '\ud83d\udd17', phone: '\ud83d\udcde', imessage: '\ud83d\udcac', 'in-person': '\ud83e\udd1d' };
+  return icons[m] || '\u2709';
+}
+
+function updateMetrics() {
+  const active = allData.filter(d => d.status !== 'done');
+  const overdue = active.filter(d => getUrgency(d) === 'overdue').length;
+  const today = active.filter(d => getUrgency(d) === 'due-today').length;
+  const upcoming = active.filter(d => getUrgency(d) === 'upcoming').length;
+  document.getElementById('m-overdue').textContent = overdue;
+  document.getElementById('m-today').textContent = today;
+  document.getElementById('m-upcoming').textContent = upcoming;
+  document.getElementById('m-total').textContent = active.length;
+}
+
+function renderCards() {
+  const container = document.getElementById('cards-container');
+  let items = [...allData];
+
+  items.forEach(i => i._urgency = getUrgency(i));
+  items.sort((a, b) => urgencyOrder(a._urgency) - urgencyOrder(b._urgency) || (a.next_follow_up_date || '').localeCompare(b.next_follow_up_date || ''));
+
+  if (currentFilter !== 'all') {
+    items = items.filter(i => i._urgency === currentFilter);
+  }
+
+  if (items.length === 0) {
+    container.innerHTML = '<div class="empty-state">No follow-ups in this category.</div>';
+    return;
+  }
+
+  container.innerHTML = items.map(item => `
+    <div class="card ${item._urgency}" data-id="${item.id}">
+      <div class="card-top">
+        <div>
+          <div class="card-name">${esc(item.name)}</div>
+          ${item.company ? `<div class="card-company">${esc(item.company)}</div>` : ''}
+        </div>
+        <div class="urgency-badge ${item._urgency}">${item._urgency === 'due-today' ? 'Today' : item._urgency}</div>
+      </div>
+      <div class="card-details">
+        <div class="detail"><strong>${methodIcon(item.contact_method)} ${item.contact_method || 'email'}</strong></div>
+        <div class="detail">Last: <strong>${formatDate(item.last_contact_date)}</strong></div>
+        <div class="detail">Next: <strong>${formatDate(item.next_follow_up_date)}</strong></div>
+      </div>
+      ${item.next_action ? `<div class="card-action">${esc(item.next_action)}</div>` : ''}
+      ${item.notes ? `<div class="card-notes">${esc(item.notes)}</div>` : ''}
+      <div class="card-buttons">
+        ${item.status !== 'done' ? `
+          <button class="btn btn-primary" onclick="markContacted('${item.id}')">Contacted Today</button>
+          <button class="btn btn-snooze" onclick="snooze('${item.id}')">Snooze 3 Days</button>
+          <button class="btn btn-done" onclick="markDone('${item.id}')">Done</button>
+        ` : `
+          <button class="btn btn-secondary" onclick="reopen('${item.id}')">Reopen</button>
+        `}
+      </div>
+    </div>
+  `).join('');
+}
+
+function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+async function loadData() {
+  allData = await api('follow_ups?order=next_follow_up_date.asc');
+  updateMetrics();
+  renderCards();
+}
+
+async function markContacted(id) {
+  const today = new Date().toISOString().split('T')[0];
+  const nextDate = new Date();
+  nextDate.setDate(nextDate.getDate() + 3);
+  const next = nextDate.toISOString().split('T')[0];
+  await api(`follow_ups?id=eq.${id}`, {
+    method: 'PATCH',
+    body: { last_contact_date: today, next_follow_up_date: next }
+  });
+  toast('Marked as contacted today');
+  loadData();
+}
+
+async function snooze(id) {
+  const nextDate = new Date();
+  nextDate.setDate(nextDate.getDate() + 3);
+  const next = nextDate.toISOString().split('T')[0];
+  await api(`follow_ups?id=eq.${id}`, {
+    method: 'PATCH',
+    body: { next_follow_up_date: next }
+  });
+  toast('Snoozed 3 days');
+  loadData();
+}
+
+async function markDone(id) {
+  await api(`follow_ups?id=eq.${id}`, {
+    method: 'PATCH',
+    body: { status: 'done' }
+  });
+  toast('Marked as done');
+  loadData();
+}
+
+async function reopen(id) {
+  const today = new Date().toISOString().split('T')[0];
+  await api(`follow_ups?id=eq.${id}`, {
+    method: 'PATCH',
+    body: { status: 'pending', next_follow_up_date: today }
+  });
+  toast('Reopened');
+  loadData();
+}
+
+async function addFollowUp() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { toast('Name is required'); return; }
+  const today = new Date().toISOString().split('T')[0];
+  await api('follow_ups', {
+    method: 'POST',
+    body: {
+      name,
+      company: document.getElementById('f-company').value.trim() || null,
+      contact_method: document.getElementById('f-method').value,
+      next_follow_up_date: document.getElementById('f-followup').value || today,
+      next_action: document.getElementById('f-action').value.trim() || null,
+      email: document.getElementById('f-email').value.trim() || null,
+      phone: document.getElementById('f-phone').value.trim() || null,
+      notes: document.getElementById('f-notes').value.trim() || null,
+      last_contact_date: today,
+      status: 'pending'
+    }
+  });
+  toast('Follow-up added');
+  toggleForm();
+  document.querySelectorAll('#addForm input, #addForm textarea').forEach(el => el.value = '');
+  loadData();
+}
+
+function toggleForm() {
+  document.getElementById('addForm').classList.toggle('show');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Filters
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderCards();
+  });
+});
+
+loadData();
+</script>
+</body>
+</html>
