@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tethron-outreach-v1';
+const CACHE_NAME = 'tethron-outreach-v2';
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
