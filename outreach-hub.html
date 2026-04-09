@@ -280,6 +280,7 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
     <button class="tab active" id="tab-queue" onclick="switchTab('queue')">Ready to Send <span class="tab-count" id="tc-queue">0</span></button>
     <button class="tab" id="tab-contacted" onclick="switchTab('contacted')">Contacted <span class="tab-count" id="tc-contacted">0</span></button>
     <button class="tab" id="tab-followup" onclick="switchTab('followup')">Follow-Up <span class="tab-count" id="tc-followup">0</span></button>
+    <button class="tab" id="tab-templates" onclick="switchTab('templates')">Templates</button>
   </div>
 
   <div id="queue-view">
@@ -289,6 +290,46 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
   <div id="contacted-view" style="display:none;">
     <div id="contacted-leads"></div>
     <div class="empty-state" id="empty-contacted" style="display:none;">No contacted leads yet. Start sending!</div>
+  </div>
+
+  <div id="templates-view" style="display:none;">
+    <div class="section-label" style="margin-top:8px;">Mass Outreach Templates</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:14px;">Tap any template to copy. Swap [Name] with the prospect's first name. Rotate templates to avoid LinkedIn spam detection.</div>
+
+    <div class="lead-card" style="cursor:pointer;flex-direction:column;align-items:stretch;gap:8px;" onclick="copyTemplate(0)">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:10px;font-weight:700;color:#00d4aa;letter-spacing:1.5px;text-transform:uppercase;">Template 1 — Direct</span>
+        <span class="tpl-copied-badge" id="tpl-badge-0" style="font-size:9px;color:#00d4aa;opacity:0;transition:opacity 0.3s;">Copied ✓</span>
+      </div>
+      <div style="font-size:12.5px;color:#e2e8f0;line-height:1.6;" id="tpl-text-0">Hey [Name] — I run Tethron. We install AI employees on dedicated hardware that run your entire operation 24/7. Leads, follow-ups, scheduling, content, CRM — all handled autonomously. Not software. Not a chatbot. An actual employee that never clocks out. Want me to put together a breakdown of what it would do for your business?</div>
+    </div>
+
+    <div class="lead-card" style="cursor:pointer;flex-direction:column;align-items:stretch;gap:8px;" onclick="copyTemplate(1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:10px;font-weight:700;color:#00d4aa;letter-spacing:1.5px;text-transform:uppercase;">Template 2 — Curiosity Hook</span>
+        <span class="tpl-copied-badge" id="tpl-badge-1" style="font-size:9px;color:#00d4aa;opacity:0;transition:opacity 0.3s;">Copied ✓</span>
+      </div>
+      <div style="font-size:12.5px;color:#e2e8f0;line-height:1.6;" id="tpl-text-1">Hey [Name] — quick question. If you could hire one employee that worked 24/7, never took a day off, and handled every repetitive task in your business — what would you have them do first? That's what we build at Tethron. Happy to show you what it looks like.</div>
+    </div>
+
+    <div class="lead-card" style="cursor:pointer;flex-direction:column;align-items:stretch;gap:8px;" onclick="copyTemplate(2)">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:10px;font-weight:700;color:#00d4aa;letter-spacing:1.5px;text-transform:uppercase;">Template 3 — Social Proof</span>
+        <span class="tpl-copied-badge" id="tpl-badge-2" style="font-size:9px;color:#00d4aa;opacity:0;transition:opacity 0.3s;">Copied ✓</span>
+      </div>
+      <div style="font-size:12.5px;color:#e2e8f0;line-height:1.6;" id="tpl-text-2">Hey [Name] — we've been deploying AI employees for business owners that handle their leads, follow-ups, and operations around the clock. No software subscriptions, no chatbots — a dedicated system that actually thinks about your business. Would love to show you what one could do for yours.</div>
+    </div>
+
+    <div style="margin-top:18px;padding:14px 18px;background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.12);border-radius:10px;">
+      <div style="font-size:10px;font-weight:700;color:#00d4aa;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Sending Guide</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">
+        • Max 50-80 messages per day to avoid throttling<br>
+        • Best times: 7-9 AM and 5-7 PM<br>
+        • Rotate templates: T1 → 300, T2 → 300, T3 → 400<br>
+        • Open profiles = free. Save InMail credits for locked profiles<br>
+        • Anyone who replies → add to main outreach hub for personalized follow-up
+      </div>
+    </div>
   </div>
 
   <div id="followup-view" style="display:none;">
@@ -521,16 +562,28 @@ function updateMetrics() {
   if (remaining === 0 && total > 0) document.getElementById('m-remaining').style.color = '#00d4aa';
 }
 
+function copyTemplate(idx) {
+  const el = document.getElementById('tpl-text-' + idx);
+  const badge = document.getElementById('tpl-badge-' + idx);
+  if (el) {
+    navigator.clipboard.writeText(el.textContent.trim());
+    badge.style.opacity = '1';
+    setTimeout(() => { badge.style.opacity = '0'; }, 2000);
+  }
+}
+
 function switchTab(tab) {
   currentTab = tab;
   document.getElementById('tab-queue').classList.toggle('active', tab === 'queue');
   document.getElementById('tab-contacted').classList.toggle('active', tab === 'contacted');
   document.getElementById('tab-followup').classList.toggle('active', tab === 'followup');
+  document.getElementById('tab-templates').classList.toggle('active', tab === 'templates');
   document.getElementById('queue-view').style.display = tab === 'queue' ? 'block' : 'none';
   document.getElementById('contacted-view').style.display = tab === 'contacted' ? 'block' : 'none';
   document.getElementById('followup-view').style.display = tab === 'followup' ? 'block' : 'none';
+  document.getElementById('templates-view').style.display = tab === 'templates' ? 'block' : 'none';
   if (tab === 'followup') fuLoad();
-  else render();
+  else if (tab !== 'templates') render();
 }
 
 function render() {
