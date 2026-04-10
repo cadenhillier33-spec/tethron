@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Operations Audit — O'Connor Family Law</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: letter; margin: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #050508;
+    color: #e2e8f0;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 8.5in; height: 11in; margin: 0 auto;
+    position: relative; overflow: hidden;
+    page-break-after: always; break-after: page;
+  }
+  .page:last-child { page-break-after: avoid; break-after: avoid; }
+
+  .cover {
+    background: #050508;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .cover-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 30%, rgba(0, 212, 232, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(0, 180, 220, 0.05) 0%, transparent 70%),
+      linear-gradient(180deg, #050508 0%, #0a0f18 50%, #050508 100%);
+  }
+  .cover-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, #00d4e8, transparent); }
+  .cover-content { position: relative; z-index: 1; padding: 2in 0.9in 0; flex: 1; }
+  .cover-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: #00d4e8;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .cover-eyebrow::before { content: ''; width: 32px; height: 2px; background: #00d4e8; }
+  .cover h1 { font-size: 44px; font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 20px; letter-spacing: -1px; }
+  .cover h1 em {
+    font-style: normal; color: #00d4e8;
+    background: linear-gradient(135deg, #00d4e8, #6eeaff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .cover-hook { font-size: 16px; font-weight: 400; color: #94a3b8; max-width: 440px; line-height: 1.65; }
+  .cover-hook strong { color: #e2e8f0; font-weight: 600; }
+  .cover-footer {
+    position: relative; z-index: 1;
+    padding: 0 0.9in 0.7in;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: 0 0.9in; padding-top: 20px;
+  }
+  .cover-for { font-size: 12px; color: #64748b; line-height: 1.7; }
+  .cover-for strong { color: #e2e8f0; font-weight: 600; }
+  .cover-brand { text-align: right; }
+  .cover-brand .name { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .cover-brand .url { font-size: 11px; color: #00d4e8; margin-top: 3px; font-weight: 500; }
+
+  .content-page { background: #050508; padding: 0.35in 0.75in; }
+  .section-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: #00d4e8;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-tag::after { content: ''; flex: 1; height: 1px; background: rgba(0,212,232,0.15); }
+  h2 { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 4px; letter-spacing: -0.5px; }
+  .section-sub { font-size: 11px; color: #64748b; margin-bottom: 8px; line-height: 1.5; }
+
+  .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+  .pain-card {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; padding: 9px 12px; position: relative; overflow: hidden;
+  }
+  .pain-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #00d4e8, transparent); }
+  .pain-card .tag { font-size: 8px; font-weight: 700; color: #00d4e8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+  .pain-card .val { font-size: 13px; font-weight: 600; color: #e2e8f0; line-height: 1.4; }
+
+  .think-bar {
+    background: rgba(0,212,232,0.04); border: 1px solid rgba(0,212,232,0.12);
+    border-radius: 8px; padding: 8px 14px; margin-bottom: 10px;
+    font-size: 10.5px; color: #94a3b8; line-height: 1.55;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .think-bar strong { color: #00d4e8; font-weight: 700; }
+  .think-icon { color: #00d4e8; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  .opp-card {
+    background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px; padding: 10px 14px; margin-bottom: 6px;
+    display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: start;
+  }
+  .opp-num {
+    width: 34px; height: 34px;
+    background: rgba(0,212,232,0.08); border: 1px solid rgba(0,212,232,0.2);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: #00d4e8;
+  }
+  .opp-body h3 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .opp-body p { font-size: 10px; color: #94a3b8; line-height: 1.5; margin-bottom: 4px; }
+  .opp-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(0,212,232,0.08); border: 1px solid rgba(0,212,232,0.2);
+    border-radius: 6px; padding: 3px 10px;
+    font-size: 9px; font-weight: 700; color: #00d4e8; letter-spacing: 0.3px;
+  }
+  .opp-badge::before { content: ''; width: 6px; height: 6px; background: #00d4e8; border-radius: 50%; }
+
+  .impact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  .impact-card {
+    background: rgba(0,212,232,0.03); border: 1px solid rgba(0,212,232,0.12);
+    border-radius: 12px; padding: 22px 16px; text-align: center;
+  }
+  .impact-card .num { font-size: 36px; font-weight: 900; color: #00d4e8; line-height: 1; letter-spacing: -1px; margin-bottom: 6px; }
+  .impact-card .lbl { font-size: 11px; color: #94a3b8; line-height: 1.35; font-weight: 500; }
+
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  .compare-card { border-radius: 12px; padding: 18px; }
+  .compare-card.without { background: rgba(239,68,68,0.03); border: 1px solid rgba(239,68,68,0.12); }
+  .compare-card.with { background: rgba(0,212,232,0.03); border: 1px solid rgba(0,212,232,0.14); }
+  .compare-card h4 { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .compare-card.without h4 { color: #ef4444; }
+  .compare-card.with h4 { color: #00d4e8; }
+  .compare-card li { font-size: 11px; color: #94a3b8; line-height: 1.7; list-style: none; padding-left: 16px; position: relative; }
+  .compare-card.without li::before { content: '✗'; position: absolute; left: 0; color: rgba(239,68,68,0.6); font-weight: 700; }
+  .compare-card.with li::before { content: '✓'; position: absolute; left: 0; color: rgba(0,212,232,0.7); font-weight: 700; }
+
+  .step-row { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 12px; }
+  .step-icon {
+    flex-shrink: 0; width: 32px; height: 32px;
+    background: rgba(0,212,232,0.08); border: 1px solid rgba(0,212,232,0.2);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: #00d4e8;
+  }
+  .step-text h4 { font-size: 13px; font-weight: 700; color: #e2e8f0; margin-bottom: 2px; }
+  .step-text p { font-size: 10.5px; color: #64748b; line-height: 1.55; }
+
+  .endless-section { margin-top: 14px; margin-bottom: 14px; }
+  .endless-section h3 { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .endless-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .endless-tile { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 8px 10px; text-align: center; }
+  .endless-tile .icon { font-size: 16px; margin-bottom: 3px; color: #00d4e8; }
+  .endless-tile .label { font-size: 9px; font-weight: 600; color: #94a3b8; line-height: 1.3; }
+
+  .cta {
+    background: linear-gradient(135deg, rgba(0,212,232,0.08), rgba(0,180,220,0.03));
+    border: 1px solid rgba(0,212,232,0.18);
+    border-radius: 14px; padding: 22px; text-align: center; margin-top: 14px;
+  }
+  .cta h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+  .cta p { font-size: 11px; color: #94a3b8; margin-bottom: 12px; line-height: 1.6; }
+  .cta .contact { font-size: 11px; color: #00d4e8; font-weight: 700; letter-spacing: 0.3px; }
+
+  .page-foot {
+    position: absolute; bottom: 0.35in; left: 0.75in; right: 0.75in;
+    display: flex; justify-content: space-between;
+    font-size: 8px; color: rgba(255,255,255,0.2); letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="cover-bg"></div>
+  <div class="cover-accent"></div>
+  <div class="cover-content">
+    <div class="cover-eyebrow">AI Operations Audit</div>
+    <h1>Your Next Hire<br>Doesn&rsquo;t <em>Bill Hours.</em></h1>
+    <p class="cover-hook">A custom breakdown of what an AI employee would do at <strong>O&rsquo;Connor Family Law</strong> &mdash; it doesn&rsquo;t just handle tasks. It thinks about your firm, spots what you&rsquo;re missing, and keeps your clients feeling heard while you focus on the work only you can do.</p>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-for">
+      Prepared for <strong>Heather A. O&rsquo;Connor</strong><br>
+      Founding Attorney &amp; CEO, O&rsquo;Connor Family Law<br>
+      April 2026
+    </div>
+    <div class="cover-brand">
+      <div class="name">Tethron</div>
+      <div class="url">tethron.ai</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: PAIN + AUTOMATIONS -->
+<div class="page content-page">
+  <div class="section-tag">Your Firm</div>
+  <h2>What We See</h2>
+  <div class="section-sub">We studied familylawma.com, your team structure, your practice areas, and your client-first philosophy. Here&rsquo;s where your AI employee would quietly make the biggest difference.</div>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="tag">What You Do</div>
+      <div class="val">Divorce, custody, high-conflict family law across MA &mdash; personal, empathetic representation with amicability first, litigation second</div>
+    </div>
+    <div class="pain-card">
+      <div class="tag">Who You Serve</div>
+      <div class="val">Parents and spouses navigating the hardest moments of their lives &mdash; people who need to feel heard, not processed</div>
+    </div>
+    <div class="pain-card">
+      <div class="tag">Your Edge</div>
+      <div class="val">100% of your attorneys have personal experience with divorce or custody. Real empathy, not rehearsed lines. Two offices. Mediation + coaching + litigation under one roof.</div>
+    </div>
+    <div class="pain-card">
+      <div class="tag">The Gap</div>
+      <div class="val">Empathy takes time. Intake calls, scheduling, document chasing, email follow-ups &mdash; they pile up. Every minute on admin is a minute not billing or not supporting a client who needs you.</div>
+    </div>
+  </div>
+
+  <div class="think-bar">
+    <span class="think-icon">&#9672;</span>
+    <span>This isn&rsquo;t a chatbot. It&rsquo;s not software. It&rsquo;s an <strong>AI employee</strong> that learns your firm&rsquo;s voice, your intake process, and your client-first philosophy &mdash; then operates 24/7 so your team can stay focused on the human work that actually matters.</span>
+  </div>
+
+  <div class="section-tag">What Your AI Employee Handles</div>
+  <h2>Five Bottlenecks That Disappear</h2>
+
+  <div class="opp-card">
+    <div class="opp-num">1</div>
+    <div class="opp-body">
+      <h3>Intake That Sounds Like You</h3>
+      <p>A prospective client fills out the contact form at 11 PM, scared, crying, unsure. Your AI employee responds within minutes in your firm&rsquo;s warm voice &mdash; acknowledges what they&rsquo;re going through, answers common questions, schedules the consult, and flags urgency (DV, custody emergency) for immediate attention. Nobody waits until Monday to feel heard.</p>
+      <div class="opp-badge">Every intake handled with empathy in under 2 minutes</div>
+    </div>
+  </div>
+
+  <div class="opp-card">
+    <div class="opp-num">2</div>
+    <div class="opp-body">
+      <h3>Client Communication on Autopilot</h3>
+      <p>Court date reminders. Document requests. Status updates between filings. Follow-ups on paperwork you&rsquo;re waiting on. Your AI employee keeps every active case moving forward and every client in the loop &mdash; without your attorneys drafting the same three emails fifty times a week.</p>
+      <div class="opp-badge">10+ hours/week reclaimed per attorney</div>
+    </div>
+  </div>
+
+  <div class="opp-card">
+    <div class="opp-num">3</div>
+    <div class="opp-body">
+      <h3>Content &amp; Education Engine</h3>
+      <p>Your site already has a library of free resources &mdash; that&rsquo;s your best marketing asset. Your AI employee writes new blog posts, turns FAQs into YouTube scripts, drafts the monthly newsletter, and repurposes your expertise into social content that positions O&rsquo;Connor Family Law as THE Massachusetts authority on compassionate family law.</p>
+      <div class="opp-badge">4x content output, zero hours from your team</div>
+    </div>
+  </div>
+
+  <div class="opp-card">
+    <div class="opp-num">4</div>
+    <div class="opp-body">
+      <h3>Reviews, Referrals &amp; Reputation</h3>
+      <p>You&rsquo;re already Expertise.com and AVVO recognized &mdash; but reputation compounds. Your AI employee follows up with past clients at the right moment to request reviews, thanks referral sources personally, tracks which attorneys get the most 5-star mentions, and helps you double down on what&rsquo;s already working.</p>
+      <div class="opp-badge">Review volume grows without you asking</div>
+    </div>
+  </div>
+
+  <div class="opp-card">
+    <div class="opp-num">5</div>
+    <div class="opp-body">
+      <h3>Case Triage &amp; Attorney Matching</h3>
+      <p>New leads come in with wildly different needs &mdash; mediation, high-net-worth divorce, father&rsquo;s rights, relocation. Your AI employee reads the intake, matches each lead to the right attorney on your team (Caitlyn for high-conflict, you for complex custody, etc.), and books them directly on the right calendar. No more manual routing.</p>
+      <div class="opp-badge">Right attorney, right client, first try</div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>&copy; 2026 Tethron</span>
+    <span>Confidential &mdash; Prepared for O&rsquo;Connor Family Law</span>
+  </div>
+</div>
+
+<!-- PAGE 3: IMPACT + COMPARE + ENDLESS + STEPS + CTA -->
+<div class="page content-page">
+  <div class="section-tag">The Math</div>
+  <h2>What This Adds Up To</h2>
+  <div class="section-sub">Not projections. These are the outcomes AI employees deliver at firms built like yours.</div>
+
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="num">40+</div>
+      <div class="lbl">Billable hours<br>recovered weekly</div>
+    </div>
+    <div class="impact-card">
+      <div class="num">24/7</div>
+      <div class="lbl">Intake &amp; emergency<br>response coverage</div>
+    </div>
+    <div class="impact-card">
+      <div class="num">0</div>
+      <div class="lbl">Prospective clients<br>waiting until Monday</div>
+    </div>
+  </div>
+
+  <div class="compare">
+    <div class="compare-card without">
+      <h4>Monday Without AI</h4>
+      <ul>
+        <li>6 weekend intake forms sitting in the queue</li>
+        <li>A scared mom in Worcester hasn&rsquo;t heard back since Friday</li>
+        <li>Paralegal spending 3 hours on document reminders</li>
+        <li>Last month&rsquo;s newsletter still unwritten</li>
+      </ul>
+    </div>
+    <div class="compare-card with">
+      <h4>Monday With AI</h4>
+      <ul>
+        <li>Every weekend inquiry answered the moment it arrived</li>
+        <li>Scared mom already scheduled with Caitlyn for Tuesday</li>
+        <li>Document requests auto-sent, tracked, and escalated</li>
+        <li>Newsletter drafted and waiting for your review</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="endless-section">
+    <div class="section-tag">And That&rsquo;s Just the Starting Point</div>
+    <h3>Your AI Employee Evolves With Your Firm</h3>
+    <div class="endless-grid">
+      <div class="endless-tile">
+        <div class="icon">&#128221;</div>
+        <div class="label">Discovery Doc<br>Summaries</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#128197;</div>
+        <div class="label">Court Calendar<br>Monitoring</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#128187;</div>
+        <div class="label">CRM +<br>Clio Sync</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#127891;</div>
+        <div class="label">Free Resource<br>Updates</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#128200;</div>
+        <div class="label">Attorney<br>Performance</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#127970;</div>
+        <div class="label">Two-Office<br>Coordination</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-tag">How It Works</div>
+  <h2>Live in 2 Weeks</h2>
+
+  <div>
+    <div class="step-row">
+      <div class="step-icon">1</div>
+      <div class="step-text">
+        <h4>Discovery</h4>
+        <p>We learn your firm&rsquo;s voice, your intake process, your attorney specialties, and your client-first philosophy. Your AI employee is built on YOUR firm &mdash; not a template.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon">2</div>
+      <div class="step-text">
+        <h4>Deployment</h4>
+        <p>Installed on dedicated infrastructure. Connected to your intake forms, email, calendar, and Clio. Starts working immediately. Your firm, your voice, your employee.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon">3</div>
+      <div class="step-text">
+        <h4>Evolution</h4>
+        <p>Your AI employee gets smarter every week. Learns which intake signals matter most, how your top attorneys write, which content drives real referrals. It doesn&rsquo;t just execute &mdash; it thinks ahead.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <h3>Ready to See It in Action?</h3>
+    <p>Let&rsquo;s talk about what an AI employee would do at O&rsquo;Connor Family Law &mdash;<br>no commitment, no pressure. Just a clear picture of what&rsquo;s possible.</p>
+    <div class="contact">Caden Hillier &nbsp;&bull;&nbsp; caden@tethron.ai &nbsp;&bull;&nbsp; tethron.ai</div>
+  </div>
+
+  <div class="page-foot">
+    <span>&copy; 2026 Tethron</span>
+    <span>Confidential &mdash; Prepared for O&rsquo;Connor Family Law</span>
+  </div>
+</div>
+
+</body>
+</html>
