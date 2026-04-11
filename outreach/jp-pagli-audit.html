@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Operations Audit — John Michael Pagli, Jr.</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: letter; margin: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #050508;
+    color: #e2e8f0;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 8.5in; height: 11in; margin: 0 auto;
+    position: relative; overflow: hidden;
+    page-break-after: always; break-after: page;
+  }
+  .page:last-child { page-break-after: avoid; break-after: avoid; }
+
+  .cover {
+    background: #050508;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .cover-sculpture {
+    position: absolute;
+    top: 1.4in;
+    right: 0.6in;
+    width: 2.6in;
+    height: 2.6in;
+    object-fit: contain;
+    z-index: 2;
+    filter: drop-shadow(0 0 60px rgba(0, 212, 232, 0.35));
+    opacity: 0.92;
+  }
+  .cover-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 30%, rgba(0, 212, 232, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(0, 180, 220, 0.05) 0%, transparent 70%),
+      linear-gradient(180deg, #050508 0%, #0a0f18 50%, #050508 100%);
+  }
+  .cover-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, #00d4e8, transparent); }
+  .cover-content { position: relative; z-index: 1; padding: 2in 0.9in 0; flex: 1; }
+  .cover-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: #00d4e8;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .cover-eyebrow::before { content: ''; width: 32px; height: 2px; background: #00d4e8; }
+  .cover h1 { font-size: 44px; font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 20px; letter-spacing: -1px; }
+  .cover h1 em {
+    font-style: normal; color: #00d4e8;
+    background: linear-gradient(135deg, #00d4e8, #6eeaff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .cover-hook { font-size: 16px; font-weight: 400; color: #94a3b8; max-width: 440px; line-height: 1.65; }
+  .cover-hook strong { color: #e2e8f0; font-weight: 600; }
+  .cover-footer {
+    position: relative; z-index: 1;
+    padding: 0 0.9in 0.7in;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: 0 0.9in; padding-top: 20px;
+  }
+  .cover-for { font-size: 12px; color: #64748b; line-height: 1.7; }
+  .cover-for strong { color: #e2e8f0; font-weight: 600; }
+  .cover-brand { text-align: right; }
+  .cover-brand .name { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .cover-brand .url { font-size: 11px; color: #00d4e8; margin-top: 3px; font-weight: 500; }
+
+  .content-page { background: #050508; padding: 0.3in 0.75in; }
+  .section-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: #00d4e8;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-tag::after { content: ''; flex: 1; height: 1px; background: rgba(0,212,232,0.15); }
+  h2 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 3px; letter-spacing: -0.5px; }
+  .section-sub { font-size: 10.5px; color: #64748b; margin-bottom: 7px; line-height: 1.5; }
+
+  .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; }
+  .pain-card {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; padding: 7px 11px; position: relative; overflow: hidden;
+  }
+  .pain-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #00d4e8, transparent); }
+  .pain-card .tag { font-size: 8px; font-weight: 700; color: #00d4e8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
+  .pain-card .val { font-size: 12px; font-weight: 600; color: #e2e8f0; line-height: 1.35; }
+
+  .think-bar {
+    background: rgba(0,212,232,0.04); border: 1px solid rgba(0,212,232,0.12);
+    border-radius: 8px; padding: 7px 13px; margin-bottom: 8px;
+    font-size: 10px; color: #94a3b8; line-height: 1.5;
+    display: flex; align-items: flex-start; gap: 9px;
+  }
+  .think-bar strong { color: #00d4e8; font-weight: 700; }
+  .think-icon { color: #00d4e8; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+
+  .opp-card {
+    background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px; padding: 8px 13px; margin-bottom: 5px;
+    display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start;
+  }
+  .opp-num {
+    width: 30px; height: 30px;
+    background: rgba(0,212,232,0.08); border: 1px solid rgba(0,212,232,0.2);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: #00d4e8;
+  }
+  .opp-body h3 { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .opp-body p { font-size: 9.5px; color: #94a3b8; line-height: 1.45; margin-bottom: 3px; }
+  .opp-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(0,212,232,0.08); border: 1px solid rgba(0,212,232,0.2);
+    border-radius: 6px; padding: 2px 9px;
+    font-size: 8.5px; font-weight: 700; color: #00d4e8; letter-spacing: 0.3px;
+  }
+  .opp-badge::before { content: ''; width: 6px; height: 6px; background: #00d4e8; border-radius: 50%; }
+
+  .impact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  .impact-card {
+    background: rgba(0,212,232,0.03); border: 1px solid rgba(0,212,232,0.12);
+    border-radius: 12px; padding: 22px 16px; text-align: center;
+  }
+  .impact-card .num { font-size: 36px; font-weight: 900; color: #00d4e8; line-height: 1; letter-spacing: -1px; margin-bottom: 6px; }
+  .impact-card .lbl { font-size: 11px; color: #94a3b8; line-height: 1.35; font-weight: 500; }
+
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  .compare-card { border-radius: 12px; padding: 18px; }
+  .compare-card.without { background: rgba(239,68,68,0.03); border: 1px solid rgba(239,68,68,0.12); }
+  .compare-card.with { background: rgba(0,212,232,0.03); border: 1px solid rgba(0,212,232,0.14); }
+  .compare-card h4 { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .compare-card.without h4 { color: #ef4444; }
+  .compare-card.with h4 { color: #00d4e8; }
+  .compare-card li { font-size: 11px; color: #94a3b8; line-height: 1.7; list-style: none; padding-left: 16px; position: relative; }
+  .compare-card.without li::before { content: '✗'; position: absolute; left: 0; color: rgba(239,68,68,0.6); font-weight: 700; }
+  .compare-card.with li::before { content: '✓'; position: absolute; left: 0; color: rgba(0,212,232,0.7); font-weight: 700; }
+
+  .step-row { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 12px; }
+  .step-icon {
+    flex-shrink: 0; width: 32px; height: 32px;
+    background: rgba(0,212,232,0.08); border: 1px solid rgba(0,212,232,0.2);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: #00d4e8;
+  }
+  .step-text h4 { font-size: 13px; font-weight: 700; color: #e2e8f0; margin-bottom: 2px; }
+  .step-text p { font-size: 10.5px; color: #64748b; line-height: 1.55; }
+
+  .endless-section { margin-top: 14px; margin-bottom: 14px; }
+  .endless-section h3 { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .endless-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .endless-tile { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 8px 10px; text-align: center; }
+  .endless-tile .icon { font-size: 16px; margin-bottom: 3px; color: #00d4e8; }
+  .endless-tile .label { font-size: 9px; font-weight: 600; color: #94a3b8; line-height: 1.3; }
+
+  .cta {
+    background: linear-gradient(135deg, rgba(0,212,232,0.08), rgba(0,180,220,0.03));
+    border: 1px solid rgba(0,212,232,0.18);
+    border-radius: 14px; padding: 22px; text-align: center; margin-top: 14px;
+  }
+  .cta h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+  .cta p { font-size: 11px; color: #94a3b8; margin-bottom: 12px; line-height: 1.6; }
+  .cta .contact { font-size: 11px; color: #00d4e8; font-weight: 700; letter-spacing: 0.3px; }
+
+  .page-foot {
+    position: absolute; bottom: 0.35in; left: 0.75in; right: 0.75in;
+    display: flex; justify-content: space-between;
+    font-size: 8px; color: rgba(255,255,255,0.2); letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="cover-bg"></div>
+  <div class="cover-accent"></div>
+  <img class="cover-sculpture" src="sculpture-v2.png" alt="Tethron">
+  <div class="cover-content">
+    <div class="cover-eyebrow">AI Operations Audit</div>
+    <h1>Your Next Associate<br>Doesn&rsquo;t <em>Sleep.</em></h1>
+    <p class="cover-hook">A custom breakdown of what an AI employee would do across <strong>Vortex Capital</strong> and <strong>Invictus Impact Capital Partners</strong> &mdash; it doesn&rsquo;t just handle tasks. It thinks about your deal flow, spots what you&rsquo;re missing, and moves the pipeline forward while you focus on the relationships only you can build.</p>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-for">
+      Prepared for <strong>John Michael Pagli, Jr. (&ldquo;JP&rdquo;)</strong><br>
+      Partner &amp; Managing Director, Vortex Capital<br>
+      Founder &amp; CEO, Invictus Impact Capital Partners<br>
+      April 2026
+    </div>
+    <div class="cover-brand">
+      <div class="name">Tethron</div>
+      <div class="url">tethron.ai</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: PAIN + AUTOMATIONS -->
+<div class="page content-page">
+  <div class="section-tag">Your World</div>
+  <h2>What We See</h2>
+  <div class="section-sub">We studied your dual role across Vortex Capital and Invictus Impact, your 12+ years in investment banking and venture capital, and your focus on transformation through growth. Here&rsquo;s where an AI employee would quietly move the needle.</div>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="tag">What You Do</div>
+      <div class="val">Investment banking, strategic business development, merchant banking, and venture capital. Lead mandate execution, capital formation, and impact investing across private markets and alternatives.</div>
+    </div>
+    <div class="pain-card">
+      <div class="tag">Who You Serve</div>
+      <div class="val">Founders and GPs seeking strategic growth capital. Investors and LPs looking for access, diligence, and impact-aligned opportunities across private markets.</div>
+    </div>
+    <div class="pain-card">
+      <div class="tag">Your Edge</div>
+      <div class="val">Running two ventures in parallel. NYU Stern. 12+ years of deal origination and enterprise value creation. A FINRA-registered foundation that few new entrants can match.</div>
+    </div>
+    <div class="pain-card">
+      <div class="tag">The Gap</div>
+      <div class="val">Relationships take time. Deal sourcing, diligence, LP communication, compliance tracking, pitchbook updates &mdash; they eat the hours that should go into the conversations that actually close the deals.</div>
+    </div>
+  </div>
+
+  <div class="think-bar">
+    <span class="think-icon">&#9672;</span>
+    <span>This isn&rsquo;t a chatbot. It&rsquo;s not software. It&rsquo;s an <strong>AI employee</strong> that learns your deal thesis, your investor universe, and your voice &mdash; then operates 24/7 across both ventures so you can stay focused on the relationships and judgment calls only you can make.</span>
+  </div>
+
+  <div class="section-tag">What Your AI Employee Handles</div>
+  <h2>Five Bottlenecks That Disappear</h2>
+
+  <div class="opp-card">
+    <div class="opp-num">1</div>
+    <div class="opp-body">
+      <h3>Deal Sourcing &amp; Opportunity Intelligence</h3>
+      <p>Your AI employee monitors private market activity, funding announcements, leadership changes, and thematic signals across your sectors. It flags opportunities that match your thesis before they hit the broader market, compiles a morning deal sheet, and drafts intro notes you can send with a single edit. You wake up to a qualified pipeline, not an empty inbox.</p>
+      <div class="opp-badge">Qualified deal flow delivered daily</div>
+    </div>
+  </div>
+
+  <div class="opp-card">
+    <div class="opp-num">2</div>
+    <div class="opp-body">
+      <h3>Due Diligence &amp; Company Research</h3>
+      <p>Feed it a target company, a founder, a sector. Within minutes you have a working diligence brief: financials in public filings, cap table signals, competitive landscape, key personnel backgrounds, recent news, risk flags, and a comparative analysis against your past deals. Every memo written at the level of a senior associate, ready for your review.</p>
+      <div class="opp-badge">Days of research compressed into minutes</div>
+    </div>
+  </div>
+
+  <div class="opp-card">
+    <div class="opp-num">3</div>
+    <div class="opp-body">
+      <h3>Investor &amp; LP Communication</h3>
+      <p>Drafts your quarterly LP letters in your voice. Handles one-off investor questions with accurate, on-brand responses routed to you for approval. Tracks who&rsquo;s engaged with updates, who&rsquo;s gone quiet, and when to reach out for a check-in. Keeps the relationship layer warm without eating your week.</p>
+      <div class="opp-badge">Every investor feels personally attended to</div>
+    </div>
+  </div>
+
+  <div class="opp-card">
+    <div class="opp-num">4</div>
+    <div class="opp-body">
+      <h3>Pitchbook &amp; Materials Engine</h3>
+      <p>Pitchbooks, teasers, one-pagers, and internal memos generated on demand. Your AI employee pulls from your templates, populates with the target&rsquo;s data, matches your formatting conventions, and has the first draft ready before your next meeting. You edit, refine, and ship. No more late nights rebuilding decks from scratch.</p>
+      <div class="opp-badge">First-draft materials in minutes, not hours</div>
+    </div>
+  </div>
+
+  <div class="opp-card">
+    <div class="opp-num">5</div>
+    <div class="opp-body">
+      <h3>Compliance &amp; Regulatory Monitoring</h3>
+      <p>Watches FINRA and SEC updates, regulatory changes, and filing deadlines relevant to your mandates. Flags anything that touches your active deals, books, or investor communications. Prepares routine filings and compliance docs for your review. One less thing to worry about between mandates.</p>
+      <div class="opp-badge">Regulatory changes surfaced before they matter</div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>&copy; 2026 Tethron</span>
+    <span>Confidential &mdash; Prepared for John Michael Pagli, Jr.</span>
+  </div>
+</div>
+
+<!-- PAGE 3: IMPACT + COMPARE + ENDLESS + STEPS + CTA -->
+<div class="page content-page">
+  <div class="section-tag">The Math</div>
+  <h2>What This Adds Up To</h2>
+  <div class="section-sub">Not projections. These are the outcomes AI employees deliver for operators running two ventures in parallel.</div>
+
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="num">40+</div>
+      <div class="lbl">Hours recovered<br>every week</div>
+    </div>
+    <div class="impact-card">
+      <div class="num">24/7</div>
+      <div class="lbl">Deal sourcing &amp;<br>investor monitoring</div>
+    </div>
+    <div class="impact-card">
+      <div class="num">0</div>
+      <div class="lbl">Opportunities<br>lost to latency</div>
+    </div>
+  </div>
+
+  <div class="compare">
+    <div class="compare-card without">
+      <h4>Monday Without AI</h4>
+      <ul>
+        <li>Weekend deal signals sitting unread in your inbox</li>
+        <li>LP from the Q3 raise hasn&rsquo;t heard from you in 3 weeks</li>
+        <li>Due diligence on a target still pending from Friday</li>
+        <li>Pitchbook for Thursday&rsquo;s meeting still blank</li>
+      </ul>
+    </div>
+    <div class="compare-card with">
+      <h4>Monday With AI</h4>
+      <ul>
+        <li>Weekend deal flow already qualified and ranked by fit</li>
+        <li>LP touchpoint sent, personalized, tracked</li>
+        <li>Full diligence brief on your desk, ready for review</li>
+        <li>Pitchbook drafted, formatted, waiting for your edits</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="endless-section">
+    <div class="section-tag">And That&rsquo;s Just the Starting Point</div>
+    <h3>Your AI Employee Evolves With Both Ventures</h3>
+    <div class="endless-grid">
+      <div class="endless-tile">
+        <div class="icon">&#128200;</div>
+        <div class="label">Portfolio<br>Monitoring</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#128269;</div>
+        <div class="label">Target Company<br>Tracking</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#128188;</div>
+        <div class="label">Impact Metrics<br>Reporting</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#128231;</div>
+        <div class="label">LP Newsletter<br>Drafting</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#128202;</div>
+        <div class="label">Capital Raise<br>Tracking</div>
+      </div>
+      <div class="endless-tile">
+        <div class="icon">&#128196;</div>
+        <div class="label">FINRA Filing<br>Prep</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-tag">How It Works</div>
+  <h2>Live in 2 Weeks</h2>
+
+  <div>
+    <div class="step-row">
+      <div class="step-icon">1</div>
+      <div class="step-text">
+        <h4>Discovery</h4>
+        <p>We learn your deal thesis, investor universe, communication voice, and the division of work across Vortex and Invictus. Your AI employee is built on YOUR workflow, not a template.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon">2</div>
+      <div class="step-text">
+        <h4>Deployment</h4>
+        <p>Installed on dedicated infrastructure. Connected to your email, CRM, data rooms, and research tools. Starts working immediately. Your firm, your voice, your employee.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon">3</div>
+      <div class="step-text">
+        <h4>Evolution</h4>
+        <p>Your AI employee gets sharper every week. Learns which signals matter in your deal flow, how your best LPs want to be communicated with, and what a quality diligence brief looks like in your eyes. It doesn&rsquo;t just execute &mdash; it thinks ahead.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <h3>Ready to See It in Action?</h3>
+    <p>Let&rsquo;s talk about what an AI employee would do across Vortex and Invictus &mdash;<br>no commitment, no pressure. Just a clear picture of what&rsquo;s possible.</p>
+    <div class="contact">Caden Hillier &nbsp;&bull;&nbsp; caden@tethron.ai &nbsp;&bull;&nbsp; tethron.ai</div>
+  </div>
+
+  <div class="page-foot">
+    <span>&copy; 2026 Tethron</span>
+    <span>Confidential &mdash; Prepared for John Michael Pagli, Jr.</span>
+  </div>
+</div>
+
+</body>
+</html>
